@@ -1,0 +1,32 @@
+<div class="help-container">
+<div class="d-flex align-items-center">
+    <span class="flex-grow-1"></span>
+    <mat-icon class="clickeable" title="cerrar ayuda" (click)="closeHelpModal()">cancel</mat-icon>
+</div>
+
+<ng-container *ngFor="let recordCard of recordCards">
+    <mat-card>
+
+        <mat-card-content>
+            <div >
+                <h3 mat-dialog-title>{{recordCard.slug}}</h3>
+                <div class="row">
+                    <div class="col-12 subtitle">
+                        <p>{{recordCard.subtitle}}</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div *ngIf="recordCard.mainimage" class="col-12">
+                        <img [ngStyle]="imgMaxSize"  alt="Imagen referencia" src="{{ recordCard.mainimage }}" >
+                    </div>
+                    <div class="col-12">
+                        <span class="description" [innerHtml]="recordCard.description | sanitizeHtml"></span>
+                    </div>
+                </div>
+            </div>
+        </mat-card-content>
+    </mat-card>
+
+</ng-container>
+<span style="font-size: xx-small;">{{data.codigo}}</span>
+</div>

@@ -1,0 +1,24 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <mat-card>
+                <mat-card-content>
+                    <div class="row">
+                        <div class="col-12">
+                            <mat-toolbar color="primary">
+                                <h1>Navegador de turnos nominales</h1>
+                                <span class="flex-grow-1"></span>
+                                <button mat-flat-button (click)="openQuickCreateModal()">
+                                <mat-icon>add_circle</mat-icon>Alta rápida
+                                </button>
+                            </mat-toolbar>
+                        </div>
+                    </div>
+                    <slot-turno-browse (lookUpModels)="fetchTurnosNominales($event)"></slot-turno-browse>
+
+                    <slot-turno-browse-table *ngIf="showData"></slot-turno-browse-table>
+                </mat-card-content>
+            </mat-card>
+        </div>
+    </div>
+</div>

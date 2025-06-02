@@ -1,0 +1,24 @@
+<mat-card class="mb-3">
+  <mat-card-title>Vinculación UDA-ASSET</mat-card-title>
+  <mat-card-content>
+    <div class="container-fluid p-0">
+      <div class="row">
+        <div class="col-md-6">
+          <ng-container *ngIf="shouldDisplayUdaTree">
+            <h6>Árbol de descripción archivística</h6>
+            <uda-tree></uda-tree>
+          </ng-container>
+        </div>
+        <div class="offset-md-4 col-md-2 d-flex flex-column">
+          <button class="mb-2" type="button" color="primary" mat-flat-button (click)="handleOnClickCreateUds()">Crear
+            UDC/UDS</button>
+          <button class="mb-2" type="button" color="accent" mat-flat-button *ngIf="shouldDisplayDeleteUdaListButton"
+            (click)="handleOnClickDeleteUdaList()">Borrar UDS generadas</button>
+        </div>
+      </div>
+    </div>
+  </mat-card-content>
+  <ng-container *ngIf="inProgress">
+    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+  </ng-container>
+</mat-card>

@@ -1,0 +1,72 @@
+<div class="detail-host" [align]="customalign" *ngIf="model">
+
+    <mat-card class="detail-card">
+        <mat-card-content>
+            <h1>{{ model.slug}}</h1>
+            <h3>{{ model.topic }}</h3>
+            <h3 [innerHTML]='post_author' class="post-author text-uppercase"></h3>
+
+            <div class="carrousel">
+                <img class="carrousel-image" src="{{ mainImageUrl }}">
+            </div>
+            <div class="d-flex flex-row justify-content-center">
+                <div class="post-subtitle text-justify">
+                    <h4 class="mx-0"><i>{{model.subtitle}}</i></h4>
+                </div>
+            </div>
+            <div class="d-flex flex-row justify-content-center">
+                <div>
+                    <div class="text-justify post-text" [innerHTML]='model.description'></div>
+                </div>
+
+                <!-- <div *ngIf='showExcerpt' >
+        <div class="text-justify post-text" [innerHTML]='model.excerpt' ></div>
+        <a class="toggleText" role="button" (click)='showMore($event)'>LEER MAS...</a>
+      </div>
+      <div *ngIf='showDescription' >
+        <div class="text-justify post-text" [innerHTML]='model.description' ></div>
+        <div *ngIf='hasExcerpt'>
+          <a class="toggleText" role="button" (click)='showLess($event)'>OCULTAR TEXTO</a>
+        </div>
+      </div> -->
+            </div>
+
+
+            <!--app-carrousel [carrousel]='model.carrousel' [currentImage]='model.carrousel.mainimage' ></app-carrousel -->
+
+            <div class="row justify-content-center mt-5">
+                <div class="p-2 col-md   photo-gallery" *ngFor='let image of carrousel'>
+                    <a rel="noopener noreferrer" target="_blank" title="{{ image.slug }}" href=" {{ image.url }} ">
+                        <img class="gallery-image" src="{{ image.url }}">
+                    </a>
+
+                </div>
+            </div>
+            <div class="image-credit">
+                <p>{{ model.imagecredit }}</p>
+            </div>
+
+
+            <ng-container *ngIf="isFooter">
+                <footer-page></footer-page>
+            </ng-container>
+
+        </mat-card-content>
+
+    </mat-card>
+
+
+</div>
+
+
+
+<!--
+    <div class="d-lg-flex flex-row flex-wrap">
+      <div class="p-2 mt-5 photo-gallery"
+          *ngFor='let image of carrousel'>
+          <img class="carrousel-image" src="{{ image.url }}" >
+
+      </div>
+    </div>
+
+-->

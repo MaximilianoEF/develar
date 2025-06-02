@@ -1,0 +1,24 @@
+<h3 mat-dialog-title>Resultados de búsqueda</h3>
+<p class="m-0">Como la búsqueda arrojo <b>{{udaList.length}}</b> resultados, seleccione que UD desea elegir</p>
+<ng-container *ngIf="list && list.selectedOptions && list.selectedOptions.selected[0]?.value">
+  <p class="m-0"><b>Ha seleccionado la UD: {{list.selectedOptions.selected[0].value.identificador.title}} 
+     ({{getReferenceCode(list.selectedOptions.selected[0].value.identificador.reference_code)}})</b>
+  </p>
+</ng-container>
+<mat-dialog-content>
+  <div class="container-fluid p-0">
+    <div class="row">
+      <div class="col-12">
+        <mat-selection-list #list [multiple]="false">
+          <mat-list-option *ngFor="let item of udaList" [value]="item">
+            {{item.identificador.title}} ({{getReferenceCode(item.identificador.reference_code)}})
+          </mat-list-option>
+        </mat-selection-list>
+      </div>
+    </div>
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button class="ml-2" mat-flat-button color="primary" type="button" (click)="submit()" [disabled]="!list.selectedOptions || !list.selectedOptions.selected || !list.selectedOptions.selected[0]">Confirmar</button>
+  <button class="ml-2" mat-flat-button color="warn" type="button" mat-dialog-close>Cerrar</button>
+</mat-dialog-actions>

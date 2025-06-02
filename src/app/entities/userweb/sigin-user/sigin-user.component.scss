@@ -1,0 +1,86 @@
+@import '../../../../assets/sass/mixin';
+
+:host {
+
+  //background: url(../../../../assets/content/login-bg.jpg) 50% 50% no-repeat;
+  background-size: cover;
+  display: table-cell;
+  height: 100%;
+  vertical-align: middle;
+  width: 100%;
+
+}
+
+@import '../../../../assets/sass/variable';
+
+#login-form-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+  
+#login-form {
+  //margin: auto;
+  padding: 20px 50px;
+  border-radius: 12px;
+}
+
+
+#btn-acceder {
+  float: left;
+  line-height: 35px;
+}
+
+#btn-volver {
+  float: right;
+  line-height: 35px;
+}
+
+.btn-left {
+  margin-top: 10%;
+  float: left;
+}
+
+mat-card-actions{
+  margin-left: 0;
+}
+
+
+.logo-float {
+  position: absolute;
+  top: 60px;
+  left: 80px;
+
+  @media #{$min1200} {
+      font-size: 1.2em;
+      padding-left: 10px;
+  }
+
+  @media #{$max991} {
+      top: 40px;
+      left: 80px;
+      max-width: 200px;
+  }
+
+  @media #{$max767} {
+      top: 40px;
+      left: 80px;
+      max-width: 150px;
+  }
+
+  @media #{$max543} {
+      top: 35px;
+      left: 25px;
+      max-width: 130px;
+  }
+}
+
+
+.mat-flat-button {
+  @include button-agn;
+}
+
+#btn-registrate {
+  width: 100%;
+}

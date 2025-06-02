@@ -1,0 +1,17 @@
+<h3 mat-dialog-title>Viendo metadatos para el asset [{{ data.filename }}]</h3>
+<mat-dialog-content>
+    <div class="row">
+        <div class="col-12">
+            <p>Imagen tomada con un dispositivo <b>{{ data.metadata.Make }}</b> modelo <b>{{ data.metadata.Model }}</b></p>
+            <p>La resolución de la imagen es de <b>{{ data.metadata.XResolution }} x {{ data.metadata.YResolution }} dpi</b></p>
+            <p>El tamaño de la imagen es de <b>{{ data.metadata.ExifImageWidth }} x {{ data.metadata.ExifImageHeight }} píxels</b></p>
+        </div>
+    </div>
+</mat-dialog-content>
+<mat-dialog-actions class="my-2">
+    <div class="row">
+        <div class="col-12">
+            <button mat-flat-button color="warn" mat-dialog-close>Cerrar</button>
+        </div>
+    </div>
+</mat-dialog-actions>

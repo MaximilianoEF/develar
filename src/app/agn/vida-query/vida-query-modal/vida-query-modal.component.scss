@@ -1,0 +1,17 @@
+$bgColor: #000;
+$fgColor: #FFF;
+
+/* Ventana modal */
+
+.mat-card {
+    background: $bgColor;
+    color: $fgColor;
+}
+
+
+/* Reproductor VideoJS */
+
+.mat-card-title {
+    font-size: 1.3rem;
+    line-height: 1.75rem;
+}

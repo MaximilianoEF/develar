@@ -1,0 +1,115 @@
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes }         from '@angular/router';
+
+// site routed components
+import { HomeComponent }             from './home/home.component';
+
+import { MinimalistLayoutComponent } from './layouts/minimalist/minimalist.component';
+
+import { PapersComponent }          from './papers/papers.component';
+import { DetailCardComponent }      from './detail/detail-card/detail-card.component';
+import { PortfolioPageComponent }   from './portfolio/portfolio-page/portfolio-page.component';
+import { PortfolioDetailComponent } from './portfolio/portfolio-detail/portfolio-detail.component';
+import { PostDetailContainerComponent } from './foros/post-detail-container/post-detail-container.component';
+import { HomeBienvenidoComponent }   from './home-bienvenido/home-bienvenido.component';
+
+//import { VidaQueryPageComponent } from '../agn/vida-query/vida-query-page.component';
+
+import { Page404Component }          from '../develar-commons/errorpages/page-404.component';
+
+const routes: Routes = [
+  {
+    path: 'red',
+    component: MinimalistLayoutComponent,
+    children: [
+
+      {
+        path: '',
+        component: PortfolioPageComponent,
+        pathMatch: 'full'
+      },
+      {
+        path: 'info/:id',
+        component: PortfolioPageComponent,
+        pathMatch: 'full'
+      },
+      {
+        path: ':id',
+        component: PortfolioDetailComponent,
+      },
+
+    ]  
+  },
+  {
+    path: 'navegar',
+    component: MinimalistLayoutComponent,
+    children: [
+      {
+        path: ':id',
+        component: PostDetailContainerComponent,
+      },
+    ]  
+  },
+  // {
+  //   path: 'buscar',
+  //   component: MinimalistLayoutComponent,
+  //   children: [
+  //     {
+  //       path: ':id',
+  //       component: VidaQueryPageComponent,
+  //     },
+  //     {
+  //       path: '',
+  //       component: VidaQueryPageComponent,
+  //     },
+  //   ]  
+  // },
+  {
+    path: '',
+    component: MinimalistLayoutComponent,
+    children: [
+      {
+        path: 'prueba',
+        component: HomeComponent,
+      },
+      {
+        path: 'bienvenidx',
+        component: HomeBienvenidoComponent,
+      },
+      {
+        path: 'view/:id',
+        component: DetailCardComponent,
+      },
+      {
+        path: 'publicaciones/:topic/:id',
+        component: DetailCardComponent,
+      },
+      {
+        path: 'publicaciones/:topic',
+        component: PapersComponent,
+      },
+      {
+        path: 'info/:id',
+        component: PortfolioPageComponent,
+        pathMatch: 'full'
+      },
+		  {
+		    path: '',
+  			component: HomeComponent,
+		    pathMatch: 'full'
+		  },
+
+    ]
+  }
+];
+
+@NgModule({
+  imports: [
+    RouterModule.forChild(routes)
+  ],
+  exports: [
+  	RouterModule
+  ],
+  declarations: []
+})
+export class MinimalRoutingModule {}

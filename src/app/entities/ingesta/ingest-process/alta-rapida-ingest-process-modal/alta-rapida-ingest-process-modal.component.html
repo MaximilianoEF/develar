@@ -1,0 +1,63 @@
+<h1 mat-dialog-title>Alta de nuevo Parte de Ingesta (PI)</h1>
+<form [formGroup]="formGroup" (ngSubmit)="onSubmit()">
+    <mat-dialog-content>
+        <div class="container-fluid p-0">
+            <div class="row">
+                <div class="col-md-6 col-12">
+                    <mat-form-field>
+                        <mat-label>Fecha de digitalización e ingesta</mat-label>
+                        <input matInput formControlName="fecha" [matDatepicker]="picker2">
+                        <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                        <mat-datepicker #picker2 color="primary" [startAt]="startDate">
+                        </mat-datepicker>
+                    </mat-form-field>
+                </div>
+                <div class="col-md-6 col-12">
+                    <mat-form-field>
+                        <mat-label>Responsable de digitalización</mat-label>
+                        <mat-select formControlName="user">
+                            <mat-option *ngFor="let user of userResult$ | async" [value]="user._id">
+                                {{user.displayName}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <mat-form-field>
+                        <mat-label>Descripción</mat-label>
+                        <input matInput formControlName="slug">
+                        <mat-hint>Texto breve (slug) que facilite la identificación del parte de ingesta</mat-hint>
+                    </mat-form-field>
+                </div>
+            </div>
+          <div class="row mt-3">
+            <div class="col-6">
+              <mat-form-field>
+                <mat-label>Tipo de parte de ingesta</mat-label>
+                <mat-select formControlName="tipoParte">
+                  <mat-option *ngFor="let item of tipoParteList" [value]="item.val">{{ item.label }}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="col-6">
+              <mat-form-field>
+                <mat-label>Punto de montaje</mat-label>
+                <mat-select formControlName="puntoMontaje">
+                  <mat-option *ngFor="let item of puntoMontajeList" [value]="item.val">{{ item.label }}</mat-option>
+                </mat-select>
+                <mat-hint>Carpeta a partir de la que se realiza la búsqueda de la carpeta a ingestar</mat-hint>
+              </mat-form-field>
+            </div>
+          </div>
+
+        </div>
+    </mat-dialog-content>
+    <mat-card-actions class="p-0 mb-0">
+        <button mat-flat-button type="submit" color="primary" class="ml-2" [disabled]="formGroup.invalid">
+            Confirmar
+        </button>
+        <button mat-flat-button type="button" color="warn" class="ml-2" mat-dialog-close>Cancelar</button>
+    </mat-card-actions>
+</form>

@@ -1,0 +1,79 @@
+<h3 mat-dialog-title>Generación de UDS / UDC asociados al lote de INGESTA</h3>
+<mat-dialog-content class="py-3">
+  <form [formGroup]="form" class="py-3">
+    <div class="container-fluid p-0">
+
+      <div class="row">
+        <div class="col-md-4">
+          <mat-form-field>
+            <mat-label>Relación (asset:UDA)</mat-label>
+            <mat-select formControlName="relAssetUds">
+              <mat-option *ngFor="let item of relAssetUdsList" [value]="item.val">{{ item.label }}</mat-option>
+            </mat-select>
+            <mat-hint>Elija la cardinalidad de la relación</mat-hint>
+          </mat-form-field>
+        </div>
+        <div class="col-md-4">
+          <mat-form-field>
+            <mat-label>Prefijo identificador</mat-label>
+            <input matInput formControlName="identifierBase">
+            <mat-hint>Indique el prefijo para el identificador de las UDC/UDS</mat-hint>
+          </mat-form-field>
+        </div>
+        <div class="col-md-4">
+          <mat-form-field>
+            <mat-label>Prefijo título</mat-label>
+            <input matInput formControlName="slugBase">
+            <mat-hint>Indique el prefijo para el título de las UDC/UDS</mat-hint>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row my-5 align-items-center">
+        <div class="col-md-8 col-12">
+          <mat-checkbox formControlName="identifyFromFilename">
+            <span>Identificar UDS a partir del nombre de archivo</span>
+          </mat-checkbox>
+        </div>
+        <div class="col-md-4 col-12" *ngIf="form.get('identifyFromFilename').value">
+          <mat-form-field>
+            <mat-label>Carácter de separación</mat-label>
+            <input matInput formControlName="splitCaracterF">
+            <mat-hint>Indique el carácter de separación para recuperar el nombre del archivo</mat-hint>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="row mb-5 align-items-center">
+        <div class="col-md-8 col-12">
+          <mat-checkbox formControlName="identifyFromDirectoryName">
+            <span>Identificar UDC a partir del nombre del directorio</span>
+          </mat-checkbox>
+        </div>
+        <div class="col-md-4 col-12" *ngIf="form.get('identifyFromDirectoryName').value">
+          <mat-form-field>
+            <mat-label>Carácter de separación</mat-label>
+            <input matInput formControlName="splitCaracterD">
+            <mat-hint>Indique el carácter de separación para configurar el número de inventario</mat-hint>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="row align-items-center">
+        <div class="col-md-8 col-12">
+          <mat-checkbox formControlName="identifyFromDirectoryNameExact">
+            <span>Identificar UDC con nombre exacto del directorio</span>
+          </mat-checkbox>
+        </div>
+      </div>
+
+    </div>
+  </form>
+
+</mat-dialog-content>
+
+<mat-dialog-actions class="mt-3 pb-3">
+  <button type="button" mat-flat-button color="primary" class="ml-2" [disabled]="form.invalid"
+      (click)="handleOnSubmit()">Confirmar</button>
+
+  <button type="button" mat-flat-button color="warn" mat-dialog-close class="ml-2">Cancelar</button>
+</mat-dialog-actions>

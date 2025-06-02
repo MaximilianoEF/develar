@@ -1,0 +1,21 @@
+@import '../../../../assets/sass/variable';
+.navigate-btn {
+    margin-right: 10px;
+}
+
+.mat-column-select {
+    max-width: 60px;
+}
+
+.mat-column-displayName {
+    max-width: 185px;
+    min-width: 160px
+}
+
+.mat-column-descripcion {
+    min-width: 440px;
+}
+
+.mat-column-rowactions .mat-icon {
+    cursor: pointer;
+}

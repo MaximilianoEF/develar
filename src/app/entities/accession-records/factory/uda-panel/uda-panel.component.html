@@ -1,0 +1,16 @@
+<mat-card class="pl-sm-4">
+  <div class="uda-asset-container">
+    <div class="zoom-container">
+      <img
+        (mousemove)="handleOnMouseMove($event)"
+        (mouseup)="handleOnMouseUp()"
+        (mousedown)="handleOnMouseDown($event)"
+        #udaImage
+        src="/download/withserver/{{ udaProxy.assetId }}"
+        alt="{{ udaProxy.title }}">
+    </div>
+  </div>
+
+  <p class="mb-0"><b>Código de referencia: </b> <a matTooltip="Navegar a la vista detallada de esta UDA" [routerLink]="['/unidad-descripcion', 'vista-detallada', udaProxy.idUda]">{{ buildReferenceCode(udaProxy.reference_code) }}</a></p>
+  <p><b>Título: </b> {{ udaProxy.title }}</p>
+</mat-card>

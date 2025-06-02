@@ -1,0 +1,52 @@
+<mat-table #assetsTable matSort [dataSource]="dataSource">
+
+  <ng-container matColumnDef="select">
+    <mat-header-cell *matHeaderCellDef>
+      <mat-checkbox (change)="$event ? masterToggle() : null" [checked]="selection.hasValue() && isAllSelected()"
+                    [indeterminate]="selection.hasValue() && !isAllSelected()">
+      </mat-checkbox>
+    </mat-header-cell>
+    <mat-cell *matCellDef="let row">
+      <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? changeSelectionStatus(row) : null"
+                    [checked]="selection.isSelected(row)">
+      </mat-checkbox>
+    </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="fileType">
+    <mat-header-cell *matHeaderCellDef mat-sort-header>Tipo</mat-header-cell>
+    <mat-cell *matCellDef="let item">{{ item.fileType }}</mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="assetType">
+    <mat-header-cell *matHeaderCellDef mat-sort-header>Objeto digital</mat-header-cell>
+    <mat-cell *matCellDef="let item">{{ item.assetType }}</mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="filename">
+    <mat-header-cell *matHeaderCellDef mat-sort-header>Nombre del archivo</mat-header-cell>
+    <mat-cell *matCellDef="let item">{{ item.filename }}</mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="bundlePath">
+    <mat-header-cell *matHeaderCellDef mat-sort-header>Ruta</mat-header-cell>
+    <mat-cell *matCellDef="let item">{{ item.bundlePath }}</mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="rowactions">
+    <mat-header-cell *matHeaderCellDef>&nbsp;</mat-header-cell>
+    <mat-cell *matCellDef="let item">
+      <mat-icon matTooltip="Editar este objeto digital" class="mx-2" (click)="edit(item)">edit</mat-icon>
+      <mat-icon *ngIf="item.isFile" matTooltip="Ver metadatos" class="mx-2" (click)="showMetadata(item)">article</mat-icon>
+      <mat-icon matTooltip="Crear derivada" class="mx-2" (click)="crearDerivada(item)">collections</mat-icon>
+    </mat-cell>
+  </ng-container>
+
+  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+
+  <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+
+</mat-table>
+
+<mat-paginator #paginator [length]="10" [pageIndex]="0" [pageSize]="25" [pageSizeOptions]="[5, 10, 25, 100]">
+</mat-paginator>

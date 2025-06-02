@@ -1,0 +1,26 @@
+<!-- <p>
+  person-manage works!
+</p> -->
+<mat-card>
+  <form [formGroup]="form">
+    <div class="row mt-2">
+      <div class="col-md-3">
+        <mat-form-field>
+          <mat-select #seluserType formControlName="typeuser" placeholder="Tipo de usuario"
+            (selectionChange)="onSelectionChange('typeuser', seluserType.value)">
+            <mat-option *ngFor="let item of userTypeList" [value]="item.val">{{ item.label }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+    <mat-toolbar>
+      <div class="row">
+        <div class="col-12">
+          <button mat-flat-button type="button" color="primary" (click)="search()">Refrescar búsqueda</button>
+          <!-- <button mat-flat-button class="ml-3" type="button" color="primary" (click)="doDownloadResults()">Exportar resultados</button> -->
+        </div>
+      </div>
+    </mat-toolbar>
+  </form>
+  <person-table (actionTriggered)='actionTriggered($event)' *ngIf="showData"></person-table>
+</mat-card>

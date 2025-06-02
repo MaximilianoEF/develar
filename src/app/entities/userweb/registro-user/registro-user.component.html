@@ -1,0 +1,177 @@
+<div [class.registro-form-container]="!isEdit" [class.edicion-form-container]="isEdit" *ngIf="showForm" style="background-image: url({{mainimage}});">
+    <ng-container *ngIf="hasImage && !isEdit">
+        <img class="logo-float" src="{{ logoUrl }}" alt="Logo AGN">
+
+        <!-- <img class="main-image" mat-card-image src='{{ mainimage }}' > -->
+    </ng-container>
+    <mat-card class="mat-elevation-z0">
+        <mat-card-title>
+            <div class="row">
+                <div class="col-12">
+                    <h3>{{title}}</h3>
+                </div>
+            </div>
+        </mat-card-title>
+
+        <div class="container-fluid p-0">
+            <form [formGroup]="form" (ngSubmit)="onSubmit()" autocomplete="off">
+                <mat-card-content>
+                    <div class="row">
+                        <div class="col-3 col-sm-4">
+                            <mat-form-field>
+                                <mat-label>Tipo de documento</mat-label>
+                                <mat-select formControlName="tipoDoc">
+                                    <mat-option *ngFor="let tipo of tcompPersonaFisica" [value]="tipo.val">
+                                        {{tipo.label}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-4">
+                            <mat-form-field>
+                                <mat-label>N° de documento</mat-label>
+                                <input matInput formControlName="ndoc" required>
+                                <mat-error *ngIf="hasError('ndoc', 'ndocerror') && !isEdit">{{ docBelongsTo.error }}
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-5 col-sm-4">
+                            <mat-form-field>
+                                <mat-label>N° de trámite</mat-label>
+                                <input matInput formControlName="numTramite" required>
+                                <button mat-icon-button type="button" matSuffix (click)="showInstructivo()" matTooltip="Ver instructivo de número de trámite">
+                                    <i class="far fa-question-circle"></i>
+                                </button>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 col-12">
+                            <mat-form-field>
+                                <mat-label>Nombres</mat-label>
+                                <input matInput formControlName="nombre" required>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-6 col-12">
+                            <mat-form-field>
+                                <mat-label>Apellidos</mat-label>
+                                <input matInput formControlName="apellido" required>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-6" *ngIf="!isEdit">
+                            <mat-form-field>
+                                <mat-label>Fecha de nacimiento</mat-label>
+                                <input matInput formControlName="fechaNacimiento" [matDatepicker]="picker2" required>
+                                <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                                <mat-datepicker #picker2 color="primary" startView="multi-year" [startAt]="startDate">
+                                </mat-datepicker>
+                                <mat-hint align="end" *ngIf="form.value.fechaNacimiento">edad: {{ currentAge() }}
+                                </mat-hint>
+                                <mat-error *ngIf="hasError('fechaNacimiento', 'invalidAge')">fecha de nacimiento inválida
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-sm-4 col-md-6 col-6" *ngIf="!isEdit">
+                            <mat-form-field>
+                                <mat-label>Teléfono</mat-label>
+                                <input matInput formControlName="telefono" required>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-12" >
+                            <mat-form-field>
+                                <mat-label>Correo electrónico</mat-label>
+                                <input matInput formControlName="email" required>
+                                <mat-error *ngIf="hasError('email', 'mailerror')">{{ docBelongsTo.error }}</mat-error>
+                            </mat-form-field>
+                        </div>
+                        <!--Inputs de residencia de la persona-->
+                        <div class="col-md-6 col-12" *ngIf="!isEdit">
+                            <mat-form-field>
+                                <mat-label>Domicilio</mat-label>
+                                <input matInput formControlName="domicilio" required>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-6 col-12" *ngIf="!isEdit">
+                            <mat-form-field>
+                                <mat-label>Ciudad</mat-label>
+                                <input matInput formControlName="ciudad" required>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-6 col-12" *ngIf="!isEdit">
+                            <mat-form-field>
+                                <mat-label>Provincia/Estado</mat-label>
+                                <input matInput formControlName="provincia_estado" required>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-6 col-12" *ngIf="!isEdit">
+                            <mat-form-field>
+                                <mat-label>País</mat-label>
+                                <input matInput formControlName="pais" name="pais" autocomplete="off" required>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-6 col-12" *ngIf="!isEdit">
+                            <mat-form-field>
+                                <mat-label>Contraseña</mat-label>
+                                <input class="password" type="password" matInput formControlName="password" autocomplete="new-password" required>
+                                <button mat-button type="button" *ngIf="!showPassword" matSuffix mat-icon-button (click)="verPassword()">
+                                    <mat-icon>visibility</mat-icon>
+                                </button>
+                                <button mat-button type="button" *ngIf="showPassword" matSuffix mat-icon-button (click)="verPassword()">
+                                    <mat-icon>visibility_off</mat-icon>
+                                </button>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-6 col-12" *ngIf="!isEdit">
+                            <mat-form-field>
+                                <mat-label>Reingrese la contraseña</mat-label>
+                                <input class="password" type="password" matInput formControlName="confirmPassword" autocomplete="new-password" required>
+                                <small *ngIf="form.controls['confirmPassword'].errors?.equalTo" class="form-message text-danger">Las claves no coinciden</small>
+                            </mat-form-field>
+                            </div>
+                        <div class="col-md-6 col-12">
+                            <mat-form-field>
+                                <mat-label>Pregunta de seguridad</mat-label>
+                                <mat-select formControlName="preguntaSecreta" required>
+                                    <mat-option *ngFor="let item of preguntasSecretas" [value]="item.key">
+                                        {{item.label}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-6 col-12">
+                            <mat-form-field>
+                                <mat-label>Respuesta</mat-label>
+                                <input matInput autocomplete="off" formControlName="respuestaSecreta" required>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="row" *ngIf="!isEdit">
+                        <div class="col-12">
+                            <mat-checkbox formControlName="termscond" (click)="openTermsCond()">
+                                Consultá acá los términos y condiciones de uso.
+                            </mat-checkbox>
+                        </div>
+                    </div>
+                </mat-card-content>
+                <mat-card-actions>
+                    <div class="row">
+                        <div class="col-12">
+                            <button type="button" mat-flat-button class="button-cancel" (click)="volver()">
+                                <mat-icon>keyboard_arrow_left</mat-icon>Volver
+                            </button>
+                            <button type='submit' mat-flat-button class="ml-4 mr-0 mx-md-3 button-submit" [disabled]="form.invalid">{{button_label}}
+                                <ng-container *ngIf="!isEdit">
+                                    <i class="ml-1 fas fa-arrow-circle-right"></i>
+                                </ng-container>
+                            </button>
+                            <button id="button-navigate" class="mt-2 mt-md-0" type="button" mat-flat-button (click)="editPerson()" *ngIf="isEdit">
+                                Editar datos personales<mat-icon>keyboard_arrow_right</mat-icon>
+                            </button>
+                        </div>
+                    </div>
+                </mat-card-actions>
+            </form>
+        </div>
+    </mat-card>
+</div>
+<!-- <footer-page [showContacto]="false"></footer-page> -->

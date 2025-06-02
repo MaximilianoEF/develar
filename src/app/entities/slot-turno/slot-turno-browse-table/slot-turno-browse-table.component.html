@@ -1,0 +1,54 @@
+<mat-table #turnoSedeTable matSort [dataSource]="dataSource">
+
+    <ng-container matColumnDef="select">
+        <mat-header-cell *matHeaderCellDef>
+            <mat-checkbox (change)="$event ? masterToggle() : null" [checked]="selection.hasValue() && isAllSelected()" [indeterminate]="selection.hasValue() && !isAllSelected()">
+            </mat-checkbox>
+        </mat-header-cell>
+        <mat-cell *matCellDef="let row">
+            <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(row) : null" [checked]="selection.isSelected(row)">
+            </mat-checkbox>
+        </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="nombre">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Turnera</mat-header-cell>
+        <mat-cell *matCellDef="let item">{{ item.nombre }}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="sede">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Sede</mat-header-cell>
+        <mat-cell *matCellDef="let item">{{ item.sede }}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="descripcion">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Descripción</mat-header-cell>
+        <mat-cell *matCellDef="let item">{{ item.slug }}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="tipo">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Tipo de turnera</mat-header-cell>
+        <mat-cell *matCellDef="let item">{{ item.type }}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="estado">
+        <mat-header-cell *matHeaderCellDef>Estado</mat-header-cell>
+        <mat-cell *matCellDef="let item">{{ item.estado }}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="rowactions">
+        <mat-header-cell *matHeaderCellDef>&nbsp;</mat-header-cell>
+        <mat-cell *matCellDef="let item">
+            <mat-icon matTooltip="Editar esquema" class="mr-3" [routerLink]="['factory', item._id]">edit</mat-icon>
+            <!-- <mat-icon matTooltip="Eliminar esquema" class="mr-3" (click)="delete(item)">delete_forever</mat-icon> -->
+        </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+
+    <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+
+</mat-table>
+
+<mat-paginator #paginator [length]="10" [pageIndex]="0" [pageSize]="25" [pageSizeOptions]="[5, 10, 25, 100]">
+</mat-paginator>

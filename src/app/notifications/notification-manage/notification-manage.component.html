@@ -1,0 +1,22 @@
+<mat-card class="alta-ficha" [title]="'Notificaciones'" >
+  <mat-card-header><mat-card-title>Notificaciones y Mensajes</mat-card-title></mat-card-header>
+
+  <mat-card-content>
+    <ng-container *ngIf="showEditor">
+      <notification-create 
+      	[context]="context"
+      	[openeditor]='_openEditor'
+      	(messageUpdated)='messageUpdated($event)'></notification-create>
+    </ng-container>
+  </mat-card-content>
+
+	<ng-container *ngIf="showTable">
+		<notification-list   
+      [context]="context"
+      (actionTriggered)='actionTriggered($event)' ></notification-list>
+	</ng-container>
+
+</mat-card>
+
+
+

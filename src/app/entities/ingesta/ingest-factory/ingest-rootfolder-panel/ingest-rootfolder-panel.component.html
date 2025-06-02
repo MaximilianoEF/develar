@@ -1,0 +1,61 @@
+<mat-card class="mb-2">
+  <div class="container-fluid p-0">
+    <div class="row">
+      <div class="col-md-4">
+        <mat-card-title>(CI) Carpeta de ingesta</mat-card-title>
+      </div>
+      <div class="col-md-8" style="text-align: end;">
+        <button mat-flat-button type="button" color="primary" (click)="panelHandler(item.val)"
+        [class.currentState]="isCompleteState(item.val)"
+        [disabled]="!pi.assetList || !pi.assetList.length"
+        [class.activestate]="workInProgress(item.val)"
+        class="ml-2"
+        *ngFor="let item of estadosBotonera">{{showLabelOrSlug(item.val)}}</button>
+        <!-- <button mat-flat-button class="ml-2" type="button" color="primary" (click)="openTreeViewModal()">Ver árbol</button> -->
+        <!-- <button mat-flat-button class="ml-2" type="button" color="primary" (click)="refreshAssetTree()">Refrescar</button> -->
+      </div>
+    </div>
+  </div>
+  <mat-card-content>
+    <div class="container-fluid p-0">
+      <div class="row">
+        <div class="col-12">
+          <h5 class="clickeable d-inline-block" (click)="openTreeViewModal()">{{currentLocalPath}}</h5>
+        </div>
+      </div>
+    </div>
+  </mat-card-content>
+  <ng-container *ngIf="inProgressDerivada$ | async">
+    <div class="container-fluid p-0">
+      <div class="row">
+        <div class="col-md-6">
+          <span>Derivada: {{derivadaProgressInfo$ | async}}</span>
+        </div>
+        <div class="col-md-6">
+          <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+  <ng-container *ngIf="inProgressThumbnail$ | async">
+    <div class="container-fluid p-0">
+      <div class="row">
+        <div class="col-md-6">
+          <span>Thumbnail: {{thumbnailProgressInfo$ | async}}</span>
+        </div>
+        <div class="col-md-6">
+          <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+  <ng-container *ngIf="inProgressAssets$ | async">
+    <div class="container-fluid p-0">
+      <div class="row">
+        <div class="col-12">
+          <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+</mat-card>

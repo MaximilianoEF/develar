@@ -1,0 +1,54 @@
+<div class="container">
+    <h2 mat-dialog-title>CONSULTA PRESENCIAL EN EL ARCHIVO GENERAL DE LA NACIÓN</h2>
+
+    <mat-dialog-content>
+
+        <p>Antes de solicitar un turno tenés que tener en cuenta que:</p>
+        <p>En el marco de la pandemia COVID-19 y de la mudanza de nuestro acervo documental los fondos disponibles a la consulta presencial son limitados. </p>
+        <p>Podrás encontrar el listado completo de lo disponible en esta etapa haciendo click aquí: https://www.argentina.gob.ar/interior/archivo-general/fondos-consulta</p>
+        <p>A medida que los fondos documentales se vayan digitalizando y/o trasladando a la nueva sede, el listado de disponibles a la consulta se irá incrementando.</p>
+        <p>El turno será confirmado o desestimado por personal de la institución.</p>
+        <p>Recordá que para ingresar y permanecer en nuestras instalaciones tenés que utilizar barbijo todo el tiempo y respetar los protocolos sanitarios. Cuando ingreses se controlará tu temperatura.</p>
+        <p>Podés ver el reglamento completo para la consulta presencial acá: https://www.argentina.gob.ar/sites/default/files/agna-reglamento-consulta.pdf</p>
+
+        <mat-divider></mat-divider>
+
+        <p class="mt-3">
+            Ingresa aquí el objetivo de tu visita a AGN. Indica fondo documental que quieres consultar, en que rango de fechas y qué tipo de soporte físico estás buscando. De esta forma podremos ofrecerte un turno de visita en la sede que sea más ajustada a tu necesidad.
+            Recibirás nuestra respuesta en este mismo espacio en un plazo no mayor a 48hs. Gracias.
+        </p>
+
+        <div class="row">
+            <div class="col-12">
+                <form [formGroup]="form">
+                    <div class="row">
+                        <div class="col-3">
+                            <mat-form-field>
+                                <mat-label>Tipo de consulta: </mat-label>
+                                <mat-select formControlName="type">
+                                    <mat-option *ngFor="let item of consultaTypeList" [value]="item.val">
+                                        {{ item.label }}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-9">
+                            <mat-form-field>
+                                <mat-label>Describe el requerimiento completando los datos solicitados: </mat-label>
+                                <textarea matInput rows=5 formControlName="description" placeholder="Describa su consulta" required></textarea>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <mat-dialog-actions>
+                        <button mat-flat-button color="primary" (click)="closeDialog()" cdkFocusInitial>
+                                Alta Solicitud de Turno</button>
+                        <button mat-flat-button color="warn" mat-dialog-close>Cancelar</button>
+                    </mat-dialog-actions>
+                </form>
+            </div>
+        </div>
+    </mat-dialog-content>
+
+</div>

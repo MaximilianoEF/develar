@@ -1,0 +1,99 @@
+@import '../../../../assets/sass/variable';
+@import '../../../../assets/sass/mixin';
+:host {
+    // background: url(../../../../assets/content/signup-bg.jpg) 50% 50% no-repeat;
+    background-size: cover;
+    height: 100%;
+    display: table-cell;
+    //vertical-align: middle;
+    width: 100%;
+}
+
+.registro-form-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    //background-image: url('/download/5f5a18f69b0b25494226f5cb');
+}
+
+.edicion-form-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    background-image: none !important;
+}
+
+mat-card {
+    width: 50%;
+}
+.button-submit {
+    background-color: #4ac1ee;
+}
+
+.button-cancel {
+    background-color: #4ac1ee;
+}
+
+#button-navigate {
+    background-color: #d8df56;
+}
+
+.logo-float {
+    position: absolute;
+    top: 60px;
+    left: 80px;
+
+    @media #{$min1200} {
+        font-size: 1.2em;
+        padding-left: 10px;
+    }
+
+    @media #{$max991} {
+        top: 40px;
+        left: 80px;
+        max-width: 200px;
+    }
+
+    @media #{$max767} {
+        top: 40px;
+        left: 80px;
+        max-width: 150px;
+    }
+
+    @media #{$max543} {
+        top: 35px;
+        left: 25px;
+        max-width: 130px;
+    }
+}
+
+// @media(max-width: 768px) {
+//     mat-card {
+//         width: 100%;
+//         height: 100%;
+//     }
+// }
+
+.mat-flat-button {
+    @include button-agn;
+}
+
+
+mat-card {
+    width: 75%;
+    margin: 0 auto;
+    @media #{$min992} {
+        width: 75%;
+    }
+    @media #{$max991} {
+        width: 75%;
+    }
+    @media #{$max767} {
+        width: 80%;
+    }
+    @media #{$max543} {
+        width: 100%;
+    }
+  }

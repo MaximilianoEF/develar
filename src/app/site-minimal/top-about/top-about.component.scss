@@ -1,0 +1,39 @@
+@import '../../../assets/sass/variable';
+
+:host {
+	#top {
+		margin: 5px 0 30px 0;
+		.top-title {
+			text-align: center;
+			color: #0645f5;
+			font-weight: 400;
+
+		}
+	}
+
+	#about {
+		vertical-align: middle;
+
+		.about-text {
+			vertical-align: top;
+			color: #0645f5;
+			font-weight: 300;
+			//padding: 10px 50px 0 50px;
+			min-height: 245px;
+			font-size: 1.5em;
+			text-align: center;
+		}
+
+		.about-img {
+			display: block;
+			margin: 0 auto;
+			margin-bottom: 25px;
+		}
+
+	}
+
+	.about-image {
+	}
+
+
+}

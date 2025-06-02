@@ -1,0 +1,33 @@
+<div class="container-fluid p-0 ml-3 my-3">
+  <div class="row">
+    <div class="col-12">
+      <mat-toolbar>Datos descriptivos</mat-toolbar>
+    </div>
+  </div>
+  <div class="row mb-2">
+    <div class="col-12">
+      <p> <strong> Alcance y contenido:</strong>&nbsp; ({{ud.contenidoYEstructura.scope_and_content}})
+        {{ud.contenidoYEstructura.contenido}} </p>
+      <p> <strong>Acción y descripción:</strong>&nbsp;
+        ({{getLabel('actionsContentAndStructure',ud.contenidoYEstructura.action)}})
+        {{ud.contenidoYEstructura.appraisal_destruction_and_scheduling}}
+      </p>
+      <p> Se espera acumulaciones: &nbsp;
+        {{ud.contenidoYEstructura.accruals}}</p>
+    </div>
+  </div>
+  <div class="row" *ngIf="ud.contenidoYEstructura.especificaciones && ud.contenidoYEstructura.especificaciones.length">
+    <div class="col-12">
+      <mat-toolbar>Sistema de arreglos</mat-toolbar>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <ng-container *ngFor="let item of ud.contenidoYEstructura.especificaciones">
+        <p> <strong>Especificación y descripción:</strong>&nbsp; ({{getLabel('arreglos', item.type)}})
+          {{item.system_of_arrangement}} </p>
+        <hr />
+      </ng-container>
+    </div>
+  </div>
+</div>

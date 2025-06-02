@@ -1,0 +1,22 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-12">
+      <mat-card>
+        <mat-card-content>
+
+          <div class="row">
+            <div class="col-12">
+              <mat-toolbar color="primary">
+                <span class="flex-grow-1"></span>
+                <button mat-flat-button (click)="openAltaRapida()">Alta de UD</button>
+              </mat-toolbar>
+            </div>
+          </div>
+          <unidad-descripcion-browse (lookUpModels)="fetchUnidadDescripcion($event)" (exportarParaAtom)="exportarAtom($event)"></unidad-descripcion-browse>
+          <mat-progress-bar mode="indeterminate" *ngIf="searching"></mat-progress-bar>
+          <unidad-descripcion-browse-table *ngIf="showData" (altaRapida)="openAltaRapida($event)"></unidad-descripcion-browse-table>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+</div>

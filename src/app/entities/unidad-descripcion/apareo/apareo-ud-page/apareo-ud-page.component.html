@@ -1,0 +1,30 @@
+<mat-card>
+  <mat-card-title>Apareo UD</mat-card-title>
+  <mat-card-content>
+    <div class="container-fluid p-0">
+      <apareo-ud-browse (emitQuery)="search($event)"></apareo-ud-browse>
+      <div class="row">
+        <div class="col-12">
+          <p class="m-0" *ngIf="udRoot">
+            <b>UD seleccionada: {{udRoot.identificador.title}} ({{getReferenceCode(udRoot.identificador.reference_code)}})</b>
+          </p>
+        </div>
+      </div>
+      <div class="row" *ngIf="ingestadosAndNoIngestados">
+        <div class="col-12 col-md-6">
+          <h5 class="text-center">No ingestados</h5>
+          <apareo-ud-table [apareoDataSource]="ingestadosAndNoIngestados.noIngestados" (selectedList)="pushToApareoSelectedList($event, false)"></apareo-ud-table>
+        </div>
+        <div class="col-12 col-md-6">
+          <h5 class="text-center">Ingestados</h5>
+          <apareo-ud-table [apareoDataSource]="ingestadosAndNoIngestados.ingestados" (selectedList)="pushToApareoSelectedList($event, true)"></apareo-ud-table>
+        </div>
+      </div>
+    </div>
+  </mat-card-content>
+  <mat-card-actions *ngIf="selectedTableRight && selectedTableRight.length && selectedTableLeft && selectedTableLeft.length">
+    <mat-error class="ml-2" *ngIf="selectedTableRight.length !== selectedTableLeft.length">Debe seleccionar la misma cantidad de UDAs en ambas tablas</mat-error>
+    <button class="ml-2" mat-flat-button color="primary" type="button" (click)="procesarAction()" [disabled]="selectedTableRight.length !== selectedTableLeft.length">Procesar</button>
+  </mat-card-actions>
+</mat-card>
+<mat-progress-bar mode="indeterminate" *ngIf="searching || working"></mat-progress-bar>

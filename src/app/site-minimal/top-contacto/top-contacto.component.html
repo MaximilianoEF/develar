@@ -1,0 +1,50 @@
+<div class="panel-container" *ngIf="hasImage">
+
+    <ng-container *ngIf="hasImage">
+        <div class="main-image-container">
+            <img class="main-image" src="{{ mainimage }}" alt="Logo AGN">
+        </div>
+    </ng-container>
+
+    <ng-container *ngIf="hasImage">
+        <div>
+            <img class="logo-float" src="{{ logoUrl }}" alt="Logo AGN">
+        </div>
+    </ng-container>
+
+    <!-- <ng-container *ngIf="hasExcerpt">
+		<div class="text-panel">
+			<div class="text-block"><span  innerHtml='{{ excerpt }}'></span></div>
+		</div>
+	</ng-container> -->
+
+
+
+
+</div>
+
+<div class="description-container">
+    <div id='top' class="row align-items-center justify-content-center">
+        <div class='col'>
+            <div class='top-description text-justify' innerHtml='{{description}}'></div>
+        </div>
+    </div>
+
+    <ng-container *ngIf="hasRegisterButton">
+        <div class="registro-panel text-center mt-4">
+            <a role="button" class="registro-box d-block" href="#" (click)="navigateTo($event)">
+                <img class="registro-image" src="{{ simageUrl }}" alt="Logo AGN">
+            </a>
+        </div>
+    </ng-container>
+
+    <div class="d-flex justify-content-center banner-container">
+        <ng-container *ngIf="hasBannerButton">
+            <div class="banner-block text-center">
+                <img class="banner-button" src="{{ bannerUrl }}" alt="ingresá con tus credenciales o registrate">
+            </div>
+        </ng-container>
+
+    </div>
+</div>
+

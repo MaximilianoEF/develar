@@ -1,0 +1,38 @@
+@import '../../../../assets/sass/variable';
+
+:host {
+
+  .main-content {
+    padding: 40px 0 0 0;
+    transition: padding .2s $animation;
+    background-color: #ffffff;
+    height: 100%;
+    display: block;
+    
+    @media #{$max991} {
+      padding-left: 0;
+    }
+
+    .main-content-wrap {
+      background-color: #ffffff;
+    }
+  }
+
+  navbar {
+    transition: left .2s $animation;
+    @media #{$max991} {
+      width: 100%;
+    }
+  }
+  .site-sidebar {
+    display: flex;
+    flex-direction: column;
+    @media #{$max991} {
+      position: relative;
+      z-index: 9999;
+    }
+  }
+
+
+
+}

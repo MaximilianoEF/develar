@@ -1,0 +1,31 @@
+<div class="container-fluid p-0 ml-3 my-3">
+  <div class="row">
+    <div class="col-12">
+      <mat-toolbar><span class="title-areas">Existencia y localización</span></mat-toolbar>
+      <p> <strong>Originales: </strong> {{ud.documentacionAsociada.existence_and_location_of_originals}}
+      </p>
+      <p> <strong>Copias:</strong> {{ud.documentacionAsociada.existence_and_location_of_copies}} </p>
+    </div>
+  </div>
+  <mat-divider></mat-divider>
+  <div class="row">
+    <div class="col-12">
+      <mat-toolbar><span class="title-areas">Datos relevantes</span></mat-toolbar>
+    </div>
+    <div class="col-12">
+      <p>
+        <strong>Unidades de descripción relacionadas:</strong> {{ud.documentacionAsociada.related_units_of_description}}
+        ({{ud.documentacionAsociada.related_descriptions}}) </p>
+    </div>
+  </div>
+  <div class="row" *ngIf="ud.documentacionAsociada.publication_notes && ud.documentacionAsociada.publication_notes.length">
+    <div class="col-12">
+      <mat-toolbar>Notas</mat-toolbar>
+      <ul>
+        <li *ngFor="let item of ud.documentacionAsociada.publication_notes">
+          {{item}}
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>

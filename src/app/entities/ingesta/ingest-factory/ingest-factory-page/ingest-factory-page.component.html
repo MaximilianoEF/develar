@@ -1,0 +1,43 @@
+<div class="container-fluid p-0">
+    <div class="row">
+        <div class="col-12">
+            <ingest-master-panel></ingest-master-panel>
+        </div>
+    </div>
+
+    <div class="row" *ngIf="showIngestFolderPanel">
+        <div class="col-12">
+            <ingest-rootfolder-panel (showAssetPanelEmitter)="showAssetPanelHandler($event)"></ingest-rootfolder-panel>
+        </div>
+    </div>
+    <div class="row" *ngIf="showAssetsPanel">
+        <div class="col-12">
+            <ingest-rootfolder-base></ingest-rootfolder-base>
+        </div>
+    </div>
+
+    <div class="row" *ngIf="showUdaPanel">
+        <div class="col-12">
+            <ingest-uda-panel (showMatching)="showMatchingsPanelHandler($event)"></ingest-uda-panel>
+        </div>
+    </div>
+    <ng-container *ngIf="showMatchingPanel">
+        <div class="row">
+            <div class="col-12">
+                <ingest-uda-base></ingest-uda-base>
+            </div>
+        </div>
+    </ng-container>
+
+    <div class="row" *ngIf="showIngestPlanPanel">
+        <div class="col-12">
+            <ingest-techdata-panel (emitDatosTecnicos)="showIT = $event"></ingest-techdata-panel>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12" *ngIf="showIT">
+            <ingest-techdata-base (onEmitUpdate)= "editPI($event)"></ingest-techdata-base>
+        </div>
+    </div>
+
+</div>

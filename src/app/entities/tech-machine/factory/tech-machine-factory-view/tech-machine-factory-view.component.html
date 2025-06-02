@@ -1,0 +1,17 @@
+<mat-card *ngIf="tm$ | async as tm">
+    <mat-card-title>Vista de maquinaria {{tm.cod_machine}}</mat-card-title>
+    <mat-card-content>
+        <div class="container-fluid p-0">
+            <div class="row">
+                <div class="col-12">
+                    <p class="mb-0"><strong>Código:</strong> {{tm.cod_machine}} ({{tm.slug}})</p>
+                    <p class="mb-0" *ngIf="tm.descripcion"><strong>Descripción:</strong> {{tm.descripcion}} </p>
+                    <p class="mb-0" *ngIf="tm.marca"><strong>Marca:</strong> {{tm.marca}} <span *ngIf="tm.modelo">({{tm.modelo}})</span></p>
+                    <p class="mb-0" *ngIf="tm.software"><strong>Software:</strong> {{tm.software}} ({{tm.version_software}}) </p>
+                    <p class="mb-0"><strong>Fecha de incorporación: </strong> {{tm.fe_incorporacion_tx}}</p>
+                    <p class="mb-0" *ngIf="tm.type_digitalizacion"><strong>Tipo de digitalizaciones y especificación: </strong> {{getLabel('typeDigitalizaciones',tm.type_digitalizacion)}} <span *ngIf="tm.usos">: {{tm.usos}}</span> </p>
+                </div>
+            </div>
+        </div>
+    </mat-card-content>
+</mat-card>

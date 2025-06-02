@@ -1,0 +1,24 @@
+<div class="container-fluid p-0 ml-3 my-3">
+    <div class="row">
+        <div class="col-12">
+            <mat-toolbar><span class="title-areas">Información de identificación</span></mat-toolbar>
+            <p> <strong>Identificador: {{ud.identificador.identifier}}</strong> &nbsp;
+                ({{ getLabel('descriptionLevel',ud.identificador.level_of_description)}})
+            </p>
+            <p> <strong>Titulo:</strong> {{ud.identificador.title}} </p>
+            <p> <strong>Volumen y soporte:</strong> {{ud.identificador.extent_and_medium}} </p>
+        </div>
+    </div>
+    <mat-divider></mat-divider>
+    <div class="row" *ngIf="ud.identificador.dates && ud.identificador.dates.length">
+        <div class="col-12">
+            <mat-toolbar><span class="title-areas">Fechas</span></mat-toolbar>
+        </div>
+        <div class="col-12 mb-4" *ngFor="let item of ud.identificador.dates">
+            <p> <strong>Tipo de fecha:</strong> {{getLabel('identifierDateType',item.type)}} : {{item.date}}
+                ({{item.start_date}} - {{item.end_date}})</p>
+            <p> <strong>Observación correspondiente a la fecha:</strong> {{item.observacion}} </p>
+        </div>
+        <mat-divider></mat-divider>
+    </div>
+</div>

@@ -1,0 +1,48 @@
+<form [formGroup]="form">
+    <div class="row">
+        <div class="col-md-2">
+            <mat-form-field>
+              <mat-label>Fecha DESDE: </mat-label>
+              <input matInput [matDatepicker]="fechaDesde" formControlName="fechaDesde">
+              <mat-datepicker-toggle matSuffix [for]="fechaDesde"></mat-datepicker-toggle>
+              <mat-datepicker #fechaDesde color="accent" disabled="false"></mat-datepicker>
+            </mat-form-field>
+          </div>
+      
+          <div class="col-md-2">
+            <mat-form-field>
+              <mat-label>Fecha Hasta: </mat-label>
+              <input matInput [matDatepicker]="fechaHasta" formControlName="fechaHasta">
+              <mat-datepicker-toggle matSuffix [for]="fechaHasta"></mat-datepicker-toggle>
+              <mat-datepicker #fechaHasta color="accent" disabled="false"></mat-datepicker>
+            </mat-form-field>
+          </div>
+        <div class="col-md-3">
+            <mat-form-field>
+                <input #textSlug matInput formControlName="slug" placeholder="Denominación de PI" (keyup)="search()">
+            </mat-form-field>
+        </div>
+        <div class="col-md-3">
+            <mat-form-field>
+                <input matInput formControlName="compNum" placeholder="Número de comprobante">
+            </mat-form-field>
+        </div>
+        <div class="col-md-2">
+            <mat-form-field>
+                <mat-label>Nivel de avance</mat-label>
+                <mat-select #selNivelAvance formControlName="avance" (selectionChange)="onSelectionChange('avance', selNivelAvance.value)">
+                    <mat-option *ngFor="let item of nivelesAvanceList" [value]="item.val">
+                        {{item.slug}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+    </div>
+    <mat-toolbar>
+        <div class="row">
+            <div class="col-12">
+                <button mat-flat-button type="button" color="primary" (click)="search()" [disabled]="form.invalid">Refrescar búsqueda</button>
+            </div>
+        </div>
+    </mat-toolbar>
+</form>

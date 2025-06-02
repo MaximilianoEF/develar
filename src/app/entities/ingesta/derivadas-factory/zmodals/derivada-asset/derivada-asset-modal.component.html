@@ -1,0 +1,53 @@
+<form [formGroup]="form" *ngIf="asset; else isNotAsset">
+  <h4 mat-dialog-title>Generación de derivadas [{{ asset.filename }}]</h4>
+
+  <mat-dialog-content>
+    <div class="row mb-3">
+      <div class="col-12">
+        <p class="mb-1"> Se generará la derivada para el objeto digital elegido. <br>
+          Indique el ancho o el alto deseado. Elegida una de las dos coordenadas, la imagén adaptará la segunda de acuerdo a la relación de aspecto. <br>
+          Valor por omisión ancho 900p
+      </div>
+    </div>
+
+    <div class="row my-3">
+      <div class="col-12">
+        <mat-radio-group formControlName="esCarpetaContenedora">
+          <mat-radio-button [value]="true" *ngIf="asset.fileType === 'directory'">Generar PDF con el contenido de la carpeta contenedora</mat-radio-button>
+          <mat-radio-button [value]="false">
+            <span *ngIf="asset.fileType === 'directory'">Regenerar todas las derivadas de la carpeta contenedora </span>
+            <span *ngIf="asset.fileType !== 'directory'">Generar la derivada de este Asset</span>
+            </mat-radio-button>
+        </mat-radio-group>
+      </div>
+    </div>
+
+    <div class="row" *ngIf="form.get('esCarpetaContenedora').value === false">
+      <div class="col-4">
+        <mat-form-field>
+          <mat-label>Ancho (en píxeles):</mat-label>
+          <input matInput formControlName="ancho">
+          <mat-hint>Número entero</mat-hint>
+        </mat-form-field>
+      </div>
+
+      <div class="col-4">
+        <mat-form-field>
+          <mat-label>Alto (en píxeles):</mat-label>
+          <input matInput formControlName="alto">
+          <mat-hint>Número entero</mat-hint>
+        </mat-form-field>
+      </div>
+    </div>
+  </mat-dialog-content>
+
+  <mat-dialog-actions class="mt-3">
+    <mat-divider></mat-divider>
+    <button type="button" mat-flat-button color="primary" (click)="generarDerivadaParaAsset()" [disabled]="form.invalid">Confirmar</button>
+    <button type="button" mat-flat-button color="warn" (click)="cerrarModal()">Cancelar</button>
+  </mat-dialog-actions>
+
+</form>
+<ng-template #isNotAsset>
+  <p>No se ha podido recuperar el <b>Asset</b> en cuestión, vuelva a intentar más tarde.</p>
+</ng-template>

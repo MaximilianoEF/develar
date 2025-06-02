@@ -1,0 +1,27 @@
+<main class="mt-3">
+  <div class="container-fluid p-0">
+    <p id="text-resultado" *ngIf="itemsLength">La consulta produjo {{itemsLength}} resultados</p>
+
+    <ng-container >
+      <div class="row">
+        <div class="col-12" *ngIf="viewCard">
+          <vida-query-view *ngFor="let archive of vidaQueryList" [archive]="archive"></vida-query-view>
+        </div>
+      </div>
+    </ng-container>
+    <ng-container *ngIf="showUdaData">
+      <div class="row">
+        <div class="col-12" >
+          <unidad-descripcion-card-view *ngFor="let uda of udaList" [uda]="uda"></unidad-descripcion-card-view>
+        </div>
+      </div>
+      <!-- <unidad-descripcion-browse-table (hidePaginator)="hidePaginator()"></unidad-descripcion-browse-table> -->
+    </ng-container>
+    <mat-paginator id="paginatorvida" #paginator [length]="itemsLength" [pageIndex]="0" [pageSize]="25"
+      [pageSizeOptions]="[5, 25, 50, 75, itemsLength]">
+    </mat-paginator>
+    
+
+  </div>
+
+</main>

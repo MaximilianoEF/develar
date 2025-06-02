@@ -1,0 +1,23 @@
+<h3 class="mb-0" mat-dialog-title>Vista de árbol de la carpeta de ingesta</h3>
+<mat-dialog-content>
+    <p class="text-secondary">Haga click en un elemento del árbol para visualizarlo</p>
+
+    <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
+        <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding>
+            <button mat-icon-button disabled><mat-icon>image</mat-icon></button> <a target="_blank" href="/download/withserver/{{ node.id }}">{{node.item}}</a>
+        </mat-tree-node>
+
+        <mat-tree-node *matTreeNodeDef="let node; when: hasChild" matTreeNodePadding>
+            <button mat-icon-button [attr.aria-label]="'Toggle ' + node.item" matTreeNodeToggle>
+              <mat-icon class="mat-icon-rtl-mirror">
+                {{treeControl.isExpanded(node) ? 'folder_open' : 'folder'}}
+              </mat-icon>
+            </button> {{node.item}}
+            <mat-progress-bar *ngIf="node.isLoading" mode="indeterminate" class="example-tree-progress-bar"></mat-progress-bar>
+        </mat-tree-node>
+    </mat-tree>
+
+</mat-dialog-content>
+<mat-dialog-actions class="py-4">
+    <button mat-flat-button type="button" color="warn" mat-dialog-close>Cerrar</button>
+</mat-dialog-actions>

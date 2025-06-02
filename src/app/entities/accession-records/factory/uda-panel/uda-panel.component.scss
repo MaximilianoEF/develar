@@ -1,0 +1,33 @@
+.uda-asset-container {
+  height: 500px;
+  // width: 800px;
+
+  border: dashed 1px #ccc;
+}
+
+.zoom-container {
+  // width: 800px;
+  // height: 500px;
+  height: 100%;
+  width: 100%;
+
+  transform-origin: 0 0;
+  transform: scale(1) translate(0, 0);
+  cursor: move;
+
+  overflow: hidden;
+}
+
+
+img {
+  max-width: none;
+
+  width: auto;
+  height: auto;
+
+  -webkit-user-drag: none;
+}
+
+.uda-asset-container {
+  overflow: hidden;
+}

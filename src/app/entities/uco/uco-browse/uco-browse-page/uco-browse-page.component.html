@@ -1,0 +1,24 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <mat-card>
+                <mat-card-content>
+                    <div class="row">
+                        <div class="col-12">
+                            <mat-toolbar color="primary">
+                                <span class="flex-grow-1"></span>
+                                <button mat-flat-button (click)="openQuickCreateModal()">
+                                  Alta UCO
+                                </button>
+                            </mat-toolbar>
+                        </div>
+                    </div>
+                    <uco-browse (lookUpModels)="fetchUco($event)"></uco-browse>
+
+                    <uco-browse-table *ngIf="showData"></uco-browse-table>
+
+                </mat-card-content>
+            </mat-card>
+        </div>
+    </div>
+</div>

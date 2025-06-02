@@ -1,0 +1,30 @@
+@import '../../../../assets/sass/variable';
+
+:host {
+    .main-content {
+        background-color: #ffffff;
+        padding: 0;
+        transition: padding .2s $animation;
+
+        @media #{$max991} {
+          padding-left: 0;
+        }
+      }    
+
+    .service-block{
+        margin: 10px 0 10px 0;
+    }
+    
+    .service-item {
+        margin: 5px;
+        height: auto;
+        width: auto;
+    }
+    
+    .service-image {
+        max-height: 100px;
+        height: auto;
+        width: auto;
+    }      
+}
+

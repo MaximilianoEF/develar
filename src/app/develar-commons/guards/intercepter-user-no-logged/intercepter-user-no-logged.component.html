@@ -1,0 +1,36 @@
+<mat-spinner *ngIf="!initViewFirst && !initViewTwo"></mat-spinner>
+<mat-card class="mat-elevation-z0">
+    <mat-card-title class="text-center">{{ title}}</mat-card-title>
+
+    <div class="container-fluid p-0" *ngIf="initViewFirst">
+        <mat-card-content>
+            <div class="row">
+                <p>{{ autenticarse }}/p>
+            </div>
+        </mat-card-content>
+        <mat-card-actions>
+            <div class="row">
+                <div class="ml-3">
+                    <button color="primary" mat-flat-button (click)="auth()">{{ registrar_ahora }}</button>
+                </div>
+                <div class="ml-3">
+                    <button color="warn" mat-flat-button (click)="aplazar()">{{ registrar_manana }}</button>
+                </div>
+            </div>
+        </mat-card-actions>
+    </div>
+    <div class="container-fluid p-0" *ngIf="initViewTwo">
+        <mat-card-content>
+            <div class="row">
+                <p>{{ login_now }}</p>
+            </div>
+        </mat-card-content>
+        <mat-card-actions>
+            <div class="row">
+                <div class="ml-3">
+                    <button color="primary" mat-flat-button (click)="auth()">Autenticarse</button>
+                </div>
+            </div>
+        </mat-card-actions>
+    </div>
+</mat-card>

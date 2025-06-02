@@ -1,0 +1,37 @@
+@import '../../../../assets/sass/variable';
+
+
+.my-drop-zone { 
+	border: dotted 3px lightgray; 
+	min-height: 150px;
+}
+
+.nv-file-over { 
+	border: dotted 3px red; 
+} 
+
+html, body { 
+	height: 100%; 
+}
+
+.upload-item-control {
+	margin-left: 15px;
+	font-weight: 200;
+	font-size: 12px;
+    cursor: pointer;
+}
+
+.upload-item-group {
+	font-weight: 200;
+}
+
+.button-seleccionar {
+    background-color: #4ac1ee;
+}
+
+.title-documentacion {
+	font-size: 1.75rem;
+}
+.text-normal {
+	font-size: .8rem;
+}

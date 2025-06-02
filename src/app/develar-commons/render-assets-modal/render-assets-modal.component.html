@@ -1,0 +1,42 @@
+<div class="d-flex align-items-center">
+  <span class="flex-grow-1"></span>
+  <mat-icon mat-dialog-close color="warn" class="clickeable">cancel</mat-icon>
+</div>
+<ng-container *ngIf="asset">
+  <mat-dialog-content>
+    <div class="container-fluid p-0">
+      <div class="row">
+        <div class="col-12" *ngIf="asset.assetType === 'image'">
+
+          <img mat-card-image src="/download/derivada/{{asset._id}}" alt="{{asset.basename}}" *ngIf="!showMaster">
+
+          <img mat-card-image src="/download/withserver/{{asset._id}}" alt="{{asset.basename}}" *ngIf="showMaster">
+
+        </div>
+        <ng-container *ngIf="asset.assetType === 'pdf'">
+          <div class="col-12">
+            <pdf-viewer [src]="'/download/withserver/'+asset._id"  height="80vh"></pdf-viewer>
+          </div>
+        </ng-container>
+
+        <ng-container *ngIf="asset.assetType === 'directory'">
+          <ng-container *ngIf="hasPDF">
+            <div class="col-12" *ngIf="hasPDF">
+              <pdf-viewer [src]="'/download/derivada/'+asset._id"  height="80vh"></pdf-viewer>
+            </div>
+          </ng-container>
+          <div class="col-12" *ngIf="!hasPDF">
+            <p><b>Este ASSET de tipo Directorio no poseé PDF para visualizar</b></p>
+          </div>
+
+        </ng-container>
+      </div>
+    </div>
+  </mat-dialog-content>
+  <mat-dialog-actions>
+    <a mat-flat-button download href="{{urlDownload}}">Descargar</a>
+    <button mat-flat-button type="button" (click)="recuperarMaster(true)" *ngIf="!showMaster && asset.assetType === 'image'">
+      Mostrar master
+    </button>
+  </mat-dialog-actions>
+</ng-container>

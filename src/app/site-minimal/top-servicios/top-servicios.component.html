@@ -1,0 +1,44 @@
+<div class="description-container">
+    <div id='top' class="row align-items-center justify-content-center mb-0">
+        <div class='col'>
+            <div class='top-description text-center mb-3' innerHtml='{{description}}'></div>
+        </div>
+    </div>
+
+    <ng-container *ngIf='!showDetail'>
+        <div class="d-flex">
+            <div class="row m-0 center-block" [@blockIn]='blockState.state' id='items'>
+                <div class='col-md-4 col-6 item' *ngFor='let node of nodes'>
+                    <ng-container *ngIf='node.navigateTo'>
+                        <a role="button" href="#" (click)="serviceDetail($event, node)">
+                            <img class='item-image' src='{{ node.imageUrl }}'></a>
+                    </ng-container>
+
+                    <ng-container *ngIf='node.linkTo'>
+                        <a rel="noopener noreferrer" target="_blank" title="{{node.linkTo}}" href="{{node.linkTo}}">
+                            <img class='item-image' src='{{ node.imageUrl }}'>
+                        </a>
+                    </ng-container>
+
+                    <ng-container *ngIf='node.noLink'>
+                        <a role="button" title="{{node.linkTo}}" href="#" (click)="serviceDetail($event, node)">
+                            <img class='item-image' src='{{ node.imageUrl }}' [@heroState]='node.state'>
+                        </a>
+                    </ng-container>
+                </div>
+            </div>
+        </div>
+
+    </ng-container>
+
+    <ng-container *ngIf='showDetail'>
+        <a role="button" class="item-link" title="{{detailImage.slug}}" href="#" (click)="servicePlain($event)">
+            <img mat-card-image src='{{ detailImage.url }}' [@flyInOut]='flyState.state'>
+        </a>
+    </ng-container>
+
+</div>
+<!--
+					<h5 class='item-title' innerHtml='{{node.title}}'></h5>
+					<div class='item-text' innerHtml='{{node.description}}'></div>
+-->

@@ -1,0 +1,39 @@
+<div class="container">
+    <mat-card class="p-0 p-md-3 mat-elevation-z0">
+        <mat-card-title>
+            <h3>Turnos vigentes</h3>
+        </mat-card-title>
+        <mat-card-content>
+            <div class="row">
+                <!-- <div class="col-12">
+                    <mat-toolbar class="toolbar-header">
+                        <div>Navegación de turnos</div>
+                        <span class="flex-grow-1"></span>
+                        <button mat-flat-button class="button-nueva" (click)="gotoTurneraAlta()">Nuevo turno</button>
+                    </mat-toolbar>
+                </div> -->
+                <div class="col-12" *ngIf='showTable'>
+                    <agn-turnos-browse-table [data$]="turneraTurnosList$" (editTurno)="doEditTurno($event)" (cancelTurno)="doCancelTurno($event)"></agn-turnos-browse-table>
+                </div>
+            </div>
+            <!-- <div class="row mt-3">
+      <div class="col-12">
+          <p><strong>Reglamento para las visitas presenciales al Archivo General de la Nación</strong></p>
+          <p>Los turnos son personales e indelegables y se otorgan de acuerdo a la capacidad del lugar. Por eso te pedimos que por favor en caso de no asistir canceles el turno. Tenés tiempo para hacerlo hasta 24 horas antes de la fecha asignada.</p>
+          <p>Para poder ingresar al edificio del AGN vas a tener que presentar tu documento de identidad. No te olvides de traerlo.</p>
+          <p>Podés ver el reglamento completo para la consulta presencial acá: <a target="_blank" href="https://www.argentina.gob.ar/sites/default/files/agna-reglamento-consulta.pdf">https://www.argentina.gob.ar/sites/default/files/agna-reglamento-consulta.pdf</a></p>
+      </div>
+  </div> -->
+            <!--        <p>Los turnos son personales e indelegables. Le será requerido su documento de identidad al ingreso</p>-->
+            <!--        <p>Los turnos se otorgan de acuerdo a la capacidad del lugar. Puede cancelar su turno hasta 24 horas antes del mismo</p>-->
+            <!--        <p>Nuestro acervo está físicamente preservado en distintas sedes. Si tiene alguna duda respecto de cuál es la sede para la que debe solicitar turno, por favor, primeramente envíenos su consulta y con gusto lo orientaremos. </p>-->
+            <!--        <p>Puede consultar el reglamento completo en este enlace.</p>-->
+
+        </mat-card-content>
+        <mat-card-actions>
+            <button type="button" mat-flat-button class="button-volver" [routerLink]="['../alta']"><i class="fas fa-plus"></i> Nuevo Turno</button>
+            <button type="button" mat-flat-button class="ml-2 button-volver" [routerLink]="['']"><mat-icon>keyboard_arrow_left</mat-icon>Volver</button>
+
+        </mat-card-actions>
+    </mat-card>
+</div>

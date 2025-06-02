@@ -1,0 +1,44 @@
+@import '../../../../assets/sass/variable';
+.navigate-btn {
+    margin-right: 10px;
+}
+
+.mat-column-select {
+    max-width: 60px;
+}
+
+.mat-column-ndoc {
+    max-width: 100px;
+}
+
+.mat-column-estado {
+    max-width: 60px;
+}
+
+.mat-column-ejecucion {
+    max-width: 150px;
+}
+
+.mat-column-sector {
+    max-width: 150px;
+}
+
+.mat-column-descripcion {
+    max-width: 500px;
+}
+
+.mat-column-txFecha {
+    max-width: 80px;
+}
+
+.mat-column-displayName {
+    max-width: 170px;
+}
+
+.icon-action {
+		margin-right: 10px;
+}
+
+.mat-column-rowactions .mat-icon {
+    cursor: pointer;
+}

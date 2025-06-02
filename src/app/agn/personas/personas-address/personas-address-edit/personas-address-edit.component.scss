@@ -1,0 +1,13 @@
+@import '../../../../../assets/sass/mixin';
+
+agm-map {
+    height: 300px;
+}
+.additional-info {
+   margin-top: 15px;
+   margin-bottom: 30px;
+}
+
+.mat-flat-button{
+    @include button-agn;
+}

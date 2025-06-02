@@ -1,0 +1,162 @@
+@import '../../../assets/sass/variable';
+$text-color: #0645f5;
+:host {
+    .text-antecedentes {
+        color: #01BBED
+    }
+    .text-antecedentes:hover {
+        color: $text-color
+    }
+    .card-description {
+        font-size: 1.3em;
+        font-weight: bold;
+        @media #{$max543} {
+            font-size: 1em;
+        }
+    }
+     ::placeholder {
+        color: #fff;
+    }
+    .panel-container {
+        display: flex;
+        flex-direction: column;
+        margin-top: 44px;
+        margin-bottom: 20px;
+    }
+    .main-image-container {
+        min-height: 70%;
+    }
+    .main-image {
+        width: 100%;
+        height: auto;
+    }
+    .logo-float {
+        position: absolute;
+        top: 150px;
+        left: 100px;
+        @media #{$min1200} {
+            top: 100px;
+            left: 100px;
+            max-width: 350px;
+        }
+        @media #{$max1199} {
+            top: 100px;
+            left: 100px;
+            max-width: 350px;
+        }
+        @media #{$max991} {
+            top: 90px;
+            left: 80px;
+            max-width: 280px;
+        }
+        @media #{$max767} {
+            top: 80px;
+            left: 60px;
+            max-width: 200px;
+        }
+        @media #{$max543} {
+            top: 70px;
+            left: 40px;
+            max-width: 120px;
+        }
+    }
+    .mat-form-field-appearance-outline .mat-form-field-wrapper {
+        margin: 1.5em 0 0 0;
+    }
+    .card-description {
+        font-family: 'Encode Sans';
+        line-height: 1.4em;
+        text-align: justify;
+    }
+    .mat-cyan {
+        background-color: #4FBCED;
+        color: #fff;
+        font-family: 'Encode Sans', sans-serif !important;
+        font-weight: bold;
+        width: 100%;
+    }
+    .mat-icon {
+        color: #fff;
+        font-size: 2em;
+        font-weight: bold;
+    }
+    .mat-icon.icon-navigate-arrow {
+        color: #fff;
+        transform: rotate(-90deg);
+    }
+     ::ng-deep {
+        .mat-form-field-outline {
+            background-color: #4FBCED;
+        }
+        input.mat-input-element {
+            color: #FFF;
+            font-family: 'Encode Sans', sans-serif !important;
+            font-weight: bold;
+        }
+        .mat-form-field-appearance-outline .mat-form-field-outline,
+        .mat-form-field-appearance-outline.mat-focused .mat-form-field-outline-thick {
+            border-radius: 8px;
+            color: #FFF;
+            opacity: 1;
+        }
+        .mat-form-field-appearance-outline .mat-form-field-flex {
+            align-items: normal;
+            padding: .5em .75em .5em .75em !important;
+        }
+        .mat-focused {
+            color: #fff;
+        }
+        .mat-form-field-infix {
+            border-top: none;
+            //padding: 0.5em 0;
+          padding: 1em 0;
+        }
+        .mat-form-field-wrapper {
+            padding-bottom: 0.34375em;
+        }
+        .mat-form-field-suffix {
+            cursor: pointer;
+            margin-top: 10px;
+            margin-right: 10px;
+            // padding: 5px;
+        }
+        .mat-form-field-suffix:hover {
+            background-color: transparent;
+        }
+    }
+    #top {
+        text-align: center;
+        #first-panel {
+            h1.top-title {
+                font-weight: 900;
+                color: #ffffff;
+                margin: 0 0 0 0;
+            }
+            .top-separator {
+                margin: 0 0 0 0;
+            }
+        }
+    }
+    .description-container {
+        margin: 0 auto;
+        width: 40%;
+        // display: block;
+        // width: 70%;
+        // margin: 0 auto;
+        @media #{$min1200} {
+            // width: 60%;
+        }
+        @media #{$max1199} {
+            width: 70%;
+        }
+        @media #{$max991} {
+            width: 80%;
+        }
+        @media #{$max767} {
+            width: 80%;
+        }
+        @media #{$max543} {
+            width: 90%;
+        }
+    }
+}

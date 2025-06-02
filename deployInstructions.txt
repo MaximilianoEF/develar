@@ -1,0 +1,370 @@
+Instrucciones y novedades para hacer deploy
+
+=== 2021-11-23 ==========================
+Crear entrada en /etc/hosts (en el server AtoM) 
+
+gestiondoc		111.111.111.111
+
+Cambiar 111.111.111.111 con la IP correspondiente al server donde
+esté instalado GestionDoc
+
+
+=== 2021-10-29 ==========================
+Revisar los parametros de configuración de ImageMagick:
+ /etc/ImageMagick-{$version}/policy.xml
+
+Revisar y aumentar la alocación en disco. Valor mínimo:
+	<policy domain="resource" name="disk" value="8GiB"/>
+
+Revisar y aumentar la alocación de memoria ram. Valor mínimo:
+	<policy domain="resource" name="memory" value="1GiB"/>
+
+
+=== 2021-9-4 ============================
+db.migrantes.createIndex({anioevento, apellido: 1})
+db.migrantes.createIndex({anioevento: 1})
+
+=== 2021-9-4 ============================
+Ejecutar npm install
+
+=== 2021-8-27 ============================
+Editar el archivo /etc/ImageMagick-6/policy.xml
+
+Buscar la linea
+<policy domain="coder" rights="none" pattern="PDF" />
+
+Cambiarla por
+<policy domain="coder" rights="read | write" pattern="PDF" />
+
+
+=== 2021-8-16 ============================
+// hace falta crear el índice 'text'??
+// https://docs.mongodb.com/manual/text-search/
+
+// tutorial:
+// https://www.loginradius.com/blog/async/full-text-search-in-mongodb/
+db.unidadesdescripcion.createIndex({ "stringify": "text" });
+
+=== 2021-8-5 ============================
+- Instalar paquete imagemagick
+- Crear carpeta 'converted' bajo carpeta 'public'
+
+=== 2021-8-4 ============================
+En la shell de Mongo ejecutar los comandos sobre la base develar_dev
+
+db.authorityrecords.createIndex({ "identityArea.authorizedName": 1 });
+db.unidadesdescripcion.createIndex({ "atomSlug": 1 });
+
+
+=== 2021-4-23 ============================
+
+Para visualizar las ayudas del buscador VIDA debemos:
+1) Dar de alta una nueva ficha cuyo código sea "query:audio-visual:01";
+2) Agregar en fichas relacionadas, las imagenes que corresponden a los pasos del instructivo (tener en cuenta que se visualiza el titulo y/o subtitulo);
+
+=== 2021-4-20 ============================
+
+Adaptacion de la home segun nuevos mockups
+Home NO-Logueado (la que antes tenía la imagen andando a caballo)
+1) Ficha "Registrate" cambiarle la imagen de fondo por la correspondiente (la de los nenitos) -- IMG/Imágenes de fondo/Header_Front.png
+Imagen anterior: Img_home.jpg (la de los caballos) -> Header_front.png
+2) Sub-ficha 02-roadmap: reemplazarle la imagen por la nueva imagen cargada por AGN (la que tiene los iconos redondos) -- IMG/botones/botones-front.png
+Imagen anterior: BotoneraFront.jpg -> nueva: botones-front.png
+
+Logged
+1) Ficha "Buscador" reemplazarle la imagen por la nueva imagen cargada por AGN (la que tiene la gente en el auditorio) -- IMG/Imágenes de fondo/Header_Login.png
+Imagen anterior topBrnading-1024x480-02.jpg -> nueva Header_Login.png
+Cambiar texto principal:
+Esta es una versión preliminar del buscador fílmico y sonoro. Podrás encontrar miles de piezas audiovisuales y sonoras, de fondos públicos y privados.
+Seguiremos trabajando en la mejora de la plataforma y en la carga de nuevo contenido.
+
+2) Ficha "Servicios AGN" cambiarle el texto por "También podes acceder a todos los Servicios de AGN"
+Modificar imagenes de las subfichas, para cada uno de los servicios.
+OjO: Hay en el DRIVE una versión en transparente, ver de implementar el mouseover.
+
+
+=== 2021-4-08 ============================
+-Vaciar la colección turnosnominales; (Se van a autogenerar con la estrategia administrativa);
+   db.turnosnominales.find({}).count() // siempre verificar, luego flecha atrás y editar:
+   db.turnosnominales.remove({})
+
+-Vaciar la colección de turnosasignados; (Ya que ahora para traer los nuevos horarios, se busca por la key slotId y no por sede y al editar esto trae problemas);
+   db.turnosasignados.find({}).count() // siempre verificar, luego flecha atrás y editar:
+   db.turnosasignados.remove({})
+
+-Vaciar la colección de turnosasignados; (Ya que ahora para traer los nuevos horarios, se busca por la key slotId y no por sede y al editar esto trae problemas);
+   db.turnosasignados.find({}).count() // siempre verificar, luego flecha atrás y editar:
+   db.turnosasignados.remove({})
+
+=== 2021-3-24 ============================
+- Vaciar la colección turnosnominales; regenerarlos
+   db.turnosnominales.find({}).count() // siempre verificar, luego flecha atrás y editar:
+   db.turnosnominales.remove({})
+
+- Es necesario también vaciar la colección de turnos asignados, salvo que ya haya turnos en firme.
+   db.turnosasignados.find({}).count() // siempre verificar, luego flecha atrás y editar:
+   db.turnosasignados.remove({})
+
+=== 2021-3-24 ============================
+- Ejecutar npm install (se agregó biblioteca exifr)
+
+=== 2021-3-22 ============================
+- Ejecutar npm install (se agregó biblioteca rfdc)
+- ALTA DE FICHAS DE APOYO A LA VISUALIZACIÓN
+  Para visualizar los fondos de pantalla y otros apoyos con imágenes o textos editables por el usuario
+  las fichas que se carguen serán buscadas con este query:
+      let query = {
+			publish: true,
+			"publish.topics": 'home',
+			"publish.publishOrder": queryString,
+			(valida también que la publicación esté vigente validando el rango de fechas)
+		}
+	Donde queryString será:
+	/web/ingresar: 'agn:ingresar'
+	/web/registrarse: 'agn:registro'
+	/inicio/bienvenidx:
+
+
+  se debe cargar una ficha, en el cual su Orden de publicación (publishOrder) sea 'agn:ingresar' (para inicio) y
+  correspondientes al formulario de inicio de sesión web y registro web
+  'agn:registro' (para registro).
+
+
+=== 2021-3-10 ============================
+- Ejecutar npm install; se instalaron bibliotecas bull y rsync
+- Tener instalado redis
+
+=== 2021-3-2 ============================
+- Ejecutar npm install; se instaló biblioteca directory-tree
+- Para que el Select del alta rapida de PI devuelva resultados, se debe dar de alta
+un usuario administrativo con el modulo digitalizacion y el rol en digitalizador
+
+=== 2021-2-28 ============================
+- Vaciar la colección authorityrecords, pues su modelo se
+modifica agregando el campo isArchivalInstituion
+
+
+=== 2021-2-4 ============================
+- Vaciar colecciones unidadesdescripcion
+- Agregada la colección authorityrecords
+
+=== 2021-1-21 ============================
+- Vaciar colecciones unidadesdescripcion y histories
+- Agregar una persona cuyo tipo de profesión sea "ORGANIZACIÓN ARCHIVÍSTICA"
+- Configurar comptdoc y compndoc de la persona (organización) agregada anteriormente,
+  en el archivo develar-commons/develar-config.ts
+
+=== 2021-1-8 ============================
+Se agregó la dependencia "mongoose-diff-history". Hacer npm install.
+
+=== 2020-12-29 ============================
+DEPLOYADO EN PRODUCCIÓN EN AGN
+
+=== 2020-12-23 ============================
+DEPLOYADO EN PRODUCCIÓN EN AGN
+
+=== 2020-12-18 ============================
+Se agrega la ficha 'Buscar cine, audio, video"
+Dar de alta una ficha, los atributos que se renderizan son el título y la imagen
+La imagen se recomienda que sea de 1920x400, se usa de background
+La imagen tiene que tener una tonalidad oscura para que se vea bien la caja buscadora y la leyenda.
+/api/turnospresenciales/initdata
+=== 2020-11-30 ============================
+1) Es necesario regenerar las sedes, puesto que se agregaron "pseudo-sedes"
+para retiro de documentación u otros trámites
+
+PRIMERO: loguearse al sistema
+SEGUNDO: eliminar vía mongo los registros de turnosnominales:
+	use agndb
+	db.turnosnominales.remove({})
+TERCERO: desde el admin, logueado como usuario administrador ir a Tablas Generales y regenerar turnos.
+
+
+=== 2020-11-24 ============================
+1) Debido a que se agregó la biblioteca ng2-pdf-viewer, antes de hacer
+"npm start" o "ng serve", ejecutar el script "npm install".
+
+=== 2020-11-18 ============================
+1) La sede Pichincha ahora se llama sede Rondeau, por lo que es necesario regenerar
+la coleccion de turnos nominales.
+PRIMERO: loguearse al sistema
+
+LUEGO:
+En PRODUCCIÓN:
+agnserver.com/api/turnospresenciales/initdata
+
+En DESARROLLO:
+localhost:8080/api/turnospresenciales/initdata
+
+
+
+=== 2020-11-13 ============================
+1) Se generaron índices sobre las colecciones "turnosasignados" y "consultas",
+de manera de optimizar las búsquedas por fecha o por rangos de fecha.
+
+En la consola de administración de Mongo ('mongoshell'), ejecutar las órdenes:
+> db.consultas.createIndex({tsFechaHora: 1})
+> db.consultas.createIndex({tsFechaHora: 1})
+
+Para verificar el funcionamiento del índice, i.e. que las consultas que involucran
+a dichos campos efectivamente se realicen utilizando el índice, ejecutar la siguiente
+instrucción, que permite ver la planificación ('explain') de la query por parte
+de Mongo:
+
+> db.turnosasignados.find({tsFechaHora:{$gte: 1604631600000, $lt: 1605322800000}}).explain()
+
+Si el índice efectivamente se usa para satisfacer la query, en el plan elegido por el motor
+('winning-plan') debiera verse algo similar a:
+
+		"winningPlan" : {
+			"stage" : "FETCH",
+			"inputStage" : {
+				"stage" : "IXSCAN",
+				"keyPattern" : {
+					"tsFechaHora" : 1
+				},
+				"indexName" : "tsFechaHora_1",
+				"isMultiKey" : false,
+				"multiKeyPaths" : {
+					"tsFechaHora" : [ ]
+				},
+				"isUnique" : false,
+				"isSparse" : false,
+				"isPartial" : false,
+				"indexVersion" : 2,
+				"direction" : "forward",
+				"indexBounds" : {
+					"tsFechaHora" : [
+						"[1604631600000.0, 1605322800000.0)"
+					]
+				}
+			}
+		}
+
+Esta otra consulta realiza un ordenamiento por el campo tsFechaHora:
+> db.turnosasignados.find({tsFechaHora:{$gte: 1604631600000, $lt: 1605322800000}}).sort({tsFechaHora:-1}).explain()
+		"winningPlan" : {
+			"stage" : "FETCH",
+			"inputStage" : {
+				"stage" : "IXSCAN",
+				"keyPattern" : {
+					"tsFechaHora" : 1
+				},
+				"indexName" : "tsFechaHora_1",
+				"isMultiKey" : false,
+				"multiKeyPaths" : {
+					"tsFechaHora" : [ ]
+				},
+				"isUnique" : false,
+				"isSparse" : false,
+				"isPartial" : false,
+				"indexVersion" : 2,
+				"direction" : "backward",
+				"indexBounds" : {
+					"tsFechaHora" : [
+						"(1605322800000.0, 1604631600000.0]"
+					]
+				}
+			}
+		}
+
+
+Los resultados para el índice sobre la colección 'consultas' debieran ser análogos.
+
+
+
+=== 2020-11-09 ============================
+1) Como el endpoint para regenerar los turnosnominales se encuentra protegido por
+middleware, es necesario iniciar sesión administrativa y dirigirse a:
+-> Tablas generales - Regenerar turnos nominales
+
+
+
+=== 2020-11-08 ============================
+1) La colección "turnoswebagn" ahora pasa a llamarse "turnosasignados".
+No debiera producirse ningún inconveniente al instalar la nueva versión del
+producto, exceptuando el "reseteo" de los turnos asignados.
+
+
+=== 2020-11-05 ============================
+1) La colección "turnoswebdisponiblesagn" ahora pasa a llamarse "turnosnominales";
+es necesario regenerar dicha colección invocando a:
+PRIMERO: loguearse al sistema
+
+LUEGO:
+En PRODUCCIÓN:
+agnserver.com/api/turnospresenciales/initdata
+
+En DESARROLLO:
+localhost:8080/api/turnospresenciales/initdata
+
+
+
+=== 2020-11-02 =============================
+1) Vaciar ó reonmbrar la colección "turnoswebagn": se modificó el modelo,
+agregando el atributo turnoId, cuyo propósito es almacenar el ID del 'slot'
+al que el turno se asignará.
+
+2) Para generar los 'slots' a los que es posible asignar turnos, es menester
+correr el endpoint:
+
+agnserver.com:8080/api/turnospresenciales/initdata (producción)
+localhost:8080/api/turnospresenciales/initdata (desarrollo)
+
+Refs 1) y 2) véase /core/models/agnTurnoModel.js:7, /core/routes/agnTurnoRoutes.js:7)
+
+3) Verificar que los  usuarios administrativos tengan el atributo isUsuarioWeb === false:
+	En mongoshell:
+	db.usuarios.updateMany({}, {$set: {isUsuarioWeb: false} })
+
+
+=== 2020-10-28 =============================
+  1) Ejecutar npm install  para agregar nuevas dependencias del proyecto.
+
+=== 2020-10-26 =============================
+	Tuve problemas con los índices de usuarioswebagn.
+	TODO: revisar qué indices tiene que ir y con qué instrucción crearlos. Ahora los borré todos.
+	FAVOR: Ver qué otra colección tiene índices generados para documentarlo bien
+
+=== 2020-10-23 =============================
+	1) vaciar la colección de acervos y eliminar todo índice excepto _id
+
+	db.acervos.renameCollection('acervos_xxx') // renombrar para preservar esta versión
+	//  -- no sería necesario, porque renombramos la collection  db.acervos.dropIndexes('*')
+
+	2) ejecutar el proceso de migración (que leerá los datos desde el MySQL
+	   de AGN y los insertará en MongoDB); esto invocando al endpoint
+
+	agnserver.com/api/vida/migrar
+
+	//En modo development, teniendo la VPN conectada:
+	localhost:4200/api/vida/migrar
+
+
+	3) ejecutar el proceso de regeneración de campo stringify invocando al
+	   endpoint
+
+	agnserver.com/api/vida/reviewdb/stringify
+
+	//En modo development:
+	localhost:4200/api/vida/reviewdb/stringify
+
+	4) regenerar el índice de texto sobre el campo strigify
+	   Desde la consola de mongo:
+
+	//consultar estado actual de índices:
+	db.acervos.getIndexes()
+
+	db.acervos.createIndex({stringify:'text'}, {default_language:'spanish'})
+
+	//verificar con:
+	db.acervos.getIndexes()
+
+	5) OPCIONAL, CON MÁXIMO CUIDADO
+	hacer un drop() de la colección que quedó obsoleta en el paso 1
+	desde la consola de mongo:
+	EJEMPLO: db.acervos01.drop() // retorna 'true' si todo bien
+
+
+
+{ sede: 'pichincha', tipoConsulta: 'video', tsFechaHora: { '$lte': 1605927600000 } }

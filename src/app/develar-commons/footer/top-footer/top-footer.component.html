@@ -1,0 +1,123 @@
+		<div class="content-block">
+
+			<div *ngIf="datosDeContacto" class="contacto">
+				<div class="row">
+					<div class="col">
+						<div class="contacto-title">
+							<span>{{ contactTitle}}</span>
+						</div>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col">
+
+
+						<ng-container *ngIf='contactNode.hasImage'>
+						<div class="image-box">
+							<ng-container *ngIf='contactNode.navigateTo'>
+								<a routerLink='{{ contactNode.navigateTo }}'>
+									<img class='footer-img' src='{{ contactNode.imageUrl }}' ></a>
+							</ng-container>
+
+							<ng-container *ngIf='contactNode.linkTo'>
+			          <a rel="noopener noreferrer"  target="_blank" 
+			          	 title="{{contactNode.linkTo}}" href="{{contactNode.linkTo}}" >
+		          		<img class='footer-img' src='{{ contactNode.imageUrl }}' ></a> 
+							</ng-container>
+							
+							<ng-container *ngIf='contactNode.noLink'>
+		             <img class='footer-img' src='{{ contactNode.imageUrl }}' >
+		           </ng-container>
+						</div>
+						</ng-container>
+
+						<div class='footer-text' innerHtml='{{contactNode.description}}'></div>
+					</div>					
+				</div>
+
+				<div class='row mt-2'>
+					<div class="col-md-12 col-sm-12 social-box">
+						<div class="text-social">
+							<ng-container *ngFor='let social of socialItems'>
+					        	<a class="social-token" mat-icon target="_blank" rel="noopener" 
+					            	href="{{ social.url }}"  title="{{ social.title }}">
+					              <i class='{{ social.icon }}'></i></a>
+				  			</ng-container>
+				  		</div>
+					</div>
+				</div>
+
+			</div>
+
+	
+			<div *ngIf="branding" class="branding branding-box">
+				<ng-container *ngIf='brandingNode.navigateTo'>
+
+							<img src='{{ brandingNode.imageUrl }}' >
+
+					<!-- a routerLink='{{ brandingNode.navigateTo }}'>
+						<img class='branding-img' src='{{ brandingNode.imageUrl }}' ></a -->
+				</ng-container>
+
+				<ng-container *ngIf='brandingNode.linkTo'>
+					<div class="row branding-text">
+						<div class="col-md-6">
+							<a rel="noopener noreferrer"  target="_blank" 
+								title="{{brandingNode.linkTo}}" href="{{ brandingNode.linkTo }}" >
+									<img  class='branding-img' src='{{ brandingNode.imageUrl }}' ></a>
+							<p>
+								<span><a rel="noopener noreferrer"  target="_blank" 
+									title="{{brandingNode.linkTo}}" href="https://creativecommons.org/licenses/by/4.0/deed.es" >Los contenidos de argentina.gob.ar están licenciados bajo Creative Commons Atribución 4.0 Internacional</a></span>
+							</p>
+						</div>
+						<div class='col-md-3'>
+							<p><span>
+								<a rel="noopener noreferrer"  target="_blank" 
+							title="{{brandingNode.linkTo}}" href="https://www.argentina.gob.ar/turnos" >Turnos</a>
+							</span></p>
+							<p><span>
+								<a rel="noopener noreferrer"  target="_blank" 
+							title="{{brandingNode.linkTo}}" href="https://www.argentina.gob.ar/organismos" >Organismos del Estado</a>
+							</span></p>
+							<p><span>
+								<a rel="noopener noreferrer"  target="_blank" 
+							title="{{brandingNode.linkTo}}" href="https://www.argentina.gob.ar/jefatura/mapa-del-estado" >Mapas del Estado</a>
+							</span></p>
+
+						</div>
+						<div class='col-md-3'>
+							<p><span>
+								<a rel="noopener noreferrer"  target="_blank" 
+							title="{{brandingNode.linkTo}}" href="https://www.argentina.gob.ar/normativa" >Leyes argentinas</a>
+							</span></p>
+							<p><span>
+								<a rel="noopener noreferrer"  target="_blank" 
+							title="{{brandingNode.linkTo}}" href="https://www.argentina.gob.ar/acerca" >Acerca de este sitio</a>
+							</span></p>
+							<p><span>
+								<a rel="noopener noreferrer"  target="_blank" 
+							title="{{brandingNode.linkTo}}" href="https://www.argentina.gob.ar/terminos-y-condiciones" >Términos y condiciones</a>
+							</span></p>
+						</div>
+					</div>
+				</ng-container>
+				
+				<ng-container *ngIf='brandingNode.noLink'>
+					<div class="row branding-row">
+						<div *ngIf="brandingNode.description" 
+									class='col-md-4 col-sm-12  branding-text'>
+							<!-- p  innerHtml='{{brandingNode.description}}' ></p-->
+						</div>
+						<div class="col-md-8 col-sm-12" >
+							<img class='branding-img' src='{{ brandingNode.imageUrl }}' >
+						</div>
+					</div>
+				</ng-container>
+
+				<div class="row">
+					<div class="col-md-12 col-sm-12 copyright">{{ copyright }}</div>
+				</div>
+			</div>
+	
+		</div>

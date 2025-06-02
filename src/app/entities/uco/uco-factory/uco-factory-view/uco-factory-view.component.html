@@ -1,0 +1,22 @@
+<mat-card *ngIf="uco$ | async as uco">
+    <mat-card-title>Vista de UCO {{uco.cod_uco}}</mat-card-title>
+    <mat-card-content>
+        <div class="container-fluid p-0">
+            <div class="row">
+                <div class="col-12">
+                    <p class="mb-0"><strong>Código:</strong> {{uco.cod_uco}} ({{uco.slug}})</p>
+                    <p class="mb-0" *ngIf="uco.descripcion"><strong>Descripción:</strong> {{uco.descripcion}} </p>
+                    <ng-container *ngIf="uco.ucoData">
+                        <p class="mb-0" *ngIf="uco.ucoData.sede"><strong>Sede:</strong> {{uco.ucoData.sede}}&nbsp;  <span
+                                *ngIf="uco.ucoData.sala"> <strong>Sala:</strong> {{uco.ucoData.sala}}&nbsp;  </span>
+                            <span *ngIf="uco.ucoData.pasillo"><strong>Pasillo:</strong> {{uco.ucoData.pasillo}}&nbsp;  </span>
+                            <span *ngIf="uco.ucoData.estanteria"> <strong>Estanteria:</strong>
+                                {{uco.ucoData.estanteria}}&nbsp;  </span>
+                            <span *ngIf="uco.ucoData.estante"> <strong>Estante:</strong> {{uco.ucoData.estante}}&nbsp;  </span>
+                        </p>
+                    </ng-container>
+                </div>
+            </div>
+        </div>
+    </mat-card-content>
+</mat-card>

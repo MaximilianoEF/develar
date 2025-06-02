@@ -1,0 +1,71 @@
+<form [formGroup]="form">
+  <div class="row align-items-center">
+    <div class="col-md-8 mt-2">
+      <mat-form-field appearance="outline">
+        <mat-label>Seleccionar ámbito de búsqueda x ancestro. </mat-label>
+        <input #searchBox matInput  name="displayName" formControlName='displayNameFld'
+        [matAutocomplete]="displayName" (keyup)="searchParent(searchBox.value)" />
+        <mat-hint>Ingrese el IDENTIFICADOR del nodo ancestro, se recuperarán los registros dependientes de dicho nodo. </mat-hint>
+    </mat-form-field>
+    <mat-autocomplete #displayName="matAutocomplete">
+      <mat-option *ngFor="let ud of udasParent$ | async" (onSelectionChange)="selectEntity(ud)"
+      [value]="ud.identificador.identifier">
+        {{ud.identificador.title}} ({{getReferenceCode(ud.identificador.reference_code)}})
+      </mat-option>
+    </mat-autocomplete>
+    </div>
+    <div class="col-md-4 col-12 mt-4 mt-md-1">
+      <ng-container *ngIf="unidadSelected">
+          <mat-checkbox class="parent-check" (change)="vincular($event)" formControlName="selected" ></mat-checkbox>
+            Ancestro:
+            {{unidadSelected.identificador.identifier}} ({{unidadSelected.identificador.title}})
+          <p><span class="hint"> Destildar para remover la relación jerárquica</span></p>
+      </ng-container>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-3">
+      <mat-form-field>
+        <mat-select #selDescriptionLevel formControlName="descriptionlevel" placeholder="Nivel de descripción"
+          (selectionChange)="onSelectionChange('descriptionlevel', selDescriptionLevel.value)">
+          <mat-option *ngFor="let item of descriptionLevelList" [value]="item.val">{{ item.label }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <div class="col-md-3">
+      <mat-form-field>
+        <mat-label>Identificador</mat-label>
+        <input matInput formControlName="identifier">
+      </mat-form-field>
+    </div>
+
+    <div class="col-md-3">
+      <mat-form-field>
+        <mat-label>Título</mat-label>
+        <input matInput formControlName="title">
+      </mat-form-field>
+    </div>
+
+    <div class="col-md-3">
+      <mat-form-field>
+        <mat-select #selNivelAvance formControlName="navance" placeholder="Nivel de avance"
+          (selectionChange)="onSelectionChange('navance', selNivelAvance.value)">
+          <mat-option *ngFor="let item of nivelAvanceList" [value]="item.val">{{ item.label }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+  </div>
+    <div class="row align-items-center mb-3">
+      <div class="col-12 d-flex d-md-block">
+        <button class="flex-grow-1" mat-flat-button type="button" color="primary" (click)="search()">Refrescar búsqueda</button>
+        <!--
+        <button class="flex-grow-1" mat-flat-button class="ml-3" type="button" color="primary" (click)="exportar()">Exportar resultados</button>
+        -->
+        <button class="flex-grow-1" mat-flat-button class="ml-3" type="button" color="warn" (click)="exportarAtom()" [disabled]="!puedeExportarParaAtom">Migrar contenidos a AtoM</button>
+
+        <mat-checkbox class="align-middle ml-3" (change)="filtrarParaAtom($event.checked)">Mostrar registros no existentes en AtoM</mat-checkbox>
+      </div>
+    </div>
+</form>

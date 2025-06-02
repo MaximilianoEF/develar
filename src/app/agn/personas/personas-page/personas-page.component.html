@@ -1,0 +1,33 @@
+<mat-card>
+
+    <mat-card-content>
+        <div class="search-panel">
+            <div *ngIf="hasCurrentPerson" >
+                <personas-core-base [person]='currentPerson'
+                        (updatePerson)='updateCore($event)' ></personas-core-base>
+            </div>
+
+            <div *ngIf="hasCurrentPerson" >
+                <personas-contactdata-panel [items]='contactList'
+                        (updateItems)='updateContactList($event)' ></personas-contactdata-panel>
+            </div>
+
+            <div *ngIf="hasCurrentPerson" >
+                <personas-address-panel [items]='addressList'
+                        (updateItems)='updateAddressList($event)' ></personas-address-panel>
+            </div>
+
+            <!--div *ngIf="hasCurrentPerson" >
+                <personas-vinculos-panel [items]='businessList'
+                        (updateItems)='updateBusinessList($event)' ></personas-vinculos-panel>
+            </div -->
+
+        </div>
+        <mat-card-actions>
+            <button class="ml-2 mt-3" type="button" mat-flat-button (click)="goBack()">
+                <mat-icon>keyboard_arrow_left</mat-icon>Volver
+            </button>
+        </mat-card-actions>
+    </mat-card-content>
+
+</mat-card>

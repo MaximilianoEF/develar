@@ -1,0 +1,44 @@
+<mat-card>
+    <mat-card-title>Parámetros y condicion de ingesta</mat-card-title>
+    <form [formGroup]="formGroup" *ngIf="showForm">
+        <mat-card-content>
+            <div class="container-fluid p-0" *ngIf="pi$ | async as pi">
+                <div class="row align-items-center">
+                    <div class="col-md-4 col-12">
+                        <mat-form-field>
+                            <mat-label>Seleccione la máquina utilizada</mat-label>
+                            <mat-select formControlName="tech_machine" (selectionChange)="onSelectionChange()">
+                                <mat-option *ngFor="let item of machines" [value]="item.cod_machine">
+                                    {{item.cod_machine}} : {{item.slug}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-8 col-12">
+                        <button type="button" color="primary" mat-flat-button (click)="showPM()"
+                            [disabled]="!pi || !pi.ingestPlan || !pi.ingestPlan.ingestParams || !pi.ingestPlan.ingestParams.machineCod">Editar
+                            parametros de la
+                            máquina</button>
+                    </div>
+                </div>
+                <div class="row"
+                    *ngIf="pi && pi.ingestPlan && pi.ingestPlan.ingestParams && pi.ingestPlan.ingestParams.machineCod">
+                    <div class="col-12">
+                        <p class="mb-0">
+                            Máquina seleccionada: <strong>{{pi.ingestPlan.ingestParams.machineCod}}</strong>&nbsp;
+                            ({{pi.ingestPlan.ingestParams.machineSlug}}&nbsp;::&nbsp;
+                            {{getLabel('typeDigitalizaciones',pi.ingestPlan.ingestParams.machineTypeDigitalizacion)}})
+                        </p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <machine-data-edit *ngIf="showParamsMachine"
+                            (onEmitSaveChanges)="onEmitSaveChanges($event)" (emitCancelar)="showParamsMachine = $event"></machine-data-edit>
+                    </div>
+                </div>
+
+            </div>
+        </mat-card-content>
+    </form>
+</mat-card>

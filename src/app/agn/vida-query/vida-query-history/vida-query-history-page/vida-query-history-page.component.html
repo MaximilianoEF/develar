@@ -1,0 +1,20 @@
+<mat-card class="mat-elevation-z0">
+    <div class="container-fluid p-0">
+        <vida-query-history-browse></vida-query-history-browse>
+        <vida-query-history-table [data$]="data$" *ngIf="initTable" (repetirBusqueda)="repetirBusqueda($event)">
+        </vida-query-history-table>
+        <div class="row" *ngIf="noBusquedas">
+            <div class="col-12 text-center">
+                <p><strong>No se han encontrado entradas de historial.</strong></p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <button type="button" class="mt-2" mat-flat-button (click)="goToHome()">
+                    <mat-icon>keyboard_arrow_left</mat-icon>Volver
+                </button>
+            </div>
+        </div>
+    </div>
+</mat-card>
+<!-- <footer-page [showContacto]="false"></footer-page> -->

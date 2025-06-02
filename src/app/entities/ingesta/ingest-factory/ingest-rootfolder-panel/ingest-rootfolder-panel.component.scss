@@ -1,0 +1,15 @@
+.row {
+    align-items: center;
+}
+
+.clickeable:hover {
+    text-decoration: underline;
+}
+
+
+.activestate {
+    background-color: red;
+}
+.currentState{
+    background-color: green !important;
+}

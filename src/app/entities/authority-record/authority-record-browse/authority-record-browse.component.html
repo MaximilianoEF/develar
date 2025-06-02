@@ -1,0 +1,19 @@
+<form [formGroup]="form">
+    <div class="row mt-2">
+        <div class="col-md-2">
+            <mat-form-field>
+                <mat-select #selEntityType formControlName="entityType" placeholder="Tipo de entidad" (selectionChange)="onSelectionChange('entityType', selEntityType.value)">
+                    <mat-option *ngFor="let item of entityTypeList" [value]="item.val">{{ item.label }}</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+    </div>
+    <mat-toolbar>
+        <div class="row">
+            <div class="col-12">
+                <button mat-flat-button type="button" color="primary" (click)="search()">Refrescar búsqueda</button>
+                <!-- <button mat-flat-button class="ml-3" type="button" color="primary" (click)="doDownloadResults()">Exportar resultados</button> -->
+            </div>
+        </div>
+    </mat-toolbar>
+</form>

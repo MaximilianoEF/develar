@@ -1,0 +1,36 @@
+@import '../../../../assets/sass/variable';
+
+:host {
+  .top-container {
+    background: #ffffff;
+    text-align: center;
+    align-items: center;
+  }
+
+  .link-box{
+    margin: 15px 0 25px 0;
+    text-align: center;
+    align-items: center;
+    min-width: 70px;
+    width: 100%;
+
+    @media #{$max543} {
+      font-size: 1.5em;
+    }
+
+    @media #{$min544} {
+      font-size: 1.8em;
+    }
+
+    .link-button {
+      background: #0bc869;
+      color: #ffffff;
+      font-size: 1em;
+      font-weight: 700;
+      font-style: italic;
+    }
+
+  }
+
+}
+

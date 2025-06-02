@@ -1,0 +1,59 @@
+@import '../../../../assets/sass/variable';
+
+:host {
+  @media #{$max543} {
+    padding: 0 !important;
+  }
+}
+.title-areas{
+    font-size: 18.5px;
+    line-height: 38px;
+    color: #2e7d33;
+    border-top: 1px solid #f2f2f2;
+    border-bottom: 1px solid #f2f2f2;
+    margin: 0;
+    padding: 0 10px;
+}
+
+.field{
+  overflow: hidden;
+  margin-top: 10px;
+}
+
+.field>h3{
+  float: left;
+    width: 28%;
+    padding: 1px 1% 32767px 1%;
+    margin: 1px 0 -32767px 0;
+    text-align: right;
+    line-height: 20px;
+    font-weight: normal;
+    font-size: 16px;
+    color: #999;
+    border-right: 1px solid #f2f2f2;
+}
+.field > div {
+  margin-left: 26%;
+  padding: 2px 4px 2px 8px;
+  line-height: 20px;
+
+  @media #{$max543} {
+    margin-left: 20%;
+  }
+}
+.field > ul {
+  padding-top: 1px;
+  margin: 0 0 0 20px;
+  list-style-type: disc;
+}
+
+.field > p {
+  margin-left: 28%;
+}
+
+ //p {
+ //  display: -webkit-box;
+ //  -webkit-box-orient: vertical;
+ //  -webkit-line-clamp: 5;
+ //  overflow: hidden;
+ //}

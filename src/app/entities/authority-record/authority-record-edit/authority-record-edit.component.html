@@ -1,0 +1,123 @@
+<mat-card>
+    <div class="container-fluid">
+        <mat-card-title>Editar un registro de autoridad [{{ authorityRecordId }}]</mat-card-title>
+        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+            <mat-tab-group>
+                <mat-tab label="Área de identificación">
+                    <div class="row mx-0 mt-3">
+
+                        <div class="col-md-6 pl-0">
+                            <mat-form-field>
+                                <mat-label>Identificador</mat-label>
+                                <input matInput formControlName="identifier">
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col-md-6 pr-0">
+                            <mat-form-field>
+                                <mat-label>Tipo de entidad</mat-label>
+                                <mat-select #selEntityType formControlName="entityType" (selectionChange)="onSelectionChange('entityType', selEntityType.value)">
+                                    <mat-option *ngFor="let item of entityTypeList" [value]="item.val">{{ item.label }}</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+
+                    </div>
+
+                    <div class="row mx-0 mt-2">
+                        <div class="col-12 px-0">
+                            <mat-form-field>
+                                <mat-label>Forma(s) autorizada(s) del nombre</mat-label>
+                                <input matInput formControlName="authorizedName">
+                            </mat-form-field>
+                        </div>
+                    </div>
+
+                    <div class="row mx-0 mt-3 align-items-center">
+                        <div class="col-md-2 pl-0">
+                            <mat-checkbox formControlName="isArchivalInstitution">¿Es una institución archivística?</mat-checkbox>
+                        </div>
+
+                        <div class="col-md-6 pl-0">
+                            <mat-form-field>
+                                <mat-label>País: </mat-label>
+                                <mat-select #selCountryName formControlName="countryName" (selectionChange)="onSelectionChange('countryName', selCountryName.value)">
+                                    <mat-option *ngFor="let item of countriesList" [value]="item.val">{{ item.label }}</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col-md-2 pr-0">
+                            <mat-form-field>
+                                <mat-label>Prefijo de país:</mat-label>
+                                <input matInput formControlName="countryPrefix">
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col-md-2 pr-0">
+                          <mat-form-field>
+                            <mat-label>Prefijo de UDA:</mat-label>
+                            <input matInput formControlName="udaPrefix">
+                          </mat-form-field>
+                        </div>
+                    </div>
+
+                </mat-tab>
+                <mat-tab label="Área de descripción">
+                    <div class="row mx-0 mt-2">
+                        <div class="col-md-6 pl-0">
+                            <mat-form-field>
+                                <mat-label>Fechas de existencia</mat-label>
+                                <input matInput formControlName="existenceDates">
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </mat-tab>
+                <mat-tab label="Área de relaciones">
+                    <div class="row mx-0 mt-2">
+                        <div class="col-12 px-0">
+                            <h5>
+                                Instituciones, personas o familias relacionadas
+
+                                <mat-icon (click)="addRelatedAuthorityRecord()">
+                                    add
+                                </mat-icon>
+                            </h5>
+
+                            <ng-container *ngIf="hasRelatedAR">
+                                <mat-chip-list>
+                                    <mat-chip *ngFor="let item of authorityRecord.relationshipArea.relatedAuthorityRecords" [removable]="areRelatedRecordsRemovable" (removed)="removeRelatedAuthorityRecord(item)">
+                                        {{ item.category }} :: {{ item.authorityRecordName }}
+                                        <mat-icon matChipRemove *ngIf="areRelatedRecordsRemovable">cancel</mat-icon>
+                                    </mat-chip>
+                                </mat-chip-list>
+                            </ng-container>
+                        </div>
+
+                        <div class="col-12 px-0">
+                            <h5>
+                                Documentos o recursos relacionados
+                                <mat-icon (click)="addRelatedArchivalDescription()">
+                                    add
+                                </mat-icon>
+                            </h5>
+
+                            <ng-container *ngIf="hasRelatedAR">
+                                <mat-chip-list>
+                                    <mat-chip *ngFor="let item of authorityRecord.relationshipArea.relatedResources" [removable]="areRelatedResourcesRemovable" (removed)="removeRelatedArchivalDescription(item)">
+                                        {{ item.nature }} :: {{ item.resourceTitle }}
+                                        <mat-icon matChipRemove *ngIf="areRelatedResourcesRemovable">cancel</mat-icon>
+                                    </mat-chip>
+                                </mat-chip-list>
+                            </ng-container>
+                        </div>
+                    </div>
+                </mat-tab>
+            </mat-tab-group>
+            <mat-card-actions>
+                <button type="submit" class="ml-2" color="primary" [disabled]="form.invalid" mat-flat-button>Confirmar edición</button>
+                <button type="button" class="ml-2" color="warn" (click)="cancel()" mat-flat-button>Cancelar</button>
+            </mat-card-actions>
+        </form>
+    </div>
+</mat-card>

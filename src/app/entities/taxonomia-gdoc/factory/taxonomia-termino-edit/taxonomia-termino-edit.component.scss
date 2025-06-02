@@ -1,0 +1,9 @@
+.mat-card-subtitle {
+  span {
+    cursor: pointer;
+    color: #5dade0;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}

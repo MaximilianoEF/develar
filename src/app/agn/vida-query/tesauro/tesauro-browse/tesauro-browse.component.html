@@ -1,0 +1,37 @@
+<div class="row">
+    <div class="col-12">
+        <mat-card>
+            <mat-card-title>Tesauro: términos buscados en acervo audiovisual</mat-card-title>
+            <mat-card-subtitle>Seleccione un rango de fechas</mat-card-subtitle>
+            <form [formGroup]="formGroup" (ngSubmit)="onSubmit()">
+            <mat-card-content>
+                <div class="container-fluid p-0">
+                    <div class="row">
+                        <div class="col-6">
+                            <mat-form-field appearance="outline">
+                                <mat-label>Fecha desde</mat-label>
+                                <input matInput formControlName="fechaDesde" [matDatepicker]="picker" [max]="maxDate">
+                                <mat-datepicker-toggle matSuffix [for]="picker" ></mat-datepicker-toggle>
+                                <mat-datepicker #picker color="primary"  ></mat-datepicker>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-6">
+                            <mat-form-field appearance="outline">
+                                <mat-label>Fecha hasta</mat-label>
+                                <input matInput formControlName="fechaHasta" [matDatepicker]="picker2" [max]="maxDate">
+                                <mat-datepicker-toggle matSuffix [for]="picker2" ></mat-datepicker-toggle>
+                                <mat-datepicker #picker2 color="primary"  ></mat-datepicker>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </div>
+            </mat-card-content>
+            <mat-card-actions>
+                <div class="ml-3">
+                    <button mat-flat-button color="primary" type="submit">Buscar</button>
+                </div>
+            </mat-card-actions>
+            </form>
+        </mat-card>
+    </div>
+</div>

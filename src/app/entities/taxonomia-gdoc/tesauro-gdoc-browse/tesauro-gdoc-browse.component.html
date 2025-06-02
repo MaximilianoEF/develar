@@ -1,0 +1,17 @@
+<form [formGroup]="form">
+  <div class="row">
+    <div class="col-md-3">
+      <mat-form-field>
+        <mat-label>Identificador </mat-label>
+        <input matInput formControlName="identificador">
+      </mat-form-field>
+    </div>
+  </div>
+  <mat-toolbar>
+    <div class="row">
+      <div class="col-12">
+        <button mat-flat-button type="button" color="primary" (click)="search()">Refrescar búsqueda</button>
+      </div>
+    </div>
+  </mat-toolbar>
+</form>

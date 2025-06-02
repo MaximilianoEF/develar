@@ -1,0 +1,22 @@
+<div class="container p-0 p-md-3">
+    <main class="main-content">
+        <ng-container *ngIf='showDetail'>
+            <div class="d-flex justify-content-center service-block">
+
+                <ng-container *ngFor='let service of services'>
+                    <a class='service-item' role="button" title="{{service.slug}}" href="#" (click)="serviceDetail($event, service)">
+                        <img class='service-image' src='{{ service.imageUrl }}'>
+                    </a>
+                </ng-container>
+
+            </div>
+        </ng-container>
+
+        <router-outlet></router-outlet>
+
+
+    </main>
+</div>
+<div class="container-fluid p-0 agn-footer">
+    <footer-page [showContacto]="false"></footer-page>
+</div>

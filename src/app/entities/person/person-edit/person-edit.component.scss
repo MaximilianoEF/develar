@@ -1,0 +1,15 @@
+@import '../../../../assets/sass/variable';
+
+:host {
+
+  display: block;
+  height: 100%;
+  vertical-align: top;
+  width: 100%;
+
+  agm-map {
+   height: 300px;
+  }
+
+}
+

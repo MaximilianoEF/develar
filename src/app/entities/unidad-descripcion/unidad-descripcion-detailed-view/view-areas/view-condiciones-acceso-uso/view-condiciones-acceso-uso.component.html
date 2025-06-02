@@ -1,0 +1,46 @@
+<div class="container-fluid p-0 ml-3 my-3">
+  <div class="row">
+    <div class="col-12">
+      <mat-toolbar><span class="title-areas">Condiciones</span></mat-toolbar>
+      <p> <strong>Acceso: </strong> {{ud.accesoYUso.conditions_governing_access}}
+      </p>
+      <p> <strong>Reproducción:</strong> {{ud.accesoYUso.conditions_governing_reproduction}} </p>
+    </div>
+  </div>
+  <mat-divider></mat-divider>
+  <div class="row">
+    <div class="col-12">
+      <mat-toolbar><span class="title-areas">Datos relevantes</span></mat-toolbar>
+    </div>
+    <div class="col-12">
+      <div>
+        <p><strong>Idioma(s) del material: </strong></p>
+        <ul>
+          <li *ngFor="let item of ud.accesoYUso.languages_of_material">
+            {{getLabel('idiomas', item)}}
+          </li>
+        </ul>
+      </div>
+
+      <div>
+        <p><strong>Guión: </strong></p>
+        <ul>
+          <li *ngFor="let item of ud.accesoYUso.scripts_of_material">
+            {{getLabel('idiomas', item)}}
+          </li>
+        </ul>
+      </div>
+      <p>
+        <strong>Nota de lenguaje y escritura: </strong> {{ud.accesoYUso.notas}}
+      </p>
+      <p>
+        <strong>Características físicas y requisitos técnicos: </strong>
+        {{ud.accesoYUso.physical_characteristics_and_technical_requirements}}
+      </p>
+      <p>
+        <strong>Ayudas: </strong> {{ud.accesoYUso.finding_aids}}
+      </p>
+    </div>
+    <mat-divider></mat-divider>
+  </div>
+</div>

@@ -1,0 +1,38 @@
+<mat-card class="mb-2">
+  <div class="container-fluid p-0">
+    <div class="row">
+      <div class="col-md-4">
+        <mat-card-title>(IT) Información técnica</mat-card-title>
+      </div>
+      <div class="col-md-8" style="text-align: end;">
+        <button mat-flat-button type="button" color="primary" (click)="showDatosTecnicos()">Datos técnicos</button>
+      </div>
+    </div>
+  </div>
+  <mat-card-content>
+    <div class="container-fluid p-0">
+      <div class="row" *ngIf="pi$ | async as pi">
+        <div class="col-12">
+          <button *ngFor="let item of nivelesAvanceList" mat-flat-button color="primary"
+              [disabled]="includeInList(item.val) || isEndState()" 
+              [class.currentState]="isActualState(item.val)"
+              [class.activestate]="workInProgress(item.val)"
+              class="ml-2"
+              (click)="workFlowManager(item.val)">
+              {{showLabelOrSlug('nivelesAvance', item.val)}}
+          </button>
+
+        </div>
+      </div>
+      
+      <div class="row">
+        <div class="col-12" *ngIf="progressInfo$ | async as progress">
+          <p><span>{{ progress }}</span></p>
+        </div>
+
+      </div>
+    </div>
+  </mat-card-content>
+  <mat-progress-bar mode="indeterminate" *ngIf="_workInProgress"></mat-progress-bar>
+
+</mat-card>

@@ -1,0 +1,28 @@
+<mat-card class="mb-2">
+  <div class="container-fluid p-0">
+    <div class="row">
+      <div class="col-md-6 col-12">
+        <mat-card-title>(UDA) Unidad de Descripción Archivística </mat-card-title>
+      </div>
+      <div class="col-md-6 col-12" style="text-align: end;">
+        <button mat-flat-button color="accent" class="ml-2" type="button" (click)="verDetalle()">PANEL</button>
+        <!-- button mat-flat-button color="primary" class="ml-2" type="button" (click)="crearUDS()">Crear UDS</button -->
+        <!-- button mat-flat-button color="primary" class="ml-2" type="button" (click)="matching()">Matching</button -->
+      </div>
+    </div>
+  </div>
+
+  <mat-card-content>
+    <div class="container-fluid p-0">
+      <div class="row" *ngIf="ud$ | async as ud">
+        <div class="col-12">
+          <ng-container *ngFor="let item of ud.identificador.reference_code; let i = index">
+            <span class="navegable" (click)="goToDetailedView(i, ud)">
+              {{ (i < (ud.identificador.reference_code.length - 1)) ? item + " >": item  }}
+            </span>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>

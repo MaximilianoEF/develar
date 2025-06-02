@@ -1,0 +1,81 @@
+<mat-table #turnoTable matSort [dataSource]="dataSource" class="mt-3">
+
+  <ng-container matColumnDef="select">
+    <mat-header-cell *matHeaderCellDef>
+      <mat-checkbox (change)="$event ? masterToggle() : null" [checked]="selection.hasValue() && isAllSelected()"
+        [indeterminate]="selection.hasValue() && !isAllSelected()">
+      </mat-checkbox>
+    </mat-header-cell>
+    <mat-cell *matCellDef="let row">
+      <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(row) : null"
+        [checked]="selection.isSelected(row)">
+      </mat-checkbox>
+    </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="identifier">
+    <mat-header-cell *matHeaderCellDef mat-sort-header>Identificador</mat-header-cell>
+    <mat-cell *matCellDef="let item">
+      <span class="mobile-header-cell">Identificador</span>
+      <mat-icon *ngIf="item.isTransferidaAtom" color="accent" class="mr-2" matTooltip="Este registro ya forma parte de una exportación a Excel">
+        download_done
+      </mat-icon>
+      {{ item.identifier }}
+    </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="descriptionlevel">
+    <mat-header-cell *matHeaderCellDef>Nivel de descripción</mat-header-cell>
+    <mat-cell *matCellDef="let item">
+    <span class="mobile-header-cell">Nivel de descripción</span>
+      {{ item.descriptionlevel }}</mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="title">
+    <mat-header-cell *matHeaderCellDef>Título</mat-header-cell>
+    <mat-cell *matCellDef="let item">
+      <span class="mobile-header-cell">Título</span>
+      {{ item.title }}</mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="reference_code">
+    <mat-header-cell *matHeaderCellDef>Código de referencia</mat-header-cell>
+    <mat-cell *matCellDef="let item" title="{{ item._id }}">
+      <span class="mobile-header-cell">Código de referencia</span>
+      {{ item.reference_code}}</mat-cell>
+  </ng-container>
+
+
+  <ng-container matColumnDef="thumbnail">
+    <mat-header-cell *matHeaderCellDef>Miniatura</mat-header-cell>
+    <mat-cell *matCellDef="let item" title="{{ item._id }}">
+      <span class="mobile-header-cell">Miniatura</span>
+      <ng-container *ngIf="item.assetIds && item.assetIds.length > 0">
+        <img *ngFor="let assetId of item.assetIds" src="/download/thumbnail/{{ assetId }}" alt="{{ item.title }}">
+      </ng-container>
+
+    </mat-cell>
+  </ng-container>
+
+
+  <ng-container matColumnDef="rowactions">
+    <mat-header-cell *matHeaderCellDef>&nbsp;</mat-header-cell>
+    <mat-cell *matCellDef="let item">
+      <span class="mobile-header-cell">Acciones</span>
+      <mat-icon matTooltip="Editar esta UD" class="mr-3" (click)="edit(item)" *ngIf="!isBuscadorMultimedia">edit
+      </mat-icon>
+      <mat-icon matTooltip="Vista detallada" class="mr-3" (click)="detailedView(item)">visibility</mat-icon>
+      <mat-icon matTooltip="Añadir hijo a esta UD" class="mr-3" (click)="altaRapidaConParent(item)"
+        *ngIf="!isBuscadorMultimedia">library_add</mat-icon>
+      <mat-icon *ngIf="item.isUDCorUDS" matTooltip="Navegar a puntos de acceso" class="mr-3" [routerLink]="['/punto-acceso', 'factory', item._id]">directions_boat</mat-icon>
+    </mat-cell>
+  </ng-container>
+
+  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+
+  <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+
+</mat-table>
+
+<mat-paginator [length]="10" [pageIndex]="0" [pageSize]="25" [pageSizeOptions]="[5, 10, 25, 100]">
+</mat-paginator>

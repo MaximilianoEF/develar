@@ -1,0 +1,70 @@
+<mat-card class="mt-3 mat-elevation-z0">
+  <mat-card-content>
+    <div class="container p-0">
+
+      <div class='row my-1 content-header'>
+        <div class="col-md-2 content-header-elem">{{ archiveId }}
+        </div>
+        <div class="col-md-2 content-header-elem"> {{legajo}}
+        </div>
+        <div class="col-md-6 content-header-elem"> {{feGrabacion }} {{feFilmacion }}
+        </div>
+        <div class="col-md-2 content-header-recurso"> {{recursoDigital}}
+        </div>
+      </div>
+
+      <!--h4 class="my-1">{{primerRenglon}}</h4-->
+      <h5 class="titulo my-1">{{archive.titulo}}</h5>
+      <p class='text-normal' *ngIf="archive.temas_raw !== ''"><strong>CONTENIDO:</strong> {{ archive.temas_raw }}</p>
+      <p class='text-normal' *ngIf="archive.soporte !== null "> <strong>SOPORTE:</strong> {{ archive.soporte }} / {{
+        recursoDuracion }} / {{ recursoSonoro }} / {{ recursoColor }}</p>
+      <p class='text-normal' *ngIf="archive.fecha_digitalizacion !== ''"><strong>Fecha de digitalización:</strong>
+        {{archive.fecha_digitalizacion}}</p>
+      <div class="row">
+        <button class="ml-2" *ngIf='archive.id_tipo_recurso > 0' mat-icon-button type="button"
+          matTooltip="Reproducir multimedia"
+          (click)="playMedia(archive.path_recurso, archive.id_tipo_recurso, archive.titulo)">
+          <mat-icon *ngIf="archive.id_tipo_recurso == 1">
+            ondemand_video
+          </mat-icon>
+          <mat-icon *ngIf="archive.id_tipo_recurso == 2">
+            audiotrack
+          </mat-icon>
+        </button>
+        <button mat-icon-button type="button" matTooltip="Ir a vista detallada" (click)="navegarAVistaDetallada()">
+          <mat-icon>
+            search_outline
+          </mat-icon>
+        </button>
+        <!--button type="button" mat-icon-button matTooltip="Exportar a Excel" (click)="onExportExcel()">
+                    <i class="fas fa-file-excel"></i>
+                </button-->
+      </div>
+
+      <ng-container
+        *ngIf="(archive.timecodes && archive.timecodes.length > 0) || (archive.document && archive.document.length > 0)">
+        <div class="row mb-2">
+          <div class="col-12">
+            <p class="content-show-more" (click)="onToggleShowMore()">
+              <ng-container *ngIf="!showMore">(ver más)</ng-container>
+              <ng-container *ngIf="showMore">(ver menos)</ng-container>
+            </p>
+          </div>
+        </div>
+        <ng-container *ngIf="showMore">
+          <div class="row">
+            <div class="col-6" *ngIf="archive.timecodes && archive.timecodes.length > 0">
+              <p class="mb-1"><strong>Timecodes</strong></p>
+              <p class="mb-0" *ngFor="let val of archive.timecodes"><strong>{{ val.code }}</strong> {{ val.title }}</p>
+            </div>
+            <div class="col-6" *ngIf="archive.document && archive.document.length > 0">
+              <p class="mb-1"><strong>Descripción</strong></p>
+              <p class="mb-0" *ngFor="let val of archive.document"><span
+                  [innerHtml]="val.contents | sanitizeHtml"></span></p>
+            </div>
+          </div>
+        </ng-container>
+      </ng-container>
+    </div>
+  </mat-card-content>
+</mat-card>

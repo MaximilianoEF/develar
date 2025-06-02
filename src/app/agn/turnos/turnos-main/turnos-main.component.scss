@@ -1,0 +1,28 @@
+@import '../../../../assets/sass/mixin';
+blockquote {
+    background: #01BBED;
+    color: #fff;
+    font-size: 1.125em;
+}
+a.inverted-link {
+    color: #fff;
+    font-weight: 700;
+
+}
+
+article {
+    >p {
+        font-size: 1.1em;
+        a,
+        span {
+            color: #01BBED;
+        }
+    }
+}
+
+.mat-flat-button {
+    @include button-agn;
+    i {
+        vertical-align: baseline;
+    }
+}

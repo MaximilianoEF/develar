@@ -1,0 +1,205 @@
+<ng-template #datoNoDisponible><span class="text-secondary text-smaller">(( dato no disponible ))</span></ng-template>
+
+<div class="container mt-4 p-0">
+
+    <ng-container *ngIf="archive$ | async as archive">
+        <mat-card>
+            <mat-card-title>
+
+                <ng-container *ngIf="archivoIdExterno">
+                    {{ archivoIdExterno }}
+                </ng-container>
+
+                <ng-container *ngIf="archive.fondo.legajo_numero">
+                    :: Legajo Nº {{ archive.fondo.legajo_numero }}
+                </ng-container>
+
+                <ng-container *ngIf="archive.metadatos.titulo_formal">
+                    :: {{ archive.metadatos.titulo_formal }}
+                </ng-container>
+
+                <ng-container *ngIf="archivoColeccion">
+                    :: {{ archivoColeccion }}
+                </ng-container>
+
+                <ng-container *ngIf="archivoTituloSerie">
+                    :: {{ archivoTituloSerie }}
+                </ng-container>
+            </mat-card-title>
+
+            <mat-card-content>
+                <div class="container-fluid p-0">
+                    <mat-tab-group>
+                        <mat-tab label="Datos generales">
+                            <section *ngIf="archive.metadatos.temas_raw" class="block-info">
+                                <h2>Contenido</h2>
+                                <p class="mb-0">{{ archive.metadatos.temas_raw }}</p>
+                            </section>
+
+                            <section class="block-info">
+                                <h2>Responsables de la puesta</h2>
+                                <p class="mb-0" *ngIf="archivoProductores">
+                                    <strong>Productor(es): </strong><span>{{ archivoProductores }}</span>
+                                </p>
+
+                                <p *ngIf="archivoActores">
+                                    <strong>Actor(es): </strong><span>{{ archivoActores }}</span>
+                                </p>
+                            </section>
+
+                            <section *ngIf="archive.genres" class="block-info">
+                                <h2>Género</h2>
+                                <p class="mb-0">
+                                    <strong>Género(s): </strong>
+                                    <span *ngFor="let genre of archive.genres">{{ genre.title }} </span>
+                                </p>
+                            </section>
+
+
+                            <section *ngIf="archive.languages.length > 0" class="block-info">
+                                <h2>Idiomas</h2>
+                                <p class="mb-1"><strong>Lenguaje: </strong>{{ archive.languages[0].title_spanish }}</p>
+                                <p class="mb-1"><strong>Subtítulos: </strong>
+                                    <ng-container *ngIf="archive.metadatos.subtitulos == 0">No</ng-container>
+                                    <ng-container *ngIf="archive.metadatos.subtitulos == 1">Sí</ng-container>
+                                </p>
+                            </section>
+
+
+                            <section class="block-info">
+                                <h2>Fechas</h2>
+                                <p *ngIf="archive.metadatos.fecha_grabacion" class="mb-0">
+                                    <strong>Fecha de grabación</strong>: {{ archive.metadatos.fecha_grabacion }}
+                                </p>
+
+                                <p *ngIf="archive.metadatos.fecha_filmacion" class="mb-0">
+                                    <strong>Fecha de filmación</strong>: {{ archive.metadatos.fecha_filmacion }}
+                                </p>
+
+
+                                <!--p *ngIf="archive.metadatos.fecha_digitalizacion"><strong>Fecha de digitalización</strong>: {{ archive.metadatos.fecha_digitalizacion | date: 'dd/MM/yyyy' }}</p -->
+                            </section>
+
+                            <!-- <section *ngIf="archive.metadatos.observacion_preparacion || archive.metadatos.observacion_digitalizacion || archive.metadatos.observacion_cinecolor" class="block-info">
+                                <h2>Observaciones</h2>
+                                <p *ngIf="archive.metadatos.observacion_preparacion" class="mb-0"><strong>Grabación</strong>: {{ archive.metadatos.observacion_preparacion }}</p>
+                                <p *ngIf="archive.metadatos.observacion_digitalizacion" class="mb-0"><strong>Digitalización</strong>: {{ archive.metadatos.observacion_digitalizacion }}</p>
+                                <p *ngIf="archive.metadatos.observacion_cinecolor"><strong>Cinecolor</strong>: {{ archive.metadatos.observacion_cinecolor }}</p>
+                            </section> -->
+                        </mat-tab>
+
+                        <mat-tab label="Descripción">
+                            <section *ngIf="archive.documentos && archive.documentos.length > 0" class="block-info">
+                                <h2>Descripción</h2>
+                                <p class="mb-0" [innerHtml]="archive.documentos[0].contents| sanitizeHtml"></p>
+                            </section>
+
+                            <section *ngIf="archive.attachments && archive.attachments.length > 0" class="block-info">
+                                <!-- h2>Documentos</h2>
+                                <p>Documentos digitales que acompañan al presente acervo</p>
+
+                                <p class="mb-0" *ngFor="let attachment of archive.attachments">
+                                    Archivo: <strong>{{ attachment.title }}</strong> - <a [routerLink]="['/web/descargar', attachment._id]">Descargar</a>
+                                </p-->
+                            </section>
+
+                            <section class="block-info" *ngIf="!(archive.documentos && archive.documentos.length > 0) && !(archive.attachments && archive.attachments.length > 0)">
+                                <h2 class="my-2">Sin datos</h2>
+                            </section>
+                        </mat-tab>
+
+                        <mat-tab label="Índices">
+                            <section class="block-info">
+                                <h2>Onomástico (persona)</h2>
+                                <ng-container *ngFor="let tema of archive.temas">
+                                    <p class="mb-0" *ngIf="tema['themeType'].themeTypeId == 1">{{ tema.title }}</p>
+                                </ng-container>
+                            </section>
+
+                            <section class="block-info">
+                                <h2>Onomástico (organización)</h2>
+                                <ng-container *ngFor="let tema of archive.temas">
+                                    <p class="mb-0" *ngIf="tema['themeType'].themeTypeId == 2">{{ tema.title }}</p>
+                                </ng-container>
+                            </section>
+
+                            <section class="block-info">
+                                <h2>Cronológico</h2>
+                                <ng-container *ngFor="let tema of archive.temas">
+                                    <p class="mb-0" *ngIf="tema['themeType'].themeTypeId == 3">{{ tema.title }}</p>
+                                </ng-container>
+                            </section>
+
+                            <section class="block-info">
+                                <h2>Geográfico</h2>
+                                <ng-container *ngFor="let tema of archive.temas">
+                                    <p class="mb-0" *ngIf="tema['themeType'].themeTypeId == 4">{{ tema.title }}</p>
+                                </ng-container>
+                            </section>
+
+                            <section class="block-info">
+                                <h2>Temático</h2>
+                                <ng-container *ngFor="let tema of archive.temas">
+                                    <p class="mb-0" *ngIf="tema['themeType'].themeTypeId == 5">{{ tema.title }}</p>
+                                </ng-container>
+                            </section>
+                        </mat-tab>
+
+                        <mat-tab label="Contenido multimedial">
+                            <ng-container *ngIf="archive.assets && archive.assets.length > 0">
+                                <section class="block-info" *ngFor="let asset of archive.assets">
+                                    <h2 class="mb-1"><span class="text-secondary">{{ asset.resourcetype.title }} :: </span>{{ asset.title }}</h2>
+                                    <p class="my-1"><strong>Descripción: </strong>{{ asset.description }}</p>
+                                    <button class="my-2" mat-flat-button type="button" color="primary" (click)="playMedia(asset.path, asset.resourcetype.resourceTypeId, asset.title)">
+                              Reproducir
+                            </button>
+                                </section>
+                            </ng-container>
+
+                            <ng-container *ngIf="!(archive.assets && archive.assets.length > 0)">
+                                <section class="block-info">
+                                    <h2 class="my-2">Sin recurso digital</h2>
+                                </section>
+                            </ng-container>
+
+                            <section class="block-info">
+                                <h2 class="mb-2">Descripción</h2>
+                                <p class="mb-0"><strong>Idioma: </strong> {{ (archive.languages.length >0 && archive.languages[0].title_spanish)|| '' }}</p>
+                                <p class="mb-0"><strong>Subtitulado: </strong>
+                                    <ng-container *ngIf="archive.metadatos.subtitulos == 0">No</ng-container>
+                                    <ng-container *ngIf="archive.metadatos.subtitulos == 1">Sí</ng-container>
+                                </p>
+                                <p *ngIf="archive.metadatos.duracion">
+                                    <strong>Duración: </strong> {{ archive.metadatos.duracion }}
+                                </p>
+
+                                <p *ngIf="archive.metadatos.fecha_grabacion" class="mb-0"><strong>Fecha de grabación</strong>: {{ archive.metadatos.fecha_grabacion }}</p>
+                                <p *ngIf="archive.metadatos.fecha_filmacion" class="mb-0"><strong>Fecha de filmación</strong>: {{ archive.metadatos.fecha_filmacion }}</p>
+                                <!-- p *ngIf="archive.metadatos.fecha_digitalizacion"><strong>Fecha de digitalización</strong>: {{ archive.metadatos.fecha_digitalizacion | date: 'dd/MM/yyyy' }}</p -->
+
+                                <p class="mb-1"><strong>Sonido: </strong>
+                                    <ng-container *ngIf="archive.metadatos.sonido == 0">Silente</ng-container>
+                                    <ng-container *ngIf="archive.metadatos.sonido == 1">Sonora</ng-container>
+                                </p>
+                                <p class="mb-1"><strong>Color: </strong>
+                                    <ng-container *ngIf="archive.metadatos.color == 0">B/N</ng-container>
+                                    <ng-container *ngIf="archive.metadatos.color == 1">Color</ng-container>
+                                </p>
+                            </section>
+
+                            <section class="block-info" *ngIf="archive.timecodes.length > 0">
+                                <h2 class="mb-2">Timecodes</h2>
+                                <p class="my-0" *ngFor="let timecode of archive.timecodes"><strong>{{ timecode.code }} </strong>{{ timecode.title }}</p>
+                            </section>
+                        </mat-tab>
+                    </mat-tab-group>
+                </div>
+            </mat-card-content>
+            <mat-card-actions class="ml-1">
+                <button mat-flat-button color="primary" (click)="onGoBack()">
+                    <mat-icon>keyboard_arrow_left</mat-icon>Volver
+                </button>
+            </mat-card-actions>
+        </mat-card>
+    </ng-container>
+</div>

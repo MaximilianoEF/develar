@@ -1,0 +1,43 @@
+<mat-card class="mt-3">
+  <mat-card-title>(B) Unidades Documentales Simples</mat-card-title>
+  <unidad-documental-simple-filter></unidad-documental-simple-filter>
+  <mat-card-content>
+    <div class="container-fluid p-0">
+      <div class="row">
+        <div class="col-12">
+          <button class="mr-2" mat-flat-button color="primary">Matching 1-1</button>
+
+          <button mat-flat-button color="accent">Matching 1-2 (anverso-reverso)</button>
+        </div>
+      </div>
+      <div class="row mt-3">
+        <div class="col-12">
+          <button mat-flat-button [matMenuTriggerFor]="menu" style="background-color: #5dade0; color:white">Acciones
+            <mat-icon>keyboard_arrow_down</mat-icon>
+            <!-- <mat-icon *ngIf="changeIcon">keyboard_arrow_up</mat-icon> -->
+          </button>
+          <mat-menu #menu="matMenu">
+            <button mat-menu-item>Eliminar</button>
+            <button mat-menu-item>Desvincular</button>
+          </mat-menu>
+          <ng-container *ngIf="udc$ | async as udc">
+            <span *ngIf="udc.children">
+              Total de UDS : # {{ countChildrenUDS}}
+            </span>
+            <span>
+              UDS vinculadas : # {{countLinkedDigitalResources}}
+            </span>
+            <span>
+              UDS no-vinculadas : # {{countUnLinked}}
+            </span>
+          </ng-container>
+        </div>
+      </div>
+      <div class="row mt-3">
+        <div class="col-12">
+          <unidad-documental-simple-table *ngIf="showData"></unidad-documental-simple-table>
+        </div>
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>

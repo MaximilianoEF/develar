@@ -1,0 +1,28 @@
+.mat-column-select {
+    max-width: 60px;
+    min-width: 60px;
+}
+
+.mat-column-fileType {
+    max-width: 100px;
+    min-width: 80px;
+}
+
+.mat-column-assetType {
+    max-width: 100px;
+    min-width: 80px;
+}
+
+.mat-column-filename{
+    max-width: 320px;
+    min-width: 240px;
+}
+
+.mat-column-bundlePath{
+    max-width: 320px;
+    min-width: 240px;
+}
+
+.mat-column-rowactions .mat-icon {
+    cursor: pointer;
+}

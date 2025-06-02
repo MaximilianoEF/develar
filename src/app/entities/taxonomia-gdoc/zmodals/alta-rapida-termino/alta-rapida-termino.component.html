@@ -1,0 +1,43 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-12">
+      <h3 mat-dialog-title>Dar de alta un término</h3>
+    </div>
+  </div>
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="row">
+      <div class="col-4">
+        <mat-form-field>
+          <mat-label>Mostrar como:</mat-label>
+          <input  #txtSlug (keyup)="autocompletar(txtSlug.value)" matInput formControlName="slug" required>
+        </mat-form-field>
+      </div>
+      <div class="col-4">
+        <mat-form-field>
+          <mat-label>Identificador:</mat-label>
+          <input matInput formControlName="identificador" required>
+          <mat-error
+            *ngIf="errors.identificador">{{ errors.identificador }}</mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col-4">
+        <mat-form-field>
+          <mat-label>Forma abreviada:</mat-label>
+          <input matInput formControlName="formaAbreviada" required>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-12">
+        <mat-dialog-actions class="mb-3 mt-4">
+          <button type="submit" color="primary" [disabled]="form.invalid" mat-flat-button>Dar de alta
+          </button>
+          <button type="button" color="warn" mat-flat-button
+                  [mat-dialog-close]="false">Cancelar
+          </button>
+        </mat-dialog-actions>
+      </div>
+    </div>
+  </form>
+</div>

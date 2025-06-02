@@ -1,0 +1,40 @@
+<mat-table #unidadDocumentalSimpleTable matSort [dataSource]="dataSource">
+
+    <ng-container matColumnDef="select">
+        <mat-header-cell *matHeaderCellDef>
+            <mat-checkbox (change)="$event ? masterToggle() : null" [checked]="selection.hasValue() && isAllSelected()" [indeterminate]="selection.hasValue() && !isAllSelected()">
+            </mat-checkbox>
+        </mat-header-cell>
+        <mat-cell *matCellDef="let row">
+            <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(row) : null" [checked]="selection.isSelected(row)">
+            </mat-checkbox>
+        </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="identificador">
+        <mat-header-cell *matHeaderCellDef>Identificador</mat-header-cell>
+        <mat-cell *matCellDef="let item">{{ item.identificador }}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="objetoDigital">
+        <mat-header-cell *matHeaderCellDef >Objeto digital</mat-header-cell>
+        <mat-cell *matCellDef="let item">{{ item.objetoDigital }}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="rowactions">
+        <mat-header-cell *matHeaderCellDef>&nbsp;</mat-header-cell>
+        <mat-cell *matCellDef="let item">
+            <!-- <mat-icon matTooltip="Editar este registro de autoridad" class="mr-3" (click)="edit(item)">edit</mat-icon> -->
+            <!-- <mat-icon matTooltip="Vista detallada" class="mr-3" (click)="detailedView(item)">visibility</mat-icon>
+            <mat-icon matTooltip="Añadir hijo a esta UD" class="mr-3" (click)="altaRapidaConParent(item)">library_add</mat-icon> -->
+        </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+
+    <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+
+</mat-table>
+
+<mat-paginator #paginator [length]="10" [pageIndex]="0" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]">
+</mat-paginator>

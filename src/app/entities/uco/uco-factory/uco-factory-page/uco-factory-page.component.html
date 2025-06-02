@@ -1,0 +1,12 @@
+<div class="container-fluid p-0">
+    <div class="row">
+        <div class="col-12">
+            <uco-factory-edit (emitSaveChanges)="saveChanges($event)" *ngIf="showEditForm"></uco-factory-edit>
+        </div>
+    </div>
+    <div class="row mt-2">
+        <div class="col-12">
+            <uco-factory-view></uco-factory-view>
+        </div>
+    </div>
+</div>

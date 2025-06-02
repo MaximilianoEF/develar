@@ -1,0 +1,38 @@
+@import '../../../../assets/sass/mixin';
+@import '../../../../assets/sass/variable';
+
+
+
+mat-card {
+    width: 75%;
+    margin: 0 auto;
+    
+    @media #{$min992} {
+        width: 75%;
+    }
+    @media #{$max991} {
+        width: 75%;
+    }
+    @media #{$max767} {
+        width: 80%;
+    }
+    @media #{$max543} {
+        width: 100%;
+    }
+}
+
+.toolbar-header {
+    background-color: #8f84ba;
+}
+
+.button-volver {
+    background-color: #8f84ba;
+}
+
+.button-nueva {
+    background-color: #fefeff;
+}
+
+.mat-flat-button{
+    @include button-agn;
+}

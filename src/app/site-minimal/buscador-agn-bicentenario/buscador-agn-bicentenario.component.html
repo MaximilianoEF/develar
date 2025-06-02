@@ -1,0 +1,31 @@
+<div class="panel-container" *ngIf="hasImage">
+  <ng-container *ngIf="hasImage">
+    <div class="main-image-container">
+      <img class="main-image" src="{{ mainimage }}" alt="Logo AGN">
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="hasImage">
+    <div>
+      <img class="logo-img logo-float" src="{{ logoCompany }}" alt="Logo AGN">
+    </div>
+  </ng-container>
+</div>
+
+<div class="description-container">
+  <div>
+    <p class="card-description" innerHtml="{{ description }}"></p>
+  </div>
+
+  <div class="search-box mt-3">
+    <form [formGroup]="form">
+      <mat-form-field color="primary" appearance="outline">
+        <input (keyup.enter)="onSubmit()" placeholder="Buscar..." matInput formControlName="terms">
+        <mat-icon matSuffix (click)="onSubmit()">search</mat-icon>
+      </mat-form-field>
+    </form>
+  </div>
+  <div class="mt-2">
+    <a class="text-antecedentes" [routerLink]="['/web/migrante']">¡Nuevo! Buscar antecedentes migratorios.</a>
+  </div>
+</div>

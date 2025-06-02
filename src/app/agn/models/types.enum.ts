@@ -1,0 +1,12 @@
+export const ResTypesEnum = {
+  RESTYPE_VIDEO: 1,
+  RESTYPE_AUDIO: 2,
+};
+
+export const ThemeTypesEnum = {
+  THEMETYPE_ONOMASTICO_PERSONA: 1,
+  THEMETYPE_ONOMASTICO_ORGA: 2,
+  THEMETYPE_CRONO: 3,
+  THEMETYPE_GEO: 4,
+  THEMETYPE_TEMATICO: 5,
+};

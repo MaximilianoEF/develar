@@ -1,0 +1,19 @@
+<div class="site-container">
+
+	<ng-container *ngIf="defaultNavbar">
+		<public-navbar [title]="pageTitle" ></public-navbar>
+	</ng-container>
+
+	<ng-container *ngIf="agnNavbar">
+		<utopias-navbar  [title]="pageTitle" ></utopias-navbar>
+	</ng-container>
+
+  <main class="main-content">
+    <div class="main-content-wrap">
+
+      <router-outlet></router-outlet>
+
+    </div>
+  </main>
+
+</div>

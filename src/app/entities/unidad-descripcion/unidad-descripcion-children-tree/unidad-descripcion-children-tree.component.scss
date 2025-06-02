@@ -1,0 +1,38 @@
+img {
+  height: 225px;
+}
+
+.title {
+  text-align: left;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 28px;
+}
+
+.text-small {
+  text-align: left;
+  font-size: 11px;
+}
+
+.clickeable {
+  cursor: pointer;
+}
+
+img.clickeable:hover {
+  opacity: 0.5;
+}
+
+b.clickeable:hover {
+  text-decoration: underline;
+}
+
+p.clickeable:hover {
+  text-decoration: underline;
+}
+
+.mat-card-image
+{
+  max-width: 100%;
+  width: auto;
+}
+

@@ -1,0 +1,5 @@
+<mat-card>
+  <div class="d-flex">
+    <button class="flex-grow-1 ml-2 clickeable" mat-flat-button color="primary" (click)="execAction(item.val)" *ngFor="let item of headerActions">{{item.label}}</button>
+  </div>
+</mat-card>

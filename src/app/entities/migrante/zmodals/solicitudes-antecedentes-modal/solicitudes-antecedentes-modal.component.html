@@ -1,0 +1,35 @@
+<h3 mat-dialog-title>Solicitudes de antecedentes</h3>
+<mat-dialog-content>
+  <ng-container *ngIf="(antecedentesSolicitados$ | async) as solicitudes">
+    <ng-container *ngIf="solicitudes.length; else notSelectedSolicitudes">
+      <ng-container *ngFor="let item of solicitudes">
+        <mat-card>
+          <mat-card-title>{{item.title}}</mat-card-title>
+          <mat-card-subtitle>{{item.feDesdeHasta}}</mat-card-subtitle>
+          <mat-card-content>
+            <small>Identificador: {{item.identifier}}</small>
+            <div class="d-flex">
+              <small>Inventario: {{item.inventario}}</small>
+              <span class="flex-grow-1"></span>
+              <ng-container *ngIf="item.assetId">
+                <mat-icon class="clickeable ml-2" (click)="openModalRenderAsset(item.assetId)"
+                  matTooltip="Ver PDF del libro digitalizado">
+                  picture_as_pdf
+                </mat-icon>
+              </ng-container>
+              <mat-icon class="clickeable" color="warn" (click)="retirarItem(item)" matTooltip="Retirar antecedente">
+                delete</mat-icon>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </ng-container>
+    </ng-container>
+  </ng-container>
+  <ng-template #notSelectedSolicitudes>
+    <p>No hay solicitudes de antecedentes seleccionadas para exhibir</p>
+  </ng-template>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-flat-button type="button" (click)="onSubmit()">Confirmar</button>
+  <button class="ml-2" mat-flat-button type="button" mat-dialog-close>Cerrar</button>
+</mat-dialog-actions>

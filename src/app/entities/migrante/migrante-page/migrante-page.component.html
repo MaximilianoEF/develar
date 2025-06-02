@@ -1,0 +1,40 @@
+<!--mat-card>
+<mat-card>
+  <mat-card-content>
+    <div class="row">
+      <div class="col-12">
+        <mat-toolbar color="primary">
+          <h3>Navegador Migrantes</h3>
+          <span class="flex-grow-1"></span>
+          <button mat-icon-button type="button" (click)="showAntecedentes()">
+            <mat-icon matBadge="{{(antecedentesSolicitados$ | async).length}}"
+            matBadgeColor="accent"
+            matTooltip="Solicitudes de antecedentes"
+            >assignment</mat-icon>
+          </button>
+        </mat-toolbar>
+      </div>
+    </div>
+    <migrante-browse (lookUpModels)="fetch($event)"></migrante-browse>
+  </mat-card-content>
+</mat-card>
+<mat-progress-bar mode="indeterminate" color="accent" *ngIf="searching"></mat-progress-bar>
+<migrante-table (onBuscarDocumentos)="buscarDocumentos($event)" *ngIf="showData"></migrante-table>
+<-   -->
+<mat-card>
+  <mat-card-title>
+    <h3>Consulta de antecedentes migratorios</h3>
+
+  </mat-card-title>
+  <mat-card-content>
+    <p><span class="text">Ponemos a disposición los registros de pasajeros que ingresaron al país entre los años 1882 y 1937. Éstos surgen de los Libros de entradas de pasajeros por vía marítima que produjo la Dirección Nacional de Migraciones en el arribo al puerto de Buenos Aires. </span></p>
+    <p><span class="text">El AGN se encuentra en estos momentos en un proceso de digitalización del total de los libros de entrada del período, los cuales se irán cargando progresivamente.</span></p>
+    <p><span class="text">Asimismo, conservamos Actas de Inspección Marítima. Estos documentos contienen los listados elaborados por la autoridad correspondiente en cada puerto de subida, y contienen listados hasta el año 1954. Las mismas también serán digitalizadas y publicadas progresivamente.</span></p>
+    <p><span class="text">Podés buscar por nombre y/o apellido del pasajero, nombre del buque y rango de fechas de arribo a puerto.</span></p>
+    <p><span class="text">Si encontrás el registro de ingreso de tu familiar podrás descargar una constancia en formado PDF cliqueando en el botón "ver detalles". Además, de encontrarse digitalizado podrás descargarte el PDF para visualizar el libro completo donde se encuentra registrado el pasajero. </span></p>
+    <migrante-browse (lookUpModels)="fetch($event)"></migrante-browse>
+  </mat-card-content>
+</mat-card>
+
+<mat-progress-bar mode="indeterminate" color="accent" *ngIf="searching"></mat-progress-bar>
+<migrante-table (onBuscarDocumentos)="buscarDocumentos($event)" *ngIf="showData"></migrante-table>

@@ -1,0 +1,87 @@
+//$color-destacado: #0645f5;
+$color-destacado: #50535C;
+$color-normal: #AAAAAA;
+$color-header: #aaaaaa;
+mat-card-title,
+mat-card-subtitle {
+    color: $color-destacado;
+    font-style: italic;
+}
+
+img {
+  height: 100px;
+}
+
+.content-header {
+    //border: thick double #32a1ce;
+    //border: solid rgba(170, 50, 220, .6);
+    color: $color-header;
+}
+
+.content-header-elem {
+    //border: solid rgba(200, 200, 200, .6);
+    //border: thick double #32a1ce;
+}
+
+.content-header-recurso {
+    //border: solid rgba(200, 200, 200, .6);
+    color: $color-destacado;
+    //border: thick double #32a1ce;
+}
+
+.addFiltro {
+    cursor: pointer;
+    color: grey
+}
+
+.titulo {
+    color: $color-destacado;
+}
+
+.text-destacado {
+    margin: 0 0 0 0;
+    color: $color-destacado;
+    font-weight: 400;
+    font-size: 1.2rem;
+    font-style: italic;
+}
+
+.text-resaltado {
+    margin: 0 0 0 0;
+    color: $color-destacado;
+    font-weight: 600;
+    font-size: 1.1rem;
+    font-style: italic;
+}
+
+.text-normal {
+    margin: 0 0 0 0;
+    color: $color-normal;
+    font-weight: 400;
+    font-size: 1rem;
+}
+
+.text-audit {
+    margin: 0 0 0 0;
+    font-weight: 400;
+    font-size: .8rem;
+}
+
+.detail-toggle {
+    margin: 0 0 0 15px;
+    color: $color-destacado;
+    font-weight: 400;
+    font-size: 1.2rem;
+    font-style: italic;
+}
+
+.novedades-container {
+    margin: 5px 0 5px 5px;
+    padding: 5px;
+}
+
+.content-show-more {
+    cursor: pointer;
+    font-size: .8em;
+    font-weight: bold;
+}

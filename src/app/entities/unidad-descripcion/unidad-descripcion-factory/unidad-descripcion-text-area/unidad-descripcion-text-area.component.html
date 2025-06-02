@@ -1,0 +1,17 @@
+<mat-expansion-panel [expanded]="true">
+    <mat-expansion-panel-header>
+        <mat-panel-title>Contenido</mat-panel-title>
+        <mat-panel-description>Coloque el contenido pertinente del documento</mat-panel-description>
+    </mat-expansion-panel-header>
+    <form [formGroup]="formGroup" (ngSubmit)="onSubmit()">
+        <div class="container-fluid p-0">
+            <div class="row">
+                <div class="col-12">
+                    <mat-form-field appearance="outline">
+                        <textarea class="text-area" matInput formControlName="text" (input)="emitTextArea()"></textarea>
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+    </form>
+</mat-expansion-panel>

@@ -1,0 +1,50 @@
+<div id="login-form-container" style="background-image: url({{mainimage}});">
+
+    <ng-container *ngIf="hasImage">
+        <img class="logo-float" src="{{ logoUrl }}" alt="Logo AGN">
+    
+        <!-- <img class="main-image" mat-card-image src='{{ mainimage }}' > -->
+    </ng-container>
+
+    <mat-card id="login-form">
+        <mat-card-title class="text-center">
+            Ingreso al sitio
+        </mat-card-title>
+
+        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+            <mat-form-field appearance="outline">
+                <mat-label>Correo electrónico</mat-label>
+                <input #username matInput placeholder="abc@dominio.com" formControlName="username">
+                <mat-icon matSuffix>mail</mat-icon>
+            </mat-form-field>
+            <br>
+            <mat-form-field appearance="outline">
+                <mat-label>Contraseña</mat-label>
+                <input matInput [type]="'password'"  formControlName="password">
+                <mat-icon matSuffix>lock</mat-icon>
+            </mat-form-field>
+
+            <mat-card-actions>
+                <div class="row">
+                    <div class="col-12">
+                        <button type="submit" id="btn-acceder" mat-flat-button
+                            [disabled]="form.invalid">Ingresar</button>
+
+                        <button type="button" id="btn-volver" (click)="onNavigateHome()" mat-flat-button
+                            >Volver</button>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 mt-4" style="display: flex; flex-direction: column; align-items: center;">
+                        <!-- <a class="btn-left" [routerLink]="['/web','registrarse']">REGISTRATE</a> -->
+                        <button id="btn-registrate" class="btn-left" type='button' mat-flat-button class="mx-3" [routerLink]="['/web','ingresar','registrarse']">Registrate
+                            <i class="ml-1 fas fa-arrow-circle-right"></i>
+                        </button>
+                        <a class="btn-left"  [routerLink]="['/web','ingresar','recuperar']">¿Olvidaste tu contraseña?</a>
+                    </div>
+                </div>
+            </mat-card-actions>
+        </form>
+
+    </mat-card>
+</div>

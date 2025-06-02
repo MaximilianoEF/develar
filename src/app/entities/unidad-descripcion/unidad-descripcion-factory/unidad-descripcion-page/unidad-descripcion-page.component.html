@@ -1,0 +1,49 @@
+<div class="container-fluid p-0" *ngIf="startInitialView">
+  <div class="row">
+    <div class="col-12 p-0">
+      <unidad-descripcion-header *ngIf="showHeader" [referenceCodeTx]="udaReferenceCode"
+        (companyEmitter)="updateCompany($event)" (refreshUdaDialog)="refreshUdaDialog()" [ud]="ud"
+        [companyList]="companyList"
+        [prevNext]="prevNext"></unidad-descripcion-header>
+    </div>
+  </div>
+  <div class="row mt-2">
+    <div class="col-12 p-0">
+      <unidad-descripcion-actions (emitActionSelected)="action($event)"></unidad-descripcion-actions>
+    </div>
+  </div>
+  <div class="row my-2">
+    <div class="col-12 p-0">
+      <unidad-descripcion-input-area *ngIf="renderInputArea"
+        (identifierEmitter)="updateIdentifier($event)"
+        (closeInputAreaEmitter)="hideInputArea()"
+        [referenceCodeTx]="udaReferenceCode"
+        [actionSelected]="actionSelected"
+        (emitForms)="saveForm($event)"
+        (udSelected)="vinculoParent($event)"
+        [ud]="ud"
+        [udChildrens]="udChildrens">
+      </unidad-descripcion-input-area>
+    </div>
+  </div>
+  <ng-container *ngIf="renderUdaAssetPreview">
+    <div class="row mt-2">
+      <div class="col-12 p-0">
+        <view-content-ud [ud]="ud"></view-content-ud>
+      </div>
+    </div>
+  </ng-container>
+  <div class="row">
+    <div class="col-12 p-0">
+      <unidad-descripcion-text-area (emitText)="loadText($event)" [ud]="ud" *ngIf="showTextArea">
+      </unidad-descripcion-text-area>
+    </div>
+  </div>
+  <div class="row my-2">
+    <div class="col-12 p-0">
+      <assets-upload (assetUpload)=assetUpload($event) (externalAsset)='addExternalAsset($event)' *ngIf="isEdit">
+      </assets-upload>
+    </div>
+  </div>
+</div>
+<mat-progress-bar mode="indeterminate" *ngIf="!startInitialView"></mat-progress-bar>

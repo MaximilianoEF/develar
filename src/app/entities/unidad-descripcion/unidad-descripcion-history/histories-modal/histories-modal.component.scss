@@ -1,0 +1,10 @@
+.mat-list-item {
+    font-size: .9em;
+}
+
+::ng-deep {
+    .mat-list-base .mat-list-item .mat-list-item-content {
+        align-items: start;
+        flex-direction: column;
+    }
+}

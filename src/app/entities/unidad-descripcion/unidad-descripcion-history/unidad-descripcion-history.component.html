@@ -1,0 +1,73 @@
+<mat-card class="mat-elevation-z4">
+  <mat-card-title>Administración GestiónDOC</mat-card-title>
+  <mat-card-content>
+    <div class="row pb-3">
+      <div class="col-12">
+        <p class="mb-0"><strong>Estado general: </strong> {{ generalStatus }}</p>
+        <p class="mb-0"><strong>Estado de descripción archivística: </strong> {{ descriptionStatus }}</p>
+        <p class="mb-0" *ngIf="inventario"><strong>Inventario:</strong> {{inventario}} </p>
+      </div>
+    </div>
+
+    <mat-divider></mat-divider>
+
+    <div class="row pt-3">
+      <div class="col-12">
+        <p class="mb-0"><strong>Creado por: </strong> {{ createdBy }}</p>
+
+        <p><strong>Fecha de creación: </strong> {{ createdAt }}</p>
+      </div>
+    </div>
+
+    <div class="row py-3">
+      <div class="col-12">
+        <p class="mb-0"><strong>Última modificación por: </strong> {{ lastModifiedBy }}</p>
+        <p><strong>Fecha de última modificación: </strong> {{ lastModifiedAt }}</p>
+        <p><strong>Última novedad: </strong> {{ lastModifiedReason }}</p>
+      </div>
+    </div>
+
+    <mat-divider></mat-divider>
+
+    <div class="row pt-3">
+      <div class="col-12">
+        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+
+          <mat-form-field class="mb-3">
+            <mat-label>Nivel de avance</mat-label>
+            <mat-select formControlName="navance">
+              <mat-option *ngFor="let item of nivelAvanceList" [value]="item.val">{{ item.label }}</mat-option>
+            </mat-select>
+            <mat-hint>Seleccione el nuevo nivel de avance</mat-hint>
+          </mat-form-field>
+
+          <mat-form-field class="mb-3">
+            <mat-label>Motivo, novedad o actualización</mat-label>
+            <input matInput formControlName="reason">
+            <mat-hint align="start">Ingrese el motivo, novedad o actualización que motiva la edición</mat-hint>
+          </mat-form-field>
+
+          <mat-form-field class="mb-3">
+            <mat-label>Inventario</mat-label>
+            <input matInput formControlName="inventario">
+            <mat-hint align="start">Información de inventario</mat-hint>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Indique las instrucciones para la digitalización / preservación</mat-label>
+            <textarea matInput formControlName="procedureTxt"></textarea>
+            <mat-hint>Estas instrucciones estarán visibles al momento de la ingesta</mat-hint>
+          </mat-form-field>
+
+          <mat-card-actions class="mt-3">
+            <button class="ml-2" mat-flat-button type="submit" [disabled]="form.invalid"
+              color="primary">Confirmar</button>
+            <button class="ml-3" mat-flat-button type="button" color="primary" (click)="displayHistory()">Ver historial
+              de cambios</button>
+            <button class="ml-3" mat-flat-button type="button" color="warn" (click)="closeForm()">Cancelar</button>
+          </mat-card-actions>
+        </form>
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>

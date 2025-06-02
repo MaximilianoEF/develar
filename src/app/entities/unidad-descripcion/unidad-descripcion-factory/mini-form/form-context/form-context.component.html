@@ -1,0 +1,59 @@
+<mat-card>
+  <mat-card-title>Contexto</mat-card-title>
+  <div class="container-fluid p-0">
+    <div class="row">
+      <div class="col-md-6 col-12">
+        <mat-form-field appearance="outline">
+          <mat-label>Buscar registro de autoridad por nombre:</mat-label>
+          <input #searchBox matInput id="search-box" [matAutocomplete]="identifier" (keyup)="search(searchBox.value)" />
+          <span matSuffix (click)='addEntity()'>
+            <i [class]="openEditor ? 'far fa-edit' : 'fas fa-pen-square'" aria-hidden="true"></i>
+          </span>
+        </mat-form-field>
+        <mat-autocomplete #identifier="matAutocomplete">
+          <mat-option *ngFor="let item of authorityRecords$ | async" (click)="selectEntity(item)">
+            {{ item.controlArea.identifier }} :: {{ item.identityArea.authorizedName }}
+          </mat-option>
+        </mat-autocomplete>
+      </div>
+      <div class="col-12 col-md-6" *ngIf="hasSelectedEntities">
+        <h6 class="my-0">Creadores</h6>
+        <mat-chip-list>
+          <mat-chip *ngFor="let item of selectedEntities" [removable]="areSelectedEntitiesRemovable"
+            (removed)="removeRelatedEntity(item)">
+            {{ item.controlArea.identifier }} :: {{ item.identityArea.authorizedName }}
+            <mat-icon matChipRemove *ngIf="areSelectedEntitiesRemovable">cancel</mat-icon>
+          </mat-chip>
+        </mat-chip-list>
+      </div>
+    </div>
+  </div>
+  <form [formGroup]="formGroup" (ngSubmit)="onSubmit()">
+    <div class="container-fluid p-0">
+      <div class="row">
+        <div class="col-12">
+          <mat-form-field appearance="outline">
+            <mat-label>Institución archivística</mat-label>
+            <input matInput formControlName="repository">
+          </mat-form-field>
+        </div>
+        <div class="col-12">
+          <mat-form-field appearance="outline">
+            <mat-label>Historia archivística</mat-label>
+            <textarea matInput formControlName="archival_history"></textarea>
+          </mat-form-field>
+        </div>
+        <div class="col-12">
+          <mat-form-field appearance="outline">
+            <mat-label>Origen del ingreso o transferencia</mat-label>
+            <textarea matInput formControlName="immediate_source_of_acquisition_or_transfer"></textarea>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <button class="ml-2" mat-flat-button color="primary" type="submit">Confirmar</button>
+        <button type="button" class="ml-2" mat-flat-button color="warn" (click)="closeForm()">Cancelar</button>
+      </div>
+    </div>
+  </form>
+</mat-card>

@@ -1,0 +1,90 @@
+<ng-container *ngIf="showForm">
+  <mat-card class="mb-3">
+    <div class="row">
+      <div class="col-12 ml-3">
+        <mat-card-title *ngIf="!isEdit">Dar de alta una taxonomía</mat-card-title>
+        <mat-card-title *ngIf="isEdit">Editando taxonomía [{{ entity.identificador }} - {{ entity._id }}]</mat-card-title>
+      </div>
+    </div>
+
+    <form [formGroup]="form" (ngSubmit)="handleSubmit()">
+      <div class="container-fluid">
+        <div class="row align-items-center">
+
+          <div class="col-sm-3">
+            <mat-form-field>
+              <mat-label>Mostrar como</mat-label>
+              <input matInput formControlName="slug" required>
+            </mat-form-field>
+          </div>
+
+          <div class="col-sm-3">
+            <mat-form-field>
+              <mat-label>Identificador</mat-label>
+              <input matInput formControlName="identificador" required>
+              <mat-error *ngIf="asyncValidationErrors.taxonomiaIdentificador">{{ asyncValidationErrors.taxonomiaIdentificador }}</mat-error>
+              <mat-hint>Código univoco de la taxonomía</mat-hint>
+            </mat-form-field>
+          </div>
+
+          <div class="col-sm-2" *ngIf="isEdit">
+            <mat-checkbox formControlName="canEditIdentificador" (change)="changeEditIdentificador($event)">
+              <span>Editar identificador</span>
+            </mat-checkbox>
+          </div>
+
+        </div>
+
+        <div class="row">
+          <div class="col-6 mt-4">
+            <mat-form-field appearance="outline">
+              <mat-label>Descripción</mat-label>
+              <textarea matInput formControlName="descripcion" required></textarea>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-sm-2">
+            <mat-checkbox formControlName="isLocked">¿Taxonomía bloqueada?</mat-checkbox>
+          </div>
+
+          <div class="col-sm-2">
+            <mat-checkbox formControlName="canCreateOnTheFly">¿Se puede crear "al vuelo"?</mat-checkbox>
+          </div>
+        </div>
+      </div>
+
+      <div class="container-fluid mt-5">
+        <hr>
+        <div class="row align-items-center">
+          <div class="col-12">
+            <button mat-flat-button type="submit" color="primary" [disabled]="!form.valid">
+              <ng-container *ngIf="isEdit">
+                Guardar
+              </ng-container>
+              <ng-container *ngIf="!isEdit">
+                Crear
+              </ng-container>
+            </button>
+            <button *ngIf="!isEdit" mat-flat-button class="ml-2" type="button" color="warn" [routerLink]="['..']">Cancelar</button>
+            <ng-container *ngIf="isEdit">
+              <button mat-flat-button class="ml-2" type="button" color="warn" [routerLink]="['../..']">Cancelar</button>
+              <mat-checkbox class="ml-2" (change)="changeEditTaxonomy($event)" *ngIf="!isLocked">
+                <span>¿Habilitar edición de taxonomía?</span>
+              </mat-checkbox>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+    </form>
+  </mat-card>
+</ng-container>
+
+<ng-container *ngIf="isEdit && !isLocked">
+  <taxonomia-termino-edit [taxonomia]="entity"></taxonomia-termino-edit>
+</ng-container>
+<ng-container *ngIf="(dataSource$ | async) as dataSource">
+  <termino-table *ngIf="dataSource && dataSource.length" [isLocked]="isLocked"></termino-table>
+</ng-container>
+

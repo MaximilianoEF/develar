@@ -1,0 +1,63 @@
+<mat-card class="mb-2">
+    <div class="container-fluid p-0">
+        <div class="row">
+            <div class="col-md-4 col-12">
+                <mat-card-title>(PI) Proceso de Ingesta</mat-card-title>
+            </div>
+            <div class="col-md-8 col-12" style="text-align: end;">
+                <button mat-flat-button type="button" color="primary" (click)="openScanFolderMoldal()" [disabled]="!(pi$ | async)">Carpeta</button>
+                <button mat-flat-button class="ml-2" type="button" color="accent" (click)="openBrowserUDAModal()" [disabled]="!(pi$ | async)">UDA</button>
+                <button mat-flat-button class="ml-2" type="button" color="primary" (click)="openUcoModal()" [disabled]="!(pi$| async)">UCO</button>
+                <button mat-flat-button class="ml-2" type="button" color="warn" (click)="returnToBrowser()" title="Volver al navegador de procesos de ingesta"><mat-icon>chevron_left</mat-icon>Volver</button>
+            </div>
+        </div>
+    </div>
+    <mat-card-content>
+        <div class="container-fluid p-0">
+            <div class="row">
+                <!-- DATOS DE PI Y UDA -->
+                <div class="col-md-4 col-12">
+                    <ng-container *ngIf="pi$ | async as pi">
+                        <p class="mb-1" *ngIf="ud$ | async as ud"><strong class="navegable" matTooltip="Navegar a vista de edición." (click)="goToEditView(ud._id)">UDA BASE: {{(getCodRef(ud))}}</strong></p>
+                        <p class="mb-1 d-flex align-items-center"><strong>SLUG: </strong>&nbsp;{{pi.slug}} <mat-icon class="ml-2 clickeable" (click)="editSlug()" matTooltip="Editar slug">edit</mat-icon></p>
+                        <p class="mb-1"><strong>{{pi.admin.compName}}: {{pi.admin.compNum}}</strong> | {{pi.admin.fe_comp_tx}} | {{ getEstadoLabel(pi.admin.avance) }}</p>
+                        <p class="mb-1"><strong>TIPO: </strong> {{ getTipoParteLabel(pi.admin.tipoParte) }}</p>
+                        <p class="mb-1" *ngIf="pi.ingestFolder && pi.ingestFolder.path"><strong>CI: </strong> {{pi.ingestFolder.path}} </p>
+                    </ng-container>
+
+                </div>
+                <!--DATOS CORRESPONDIENTES AL FOLDERSCAN DE LA CARPETA CONTENEDORA-->
+                <div class="col-md-3 col-12" *ngIf="scan$ | async as scan">
+                    <p class="mb-1"><strong>OBJETOS DIGITALES</strong></p>
+                    <p class="mb-1">ASSETS: <span *ngFor="let item of scan.files">
+                            {{item.extension}}: #{{item.count}}
+                        </span></p>
+                    <p class="mb-1">CARPETAS: #{{scan.folderCount}} </p>
+                </div>
+                <!-- DATOS DE LOS CHILDREN DE LA UDA-->
+                <ng-container *ngIf="ud$ | async as ud">
+                    <div class="col-md-2 col-12" *ngIf="udChildren && udChildren.length">
+                        <p class="mb-1"><strong>UNIDADES DOCUMENTALES</strong></p>
+                        <p  class="mb-1" *ngFor="let item of udChildren">
+                            {{item.type}}: #{{item.length}}
+                        </p>
+                    </div>
+                </ng-container>
+
+                <div class="col-md-3 col-12" *ngIf="pi$ | async as pi">
+
+                    <ng-container *ngIf="pi.ucos && pi.ucos.length">
+                        <p><strong>UCO vinculadas</strong></p>
+                        <mat-chip-list>
+                            <mat-chip *ngFor="let item of pi.ucos" [removable]="true" (removed)="removedUco(item)" (click)="openViewUco(item)">
+                                {{ item.cod_uco }} :: {{ item.slug }}
+                                <mat-icon matChipRemove>cancel</mat-icon>
+                            </mat-chip>
+                        </mat-chip-list>
+
+                    </ng-container>
+                </div>
+            </div>
+        </div>
+    </mat-card-content>
+</mat-card>

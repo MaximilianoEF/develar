@@ -1,0 +1,46 @@
+<mat-card class="mb-3">
+  <div class="container-fluid p-0">
+    <div class="row">
+      <div class="col-md-5">
+        <mat-card-title>Assets</mat-card-title>
+      </div>
+      <div class="col-md-7 col-12" style="text-align: end;">
+        <mat-button-toggle-group appearance="legacy" value="tree" #viewAs="matButtonToggleGroup">
+          <mat-button-toggle value="tree">Ver árbol</mat-button-toggle>
+          <mat-button-toggle value="table" (click)="buildDataTable()">Ver tabla</mat-button-toggle>
+        </mat-button-toggle-group>
+
+        <button class="ml-3" mat-flat-button color="primary" (click)="collectAssetMetadata()">
+          Colectar metadata
+        </button>
+      </div>
+    </div>
+    <mat-card-content>
+      <div class="container-fluid p-0">
+        <div class="row">
+          <div class="col-12" *ngIf="viewAs.value === 'tree'">
+            <assets-tree></assets-tree>
+          </div>
+          <div class="col-12" *ngIf="viewAs.value === 'table'">
+            <h6>Tabla de objetos digitales</h6>
+            <button mat-button [matMenuTriggerFor]="menu">Acciones</button>
+            <mat-menu #menu="matMenu">
+              <button mat-menu-item type="button" (click)="edit()">Editar</button>
+            </mat-menu>
+            <assets-table (updateSelection)="onChildSelectionChange($event)"></assets-table>
+          </div>
+        </div>
+      </div>
+    </mat-card-content>
+    <ng-container *ngIf="pdfWorkInProgress$ | async">
+      <div class="row align-items-center">
+        <div class="col-md-4">
+          <span>PDF: {{pdfProgressInfo$ | async}}</span>
+        </div>
+        <div class="col-md-8">
+          <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+</mat-card>

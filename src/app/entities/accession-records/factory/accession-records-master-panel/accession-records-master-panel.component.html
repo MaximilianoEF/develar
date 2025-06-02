@@ -1,0 +1,31 @@
+<div class="container-fluid p-0">
+  <div class="row">
+    <div class="col-12 p-0">
+      <header-actions-ar></header-actions-ar>
+    </div>
+  </div>
+  <div class="row my-2">
+
+    <div class="col-12 p-0">
+      <ng-container *ngIf="(headerAction$ | async) as action">
+        
+        <migraciones-ar-edit *ngIf="action === 'migrante'" (upsertRecord)="upsertRecord($event)"></migraciones-ar-edit>
+
+        <barco-vapores-ar-edit *ngIf="action === 'barcovapores'"></barco-vapores-ar-edit>
+      </ng-container>
+    </div>
+  </div>
+  <div class="row my-2">
+    <div class="col-12 p-0">
+      <!-- Cuadrante para la uda-->
+      <uda-panel *ngIf="udaProxy" [udaProxy]="udaProxy"></uda-panel>
+    </div>
+  </div>
+  <div class="row my-2">
+    <div class="col-12 p-0">
+      <ng-container *ngIf="showData">
+        <accession-records-table></accession-records-table>
+      </ng-container>
+    </div>
+  </div>
+</div>

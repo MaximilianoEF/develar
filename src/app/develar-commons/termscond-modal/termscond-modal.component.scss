@@ -1,0 +1,5 @@
+@import '../../../assets/sass/mixin';
+
+.mat-flat-button {
+    @include button-agn;
+}

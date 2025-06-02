@@ -1,0 +1,38 @@
+<h3 mat-dialog-title>Buscador de UCOs</h3>
+<form [formGroup]="formGroup" (ngSubmit)="onSubmit()">
+  <mat-dialog-content>
+    <div class="container-fluid p-0">
+      <div class="row">
+        <div class="col-12">
+          <mat-form-field appearance="outline">
+            <mat-label>Buscar UCO</mat-label>
+            <input #searchBox matInput id="search-box" formControlName="cod_uco" [matAutocomplete]="displayName">
+            <button type="submit" mat-button matSuffix mat-icon-button [disabled]="formGroup.invalid">
+              <mat-icon matTooltip="Buscar">
+                search
+              </mat-icon>
+            </button>
+            <mat-hint>Buscar por codigo unívoco de la UCO</mat-hint>
+            <!-- <mat-error *ngIf="formGroup.get('term').invalid">Debe escribir minimo 1 caracteres</mat-error> -->
+          </mat-form-field>
+          <mat-autocomplete #displayName="matAutocomplete">
+            <mat-option *ngFor="let item of ucos$ | async" (onSelectionChange)="selectEntity(item)"
+              [value]="searchBox.value">
+              ({{item.cod_uco}}) : {{item.slug}}
+            </mat-option>
+          </mat-autocomplete>
+        </div>
+      </div>
+      <div class="row" *ngIf="ucoSelected">
+        <div class="col-12">
+          <p class="ml-2 my-2"><b>Ha seleccionado la UCO: {{ucoSelected.cod_uco}}</b> </p>
+        </div>
+      </div>
+    </div>
+  </mat-dialog-content>
+  <mat-dialog-actions>
+    <button mat-flat-button class="ml-2" type="button" color="primary"
+      (click)="confirmarSeleccion()">Seleccionar</button>
+    <button mat-flat-button class="ml-2" type="button" color="warn" mat-dialog-close>Cancelar</button>
+  </mat-dialog-actions>
+</form>

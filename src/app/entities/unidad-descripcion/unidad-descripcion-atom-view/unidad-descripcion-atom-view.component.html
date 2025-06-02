@@ -1,0 +1,333 @@
+<div class="container mt-4 p-0">
+    <mat-progress-bar *ngIf="!startView" mode="indeterminate"></mat-progress-bar>
+    <mat-card *ngIf="startView">
+        <mat-card-title>
+            <h3 class="my-0">
+                <mat-icon style="cursor: pointer;" (click)="returnToPrevious()">chevron_left</mat-icon> {{reference_code}}</h3>
+        </mat-card-title>
+        <mat-card-subtitle>
+            <h3 class="my-0"><small>{{ subTitle }}</small></h3>
+        </mat-card-subtitle>
+        <mat-card-content>
+            <div class="container-fluid p-0">
+                <div class="row">
+                    <div class="col-12 p-0">
+                        <!-- Área de indentidad -->
+                        <section>
+                            <h2 class="title-areas">Área de identidad</h2>
+                            <ng-container *ngIf="ud.identificador">
+                                <div class="field" *ngIf="reference_code">
+                                    <h3>Código de referencia</h3>
+                                    <p>{{reference_code}}</p>
+                                </div>
+                                <div class="field" *ngIf="ud.identificador.title">
+                                    <h3>Título</h3>
+                                    <p>{{ud.identificador.title}}</p>
+                                </div>
+                                <div class="field" *ngIf="ud.identificador.dates && ud.identificador.dates.length">
+                                    <h3>Fecha(s)</h3>
+                                    <div>
+                                        <ul>
+                                            <li *ngFor="let item of ud.identificador.dates">
+                                                <p>{{item.date}} ({{getLabel('identifierDateType',item.type)}})</p>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="field" *ngIf="ud.identificador.level_of_description">
+                                    <h3>Nivel de descripción</h3>
+                                    <p>{{getLabel('descriptionLevel', ud.identificador.level_of_description)}}</p>
+                                </div>
+                                <div class="field" *ngIf="ud.identificador.extent_and_medium">
+                                    <h3>Volumen y soporte</h3>
+                                    <p>{{ud.identificador.extent_and_medium}}</p>
+                                </div>
+                            </ng-container>
+
+                        </section>
+                    </div>
+                    <!-- Fin área de indentidad-->
+
+                    <!-- Área de contexto -->
+                    <div class="col-12 p-0">
+                        <section>
+                            <h2 class="title-areas">Área de contexto</h2>
+                            <ng-container *ngIf="ud.contexto">
+                                <ng-container *ngFor="let item of ud.contexto.creators">
+                                    <div class="field" *ngIf="item.authorityRecordName">
+                                        <h3>Nombre del productor</h3>
+                                        <p>{{item.authorityRecordName}}</p>
+                                    </div>
+                                </ng-container>
+                                <div class="field" *ngIf="ud.contexto.repository">
+                                    <h3>Institución archivística</h3>
+                                    <p>{{ud.contexto.repository}}</p>
+                                </div>
+                                <div class="field" *ngIf="ud.contexto.archival_history">
+                                    <h3>Historía archivística</h3>
+                                    <p>{{ud.contexto.archival_history}}</p>
+                                </div>
+                                <div class="field" *ngIf="ud.contexto.immediate_source_of_acquisition_or_transfer">
+                                    <h3>Origen del ingreso o transferencia</h3>
+                                    {{ud.contexto.immediate_source_of_acquisition_or_transfer}}
+                                </div>
+                            </ng-container>
+
+                        </section>
+                    </div>
+                    <!-- Fin área de contexto-->
+
+                    <!-- Área de contenido y estructura-->
+                    <div class="col-12 p-0">
+                        <section>
+                            <h2 class="title-areas">Área de contenido y estructura</h2>
+                            <ng-container *ngIf="ud.contenidoYEstructura">
+                                <div class="field" *ngIf="ud.contenidoYEstructura.scope_and_content">
+                                    <h3>Alcance y contenido</h3>
+                                    <p>{{ud.contenidoYEstructura.scope_and_content}}</p>
+                                </div>
+                                <div class="field" *ngIf="ud.contenidoYEstructura.appraisal_destruction_and_scheduling">
+                                    <h3>Valorización, destrucción y programación</h3>
+                                    <p>{{ud.contenidoYEstructura.appraisal_destruction_and_scheduling}}</p>
+                                </div>
+                                <div class="field" *ngIf="ud.contenidoYEstructura.accruals">
+                                    <h3>Acumulaciones</h3>
+                                    {{ud.contenidoYEstructura.accruals}}
+                                </div>
+                                <div class="field" *ngIf="ud.contenidoYEstructura.especificaciones && ud.contenidoYEstructura.especificaciones.length">
+                                    <h3>Sistema de arreglo</h3>
+                                    <p *ngFor="let item of ud.contenidoYEstructura.especificaciones">
+                                        {{ item.system_of_arrangement }}
+                                    </p>
+                                </div>
+                            </ng-container>
+                        </section>
+                    </div>
+                    <!--Fin área de contenido y estructura-->
+
+                    <!-- Área de condiciones de acceso y uso -->
+                    <div class="col-12 p-0">
+                        <section>
+                            <h2 class="title-areas">Área de condiciones de acceso y uso</h2>
+                            <ng-container *ngIf="ud.accesoYUso">
+                                <div class="field" *ngIf="ud.accesoYUso.conditions_governing_access">
+                                    <h3>Condiciones de acceso</h3>
+                                    <p>{{ ud.accesoYUso.conditions_governing_access }}</p>
+                                </div>
+                                <div class="field" *ngIf="ud.accesoYUso.conditions_governing_reproduction">
+                                    <h3>Condiciones de reproducción</h3>
+                                    <p>{{ud.accesoYUso.conditions_governing_reproduction}}</p>
+                                </div>
+                                <div class="field" *ngIf="ud.accesoYUso.languages_of_material && ud.accesoYUso.languages_of_material.length">
+                                    <h3>Idioma del material</h3>
+                                    <div>
+                                        <ul>
+                                            <li *ngFor="let item of ud.accesoYUso.languages_of_material">
+                                                {{item}}
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="field" *ngIf="ud.accesoYUso.scripts_of_material && ud.accesoYUso.scripts_of_material.length">
+                                    <h3>Escritura del material</h3>
+                                    <div>
+                                        <ul>
+                                            <li *ngFor="let item of ud.accesoYUso.scripts_of_material">
+                                                {{item}}
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="field" *ngIf="ud.accesoYUso.physical_characteristics_and_technical_requirements">
+                                    <h3>Características físicas y requisitos técnicos</h3>
+                                    <p>
+                                        {{ud.accesoYUso.physical_characteristics_and_technical_requirements}}
+                                    </p>
+                                </div>
+                                <div class="field" *ngIf="ud.accesoYUso.finding_aids">
+                                    <h3>Instrumentos de descripción</h3>
+                                    <p>{{ud.accesoYUso.finding_aids}}</p>
+                                </div>
+                            </ng-container>
+                        </section>
+                    </div>
+                    <!-- Fin área de condiciones de acceso y uso-->
+
+                    <!-- Área de materiales relacionados -->
+                    <div class="col-12 p-0">
+                        <section>
+                            <h2 class="title-areas">Área de materiales relacionados</h2>
+                            <ng-container *ngIf="ud.documentacionAsociada">
+                                <div class="field" *ngIf="ud.documentacionAsociada.existence_and_location_of_originals">
+                                    <h3>Existencia y localización de originales</h3>
+                                    <p>
+                                        {{ud.documentacionAsociada.existence_and_location_of_originals}}
+                                    </p>
+                                </div>
+                                <div class="field" *ngIf="ud.documentacionAsociada.existence_and_location_of_copies">
+                                    <h3>Existencia y localización de copias</h3>
+                                    <p>
+                                        {{ud.documentacionAsociada.existence_and_location_of_copies}}
+                                    </p>
+                                </div>
+                                <div class="field" *ngIf="ud.documentacionAsociada.related_units_of_description">
+                                    <h3>Unidades de descripción relacionadas</h3>
+                                    <p>
+                                        {{ud.documentacionAsociada.related_units_of_description}}
+                                    </p>
+                                </div>
+                                <div class="field" *ngIf="ud.documentacionAsociada.publication_notes && ud.documentacionAsociada.publication_notes.length">
+                                    <h3>Nota de publicación</h3>
+                                    <div>
+                                        <ul>
+                                            <li *ngFor="let item of ud.documentacionAsociada.publication_notes">
+                                                {{item}}
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </ng-container>
+                        </section>
+                    </div>
+                    <!-- Fin área de materiales relacionados -->
+
+                    <!-- Área de control de la descripción -->
+                    <div class="col-12 p-0">
+                        <section>
+                            <h2 class="title-areas">Área de control de la descripción</h2>
+                            <ng-container *ngIf="ud.controlDeLaDescripcion">
+                                <div class="field" *ngIf="ud.controlDeLaDescripcion.description_identifier">
+                                    <h3>Identificador de la descripción</h3>
+                                    <p>
+                                        {{ud.controlDeLaDescripcion.description_identifier}}
+                                    </p>
+                                </div>
+                                <div class="field" *ngIf="ud.controlDeLaDescripcion.institution_identifier">
+                                    <h3>Identificador de la institución</h3>
+                                    <p>
+                                        {{ud.controlDeLaDescripcion.institution_identifier}}
+                                    </p>
+                                </div>
+                                <div class="field" *ngIf="ud.controlDeLaDescripcion.rules_and_or_conventions_used">
+                                    <h3>Reglas y/o convenciones usadas</h3>
+                                    <p>
+                                        {{ud.controlDeLaDescripcion.rules_and_or_conventions_used}}
+                                    </p>
+                                </div>
+                                <div class="field" *ngIf="ud.controlDeLaDescripcion.status">
+                                    <h3>Estado de elaboración</h3>
+                                    <p>
+                                        {{ud.controlDeLaDescripcion.status}}
+                                    </p>
+                                </div>
+                                <div class="field" *ngIf="ud.controlDeLaDescripcion.level_of_detail">
+                                    <h3>Nivel de detalle</h3>
+                                    <p>
+                                        {{ud.controlDeLaDescripcion.level_of_detail}}
+                                    </p>
+                                </div>
+                                <div class="field" *ngIf="ud.controlDeLaDescripcion['Dates of creation revision deletion']">
+                                    <h3>Fechas de creación, revisión, eliminación</h3>
+                                    <p>
+                                        {{ud.controlDeLaDescripcion['Dates of creation revision deletion']}}
+                                    </p>
+                                </div>
+                                <div class="field" *ngIf="ud.controlDeLaDescripcion.physical_characteristics_and_technical_requirements">
+                                    <h3>Fuentes</h3>
+                                    <p>
+                                        {{ud.controlDeLaDescripcion.physical_characteristics_and_technical_requirements}}
+                                    </p>
+                                </div>
+                                <div class="field" *ngIf="ud.controlDeLaDescripcion.languages_of_description && ud.controlDeLaDescripcion.languages_of_description.length">
+                                    <h3>Idioma(s)</h3>
+                                    <div>
+                                        <ul>
+                                            <li *ngFor="let item of ud.controlDeLaDescripcion.languages_of_description">
+                                                {{item}}
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="field" *ngIf="ud.controlDeLaDescripcion.scripts_of_description && ud.controlDeLaDescripcion.scripts_of_description.length">
+                                    <h3>Escritura(s)</h3>
+                                    <div>
+                                        <ul>
+                                            <li *ngFor="let item of ud.controlDeLaDescripcion.scripts_of_description">
+                                                {{item}}
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="field" *ngIf="ud.controlDeLaDescripcion.archivists_notes && ud.controlDeLaDescripcion.archivists_notes.length">
+                                    <h3>Nota del archivista</h3>
+                                    <div>
+                                        <ul>
+                                            <li *ngFor="let item of ud.controlDeLaDescripcion.archivists_notes">
+                                                {{item}}
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </ng-container>
+                        </section>
+                        <!-- Fin área control de la descripción-->
+                        <!-- Puntos de acceso -->
+                        <section>
+                            <h2 class="title-areas">Puntos de acceso</h2>
+                            <ng-container *ngIf="ud.puntoAcceso">
+                                <div class="field" *ngIf="ud.puntoAcceso.subject_access_points && ud.puntoAcceso.subject_access_points.length">
+                                    <h3>Puntos de acceso por materia</h3>
+                                    <div>
+                                        <ul>
+                                            <li *ngFor="let item of ud.puntoAcceso.subject_access_points">
+                                                {{item}}
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="field" *ngIf="ud.puntoAcceso.name_access_points && ud.puntoAcceso.name_access_points.length">
+                                    <h3>Puntos de acceso por nombre</h3>
+                                    <div>
+                                        <ul>
+                                            <li *ngFor="let item of ud.puntoAcceso.name_access_points">
+                                                {{item}}
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="field" *ngIf="ud.puntoAcceso.place_access_points && ud.puntoAcceso.place_access_points.length">
+                                    <h3>Puntos de acceso por lugar</h3>
+                                    <div>
+                                        <ul>
+                                            <li *ngFor="let item of ud.puntoAcceso.place_access_points">
+                                                {{item}}
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="field" *ngIf="ud.puntoAcceso.genre_access_points && ud.puntoAcceso.genre_access_points.length">
+                                    <h3>Puntos de acceso por autoridad</h3>
+                                    <div>
+                                        <ul>
+                                            <li *ngFor="let item of ud.puntoAcceso.genre_access_points">
+                                                {{item}}
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </ng-container>
+                        </section>
+                        <!-- Fin puntos de acceso-->
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <button type="button" mat-flat-button color="warn" class="my-2" (click)="returnToPrevious()"><mat-icon>chevron_left</mat-icon> Volver</button>
+                    </div>
+                </div>
+
+                <unidad-descripcion-children-tree [childrensTree$]="childrensTree$"></unidad-descripcion-children-tree>
+            </div>
+        </mat-card-content>
+    </mat-card>
+</div>

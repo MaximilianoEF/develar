@@ -1,0 +1,37 @@
+<div class="container-fluid p-0 ml-3">
+    <div class="row">
+        <div class="col-12">
+            <mat-toolbar><span class="title-areas">Control de la descripción</span></mat-toolbar>
+        </div>
+    </div>
+    <div class="row pb-3">
+        <div class="col-12">
+            <p class="mb-0"><strong>Estado general: </strong> {{ generalStatus }}</p>
+            <p class="mb-0"><strong>Estado de descripción archivística: </strong> {{ descriptionStatus }}</p>
+        </div>
+    </div>
+
+    <mat-divider></mat-divider>
+
+    <div class="row pt-3">
+        <div class="col-12">
+            <p class="mb-0"><strong>Creado por: </strong> {{ createdBy }}</p>
+
+            <p><strong>Fecha de creación: </strong> {{ createdAt }}</p>
+        </div>
+    </div>
+
+    <div class="row py-3">
+        <div class="col-12">
+            <p class="mb-0"><strong>Última modificación por: </strong> {{ lastModifiedBy }}</p>
+            <p><strong>Fecha de última modificación: </strong> {{ lastModifiedAt }}</p>
+            <p><strong>Última novedad: </strong> {{ lastModifiedReason }}</p>
+        </div>
+    </div>
+    <div class="row mt-3">
+        <div class="col-12">
+            <button class="mb-3" mat-flat-button type="button" color="primary" (click)="displayHistory()">Ver historial de cambios</button>
+        </div>
+    </div>
+</div> 
+        

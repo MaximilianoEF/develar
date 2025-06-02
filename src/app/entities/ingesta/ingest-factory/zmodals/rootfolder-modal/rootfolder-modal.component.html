@@ -1,0 +1,48 @@
+<form [formGroup]="formGroup" (ngSubmit)="onSubmit()">
+  <h3 mat-dialog-title>Selección de carpeta raíz</h3>
+  <mat-dialog-content>
+    <div class="container-fluid p-0">
+      <div class="row">
+        <div class="col-12">
+          Punto de montaje: {{ rootPath }}
+        </div>
+      </div>
+      <div class="row" style="align-items: center;">
+        <div class="col-8">
+          <mat-form-field>
+            <mat-label>Ruta local de la carpeta raíz</mat-label>
+            <input #txtLocalPath matInput formControlName="localPath">
+          </mat-form-field>
+        </div>
+        <div class="col-4">
+          <button mat-flat-button color="primary" (click)="escanear(txtLocalPath.value)" type="button">
+            Ver contenido
+          </button>
+        </div>
+      </div>
+      <div class="row" *ngIf="scanResult">
+        <div class="col-12">
+          <p class="mb-2">
+            <strong>Encontrados {{ scanResult.filesCount }} archivos: </strong> <span
+            *ngFor="let item of scanResult.files">{{ item.count }} {{ item.extension }} </span>
+          </p>
+
+          <ng-container *ngIf="scanResult.folderCount > 0">
+            <p class="mb-0">
+              <strong>Refinar búsqueda por subcarpeta: </strong>
+            </p>
+            <ul>
+              <li class="folderItem" *ngFor="let item of scanResult.folders">
+                <span (click)="improvePath(txtLocalPath.value, item)">{{ item }}</span>
+              </li>
+            </ul>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+  </mat-dialog-content>
+  <mat-dialog-actions class="mt-2">
+    <button mat-flat-button type="submit" color="primary" [disabled]="!puedeSeleccionarCarpeta">Seleccionar</button>
+    <button class="ml-2" mat-flat-button type="button" color="warn" mat-dialog-close>Cancelar</button>
+  </mat-dialog-actions>
+</form>

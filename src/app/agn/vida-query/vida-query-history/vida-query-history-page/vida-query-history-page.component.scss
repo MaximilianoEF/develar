@@ -1,0 +1,33 @@
+@import '../../../../../assets/sass/mixin';
+@import '../../../../../assets/sass/variable';
+// .button-volver {
+//     background-color: #6cb6b0;
+// }
+.button-nueva {
+    background-color: #fefeff;
+}
+
+.mat-flat-button {
+    @include button-agn;
+}
+
+mat-card {
+    width: 75%;
+    margin: 0 auto;
+    #text-consulta-primary {
+        // background-color: #CCC;
+        resize: none;
+    }
+    @media #{$min992} {
+        // width: 75%;
+    }
+    @media #{$max991} {
+        // width: 75%;
+    }
+    @media #{$max767} {
+        width: 100%;
+    }
+    @media #{$max543} {
+        width: 100%;
+    }
+}

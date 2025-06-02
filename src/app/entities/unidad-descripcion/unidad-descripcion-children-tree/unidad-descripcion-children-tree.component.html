@@ -1,0 +1,47 @@
+<mat-progress-bar mode="indeterminate" *ngIf="loading"></mat-progress-bar>
+<div class="d-flex">
+  <div class="row mx-0">
+    <ng-container *ngFor="let item of (childrensTree$ | async) as childrensTree; let i = index">
+
+      <div [ngClass]="
+    {'w-100': item.level_of_description === 'unidad documental',
+     'col-12': childrensTree.length === 1,
+     'col-sm-6 col-12': childrensTree.length === 2 && item.level_of_description === 'item',
+     'col-md-3 col-sm-6 col-12': (childrensTree.length > 2 && item.level_of_description === 'item')
+    }">
+        <ng-container *ngIf="item.level_of_description === 'unidad documental'">
+          <mat-divider></mat-divider>
+        </ng-container>
+        <mat-card class="my-3 px-0 mat-elevation-z0">
+          <mat-card-content class="text-center">
+            <ng-container *ngIf="item.level_of_description === 'item'">
+              <img class="clickeable" mat-card-image *ngFor="let assetId of item.assetIds"
+                src="/download/thumbnail/{{ assetId }}" alt="{{ item.title }}" (click)="openModalRenderAsset(assetId)"
+                matTooltip="Ver contenido">
+            </ng-container>
+            <p class="mb-0 ml-2 title">
+              <b class="clickeable " [routerLink]="['..',item.idUda]"
+                matTooltip="Navegar a la vista detallada de esta UDA">{{getLabel('descriptionLevel',item.level_of_description)}}
+                :
+                {{item.title}}</b>
+            </p>
+            <p class="mb-0 ml-2 text-small d-flex align-items-center">
+              <ng-container *ngIf="item.hasPDF">
+                <mat-icon class="clickeable mr-2"
+                  (click)="openModalRenderAsset(item.assetIds[0])"
+                  matTooltip="Ver PDF generado a partir de las derivadas">
+                  picture_as_pdf
+                </mat-icon>
+                </ng-container>
+
+              <span>{{getReferenceCode(item.reference_code)}}</span>
+            </p>
+            <p class="mb-0 ml-2 text-small" *ngIf="item.idParent">
+              <a [routerLink]="['..',item.idParent]"> Ver antecesor </a>
+            </p>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </ng-container>
+  </div>
+</div>

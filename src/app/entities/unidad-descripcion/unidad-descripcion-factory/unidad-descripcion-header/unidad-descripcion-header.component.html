@@ -1,0 +1,40 @@
+<mat-card>
+  <div class="row align-items-center">
+    <div class="col-12 col-sm-8">
+      <h1 class="my-0">{{ referenceCode }}</h1>
+      <h1 class="my-0"><small>{{ subTitle }}</small></h1>
+
+      <ng-container *ngIf="ud && ud.atomSlug">
+        <a href="http://atom.mininterior.gob.ar/{{ud.atomSlug}}" target="blank" class="my-0"><span>{{ atomSlug }}</span></a>
+      </ng-container>
+      <ng-container *ngIf="!ud || !ud.atomSlug">
+        <p><span class="text-simple">{{atomSlug}}</span></p>
+      </ng-container>
+
+      <button mat-icon-button type="button" (click)="refreshUdaFromAtom()" *ngIf="ud && ud.atomSlug" matTooltip="Refrezcar sincronización con AtoM">
+        <mat-icon>refresh</mat-icon>
+      </button>
+
+
+      <ng-container *ngIf="hasPrev || hasNext">
+        <section id="prevNext">
+          <a matTooltip="{{ prevNext.prev.identificador.title }}" class="pr-2" *ngIf="hasPrev" [routerLink]="['/unidad-descripcion', 'factory', prevNext.prev._id]">Anterior</a>
+          <a matTooltip="{{ prevNext.next.identificador.title }}" *ngIf="hasNext" [routerLink]="['/unidad-descripcion', 'factory', prevNext.next._id]">Siguiente</a>
+        </section>
+      </ng-container>
+
+    </div>
+    <div class="col-12 col-sm-4 text-small">
+      <form [formGroup]="form">
+        <mat-form-field>
+          <mat-label>Seleccione una organización</mat-label>
+          <mat-select [compareWith]="compareFn" #selCompany formControlName="company"
+            (selectionChange)="updateCompany(selCompany.value)">
+            <mat-option *ngFor="let item of companyList" [value]="item">{{ item.identityArea.authorizedName }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </form>
+    </div>
+  </div>
+</mat-card>

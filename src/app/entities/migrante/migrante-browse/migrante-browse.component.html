@@ -1,0 +1,53 @@
+<form [formGroup]="form">
+  <div class="row">
+
+    <div class="col-md-2">
+      <mat-form-field>
+        <mat-label>Año arribo desde: </mat-label>
+        <input matInput formControlName="anioDesde">
+      </mat-form-field>
+    </div>
+
+    <div class="col-md-2">
+      <mat-form-field>
+        <mat-label>Año arribo hasta: </mat-label>
+        <input matInput formControlName="anioHasta">
+      </mat-form-field>
+    </div>
+    <div class="col-md-4">
+      <mat-form-field>
+        <mat-label>Nombre del buque</mat-label>
+        <input matInput formControlName="barconombre">
+      </mat-form-field>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-4">
+      <mat-form-field>
+        <mat-label>Apellido del pasajero</mat-label>
+        <input matInput formControlName="apellido">
+      </mat-form-field>
+    </div>
+
+    <div class="col-md-4">
+      <mat-form-field>
+        <mat-label>Nombre del pasajero</mat-label>
+        <input matInput formControlName="nombre">
+      </mat-form-field>
+    </div>
+
+
+  </div>
+
+  <!-- <mat-toolbar> -->
+  <div class="row">
+    <div class="col-12 d-flex d-md-block">
+      <button class="flex-grow-1" mat-flat-button type="button" color="primary" (click)="search()">Refrescar
+        búsqueda</button>
+      <button class="ml-md-3 ml-2 flex-grow-1" type="button" mat-flat-button (click)="goBack()">
+        <mat-icon>keyboard_arrow_left</mat-icon> Volver
+      </button>
+    </div>
+  </div>
+  <!-- </mat-toolbar> -->
+</form>

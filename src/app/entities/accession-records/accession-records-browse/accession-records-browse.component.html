@@ -1,0 +1,36 @@
+<form [formGroup]="form">
+  <div class="row">
+
+    <div class="col-md-1">
+      <mat-form-field>
+        <mat-label>Tipo de fecha</mat-label>
+        <mat-select formControlName="date_type">
+          <mat-option *ngFor="let item of typeFechas" [value]="item.val">
+            {{item.label}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <div class="col-md-2">
+      <mat-form-field>
+        <mat-label>Año Desde: </mat-label>
+        <input matInput formControlName="anioDesde">
+      </mat-form-field>
+    </div>
+
+    <div class="col-md-2">
+      <mat-form-field>
+        <mat-label>Año Hasta: </mat-label>
+        <input matInput formControlName="anioHasta">
+      </mat-form-field>
+    </div>
+  </div>
+  <mat-toolbar>
+    <div class="row">
+      <div class="col-12">
+        <button mat-flat-button type="button" color="primary" (click)="search()">Refrescar búsqueda</button>
+      </div>
+    </div>
+  </mat-toolbar>
+</form>

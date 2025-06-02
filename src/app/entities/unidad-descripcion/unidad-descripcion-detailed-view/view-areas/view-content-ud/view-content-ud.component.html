@@ -1,0 +1,40 @@
+<ng-container *ngIf="assetFromUda && assetFromUda.length">
+  <ng-container *ngIf="assetFromUda.length === 1">
+    <mat-card class="w-100">
+      <div class="container-fluid p-0">
+        <div class="row">
+          <div class="col-12">
+<!--            <img src="{{assetFromUda[0].path}}" alt="ASSET-UDS">-->
+            <ng-container *ngIf="assetFromUda[0].assetType === 'image'; else mostrarDerivada">
+              <img src="/download/withserver/{{assetFromUda[0]._id}}" (click)="openRenderAssetModal(assetFromUda[0]._id)" alt="ASSET-UDS">
+            </ng-container>
+            <ng-template #mostrarDerivada>
+            <img src="/download/derivada/{{assetFromUda[0]._id}}" (click)="openRenderAssetModal(assetFromUda[0]._id)" alt="ASSET-UDS">
+            </ng-template>
+          </div>
+        </div>
+      </div>
+    </mat-card>
+  </ng-container>
+  <ng-container *ngIf="assetFromUda.length > 1">
+    <mat-card class="w-100">
+      <ng-container *ngFor="let item of assetFromUda">
+        <div class="container-fluid p-0">
+          <div class="row">
+            <div class="col-sm-6 col-12">
+<!--              <img src="{{item.path}}" alt="ASSET-UDS">-->
+              <img src="/download/withserver/{{item._id}}" (click)="openRenderAssetModal(item._id)" alt="ASSET-UDS">
+
+              <ng-container *ngIf="assetFromUda[0].assetType === 'image'; else mostrarDerivada">
+                <img src="/download/withserver/{{item._id}}" (click)="openRenderAssetModal(item._id)" alt="ASSET-UDS">
+              </ng-container>
+              <ng-template #mostrarDerivada>
+                <img src="/download/derivada/{{item._id}}" (click)="openRenderAssetModal(item._id)" alt="ASSET-UDS">
+              </ng-template>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+    </mat-card>
+  </ng-container>
+</ng-container>

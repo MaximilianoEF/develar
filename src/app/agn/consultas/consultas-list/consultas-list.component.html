@@ -1,0 +1,22 @@
+<div class="row p-2 mb-3 consulta-block" *ngFor="let item of consultasList">
+    <div class="col-12">
+        <p class="mb-2 font-weight-bold">{{ getServiceHeader(item) }} {{ item.txFecha }}
+            <!--button type="button" class="text-align-end" mat-icon-button (click)="addPase(item._id)" matTooltip="Añadir pase">
+                <mat-icon>library_add</mat-icon>
+            </button>
+            <button type="button" mat-icon-button (click)="showPases(item._id)" matTooltip="Ver pases">
+                <mat-icon><i class="fa fa-tasks" aria-hidden="true"  matBadge="{{item.pasesCount}}"></i></mat-icon>
+            </button-->
+        </p>
+        <p class="mb-4" [innerHtml]="item.descripcion | sanitizeHtml"></p>
+    </div>
+    <ng-container *ngIf="item.hasNovedades">
+    <div class="col-12">
+        <blockquote class="pl-4 mb-1" *ngFor="let novedad of item.novedadesList">
+            <!-- <h5>Evolución de la solicitud</h5> -->
+            <p class="mb-2 font-weight-bold">Respuesta | {{ novedad.txFecha }}</p>
+            <p class="mb-2">{{ novedad.description }}</p>
+        </blockquote>
+    </div>
+    </ng-container>
+</div>

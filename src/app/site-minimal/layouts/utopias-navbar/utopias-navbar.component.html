@@ -1,0 +1,184 @@
+<div class="container-fluid" style="background-color: #fff; height: 24px;">
+        <div class="row" >
+            <div class="col">
+                <a href="{{ lemaUrl }}">
+                    <p id="campaign02" class="tituloContainerCam">
+                        <strong>{{ lema }} </strong><span class="c_bajada">{{ slema }}</span>
+                    </p>
+                </a>
+            </div>
+        </div>
+</div>
+<div [ngStyle]='navbarStyle' class="site-navbar d-block container-fluid p-0">
+    <div class="row align-items-center">
+
+        <ng-container *ngIf="loggedIn">
+            <div class="col-7 offset-sm-1">
+                <a *ngIf="!isHomeView" routerLink="/" class="logo">
+                    <img class="logo-img" src="{{logoUrl}}" alt="">
+                </a>
+                <!-- <h1 class="page-title" title="volver a argentina.gob.ar"><a class="navigate-out" role='button' href='https://www.argentina.gob.ar/interior/archivo-general-de-la-nacion'>{{ title }}</a></h1> -->
+                <a href='https://www.argentina.gob.ar/interior/archivo-general-de-la-nacion' class="navigate-out"
+                    role='button'>
+                    <img class="logo-argentina" src="{{ logoArgentinaGobAr }}" alt="">
+                </a>
+            </div>
+            <div class="interspace"></div>
+            <div class="col-4">
+                <div class="nav-items d-block" >
+                    <!--- 3.0-logged MENSAJES  -->
+                    <!--- 3.0 FIN MENSAJES -->
+                    <!-- div class="nav-item" [ngClass]="{ 'opened' : false }"><button class="text-item" mat-button title="buscar acervo digital cine, audio, video" (click)="searchAssetsForm($event)"><span>{{contactText}} |</span></button></div-->
+                    <!--- 3.0-MENU DE NAVEGACION -->
+
+                    <!--- 4.0-logged LOGIN  -->
+                    <div class="nav-item" [ngClass]="{ 'opened' : false }">
+                        <button mat-button title="usuario registrado" (click)="open($event)">
+                            <!--div class="avatar"><img src="{{ avatar }}" width="37" height="37" alt=""></div-->
+                            <div class="nombre-usuario">
+                                <mat-icon style="margin-top: 5px;">person</mat-icon>
+                                <span >{{ userName}}</span>
+                            </div>
+                        </button>
+
+                        <div class="dropdown-menu mini-menu">
+                            <ng-container *ngIf="isAdminUser()">
+                                <ul>
+                                    <li>
+                                        <a href="#" role="button" (click)='navigateAdmin($event)'>
+                                            <i class="fa fa-users"></i>Ingresar a Gestión</a>
+                                    </li>
+                                    <li>
+                                        <a role="button" (click)='editUser($event)'>
+                                            <i class="fa fa-home"></i><span class="ml-0">Mi Perfil</span></a>
+                                    </li>
+                                    <li>
+                                        <a href="#" role="button" (click)='editUser($event)'>
+                                            <i class="far fa-user"></i><span class="ml-2">Mi Cuenta</span></a>
+                                    </li>
+                                    <li>
+                                        <a href="#" role="button" (click)='changeCommunity($event)'>
+                                            <i class="far fa-user"></i><span class="ml-2">Cambiar Comunidad</span></a>
+                                    </li>
+                                    <li>
+                                        <a routerLink="/develar/a2/calendar">
+                                            <i class="fas fa-calendar-alt"></i><span class="ml-2">Calendario</span></a>
+                                    </li>
+                                    <li>
+                                        <a href="#" role="button" (click)='refreshUser($event)'>
+                                            <i class="fas fa-cogs"></i><span class="ml-1">Configuraciones</span></a>
+                                    </li>
+                                    <li>
+                                        <a href="#" role="button" (click)='changePasswd($event)'>
+                                            <i class="far fa-user"></i><span class="ml-2">Cambiar clave</span></a>
+                                    </li>
+                                    <li>
+                                        <a href="#" role="button" (click)='logout($event)'>
+                                            <i class="fas fa-sign-out-alt"></i><span class="ml-2">Cerrar
+                                                Sesión</span></a>
+                                    </li>
+                                </ul>
+                            </ng-container>
+                            <ng-container *ngIf="!isAdminUser()">
+                                <ul>
+                                    <!-- <li>
+                                        <a role="button" (click)="goToMisConsultasYSolicitudes($event)">
+                                            <i class="fas fa-users"></i> <span class="ml-2">Mis consultas y
+                                                solicitudes</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a role="button" (click)="goToHistorial($event)">
+                                            <i class="fa fa-history"></i>Historial
+                                        </a>
+                                    </li> -->
+                                    <li>
+                                        <a href="#" role="button" (click)='miPerfilWeb($event)'>
+                                            <i class="fa fa-user"></i>Mi perfil</a>
+                                    </li>
+                                    <li>
+                                        <a role="button" (click)='logout($event)'>
+                                            <i class="fa fa-power-off"></i>Cerrar sesión</a>
+                                    </li>
+                                </ul>
+                            </ng-container>
+                        </div>
+                    </div>
+                    <div class="items-overlay" (click)="close($event)"></div>
+                </div><!-- .nav-items -->
+            </div>
+        </ng-container>
+
+
+        <!--- ********* NAVEGACIÓN USUARIO NO-LOGEADO NAVEGACIÓN PÚBLICO  *********-->
+
+        <ng-container *ngIf="!loggedIn">
+
+
+            <div class="col-5 offset-sm-1">
+                <!--a *ngIf="!isHomeView" routerLink="/" class="logo">
+                    <img class="logo-img" src="{{logoUrl}}" alt="">
+                </a--->
+                <!-- <h1 class="page-title" title="volver a argentina.gob.ar"><a class="navigate-out" role='button' href='https://www.argentina.gob.ar/interior/archivo-general-de-la-nacion'>{{ title }}</a></h1> -->
+                <a href='https://www.argentina.gob.ar/interior/archivo-general-de-la-nacion' class="navigate-out"
+                    role='button'>
+                    <img class="logo-argentina" src="{{ logoArgentinaGobAr }}" alt="">
+                </a>
+            </div>
+            <div class="interspace"></div>
+
+
+            <div class="col-md-2"></div>
+
+        </ng-container>
+    </div><!-- .row -->
+</div>
+
+<!--------
+<div class="nav-item" [ngClass]="{ 'opened' : false }">
+
+<button mat-button [ngStyle]='navbarItemStyle' class="text-item" matTooltip="Acceso usuarios"
+(click)="open($event)">ingresar
+<i class="fas fa-bars fa-lg"></i></button>>
+<div class="dropdown-menu">
+<ul>
+    <li class="menu-item" *ngFor="let item of mainMenuItems" [ngClass]="{
+        'has-sub': item.sub,
+        'active': item.active,
+        'menu-item-group': item.groupTitle
+        }" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">
+                <span class="group-title" *ngIf="item.groupTitle">{{ item.title }}</span>
+
+                <a routerLink="{{item.routing}}" class="item-link"
+                    *ngIf="!item.groupTitle && !item.sub">
+                    <span class="item-badge" *ngIf="item.budge"
+                        [ngStyle]="{'background': item.budgeColor}">{{ item.budge }}</span>
+                    <span class="icon" *ngIf="item.icon"
+                        [ngClass]="item.icon"></span>{{ item.title }}
+
+                </a>
+
+                <a class="item-link" *ngIf="!item.groupTitle && item.sub"
+                    (click)="toggle($event, item, this)">
+                    <span class="item-badge" *ngIf="item.budge"
+                        [ngStyle]="{'background': item.budgeColor}">{{ item.budge }}</span>
+                    <span class="icon" *ngIf="item.icon"
+                        [ngClass]="item.icon"></span>{{ item.title }}
+                    <i class="caret fa fa-angle-right" *ngIf="item.sub"></i>
+                </a>
+
+                <ul class="sub" *ngIf="!item.groupTitle && item.sub">
+                    <li class="menu-item" *ngFor="let itemSub of item.sub" routerLinkActive="active"
+                        [routerLinkActiveOptions]="{exact:true}">
+                        <a routerLink="{{ itemSub.routing }}" class="item-link">
+                            {{ itemSub.title }}</a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+
+    </div>
+</div>
+<div class="items-overlay" (click)="close2($event)"></div>
+-->
+

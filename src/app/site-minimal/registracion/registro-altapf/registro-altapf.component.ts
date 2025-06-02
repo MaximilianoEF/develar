@@ -1,0 +1,304 @@
+import { Component, OnInit,Output, Input, EventEmitter} from '@angular/core';
+import { AbstractControl, ValidatorFn, FormBuilder, FormControl, FormGroup, Validators, ValidationErrors, AsyncValidatorFn } from '@angular/forms';
+
+
+import { Observable } from 'rxjs';
+import { map }   from 'rxjs/operators';
+
+import { Person, UpdatePersonEvent, Address, personModel } from '../../../entities/person/person';
+import { User } from '../../../entities/user/user';
+
+import { devutils }from '../../../develar-commons/utils'
+
+import { SiteMinimalController } from '../../minimal.controller';
+
+const CANCEL = "cancel";
+const NEXT = "next";
+const BACK = "back";
+const NUEVO = "nuevo";
+const REGISTRAR = "nuevo:cuit"
+const UPDATE = "update";
+
+const NAVANCE = 'lnocturno';
+const ESTADO = 'activo';
+
+
+
+@Component({
+  selector: 'registro-altapf',
+  templateUrl: './registro-altapf.component.html',
+  styleUrls: ['./registro-altapf.component.scss']
+})
+export class RegistroAltapfComponent implements OnInit {
+	@Input() user: User;
+	@Input() data = {};
+  @Input() person: Person;
+  @Input() target: string ;// [comercio | personalseguridad]
+
+	@Output() person$ = new EventEmitter<Person>();
+	@Output() cancel$ = new EventEmitter<boolean>();
+
+	@Output() event = new EventEmitter<UpdatePersonEvent>();
+
+  pageTitle: string = 'Alta NUEVA PERSONA';
+
+  public personForm: FormGroup;
+  private model: Person;
+  private newuser: User;
+  public currentUser: User;
+  public communityId = '';
+
+  public persontypes = personModel.persontypes;
+  public tcompPersonaFisica = personModel.tipoDocumPF;
+  public estadoCivil        = personModel.estadoCivilOL;
+  public sexoOptList        = personModel.sexoList;
+
+  public docBelongsTo =  {error: ''};
+  public emailBelongsTo = {error: ''};
+
+  public countriesList =  personModel.paises;
+  public provinciasList = personModel.provincias;
+  public addTypeList =    personModel.addressTypes;
+  public ciudadesList =   personModel.ciudades;
+  public paises     = personModel.paises;
+  public barrioList = [];
+
+  private passwordFormCtrl: FormControl;
+  private confirmPasswordFormCtrl: FormControl;
+
+  constructor(
+      private fb: FormBuilder,
+     	private minimalCtrl: SiteMinimalController,
+
+  ) { }
+
+  ngOnInit() {
+      if(this.person){
+        this.model = this.person
+
+      }else {
+        this.model = new Person('');
+        this.model.tdoc = this.data['tdoc'] || 'DNI';
+        this.model.ndoc = this.data['ndoc'];
+        this.model.personType = 'fisica';
+      }
+
+
+      this.personForm = this.fb.group({
+          tdoc: this.fb.control({value: this.model.tdoc}),
+          ndoc: [null, [Validators.required,
+                        Validators.minLength(6),
+                        Validators.maxLength(11),
+                        Validators.pattern('[0-9]*')]  ],
+                        //[this.dniExistenteValidator(this, this.minimalCtrl, this.docBelongsTo)] ],
+
+          // fenactx:      [null, [this.fechaNacimientoValidator()]],
+          // street1:     [null, Validators.compose([Validators.required])],
+          userdata: this.fb.group({
+		        username: [null, Validators.compose([Validators.required, Validators.minLength(5), Validators.maxLength(20) ] ) ],
+		        nombre:   [null, Validators.compose([Validators.required ] ) ],
+		        apellido: [null, Validators.compose([Validators.required ] ) ],
+		        email:    [null, [Validators.required, Validators.email ],
+		        					[this.emailExistenteValidator(this.minimalCtrl, this.emailBelongsTo)] ],
+		        password: ['', Validators.required],
+		        confirmPassword: [''],
+          })
+      });
+      this._setValidators();
+      this.resetForm(this.model);
+  }
+
+  private _setValidators(): void {
+    const form = this.personForm.get('userdata') as FormGroup;
+   form.get('confirmPassword').setValidators([devutils.equalPasswordValidator(form, 'password','confirmPassword'), Validators.required]);
+  }
+
+  get username() { return this.personForm.get('userdata').get('username'); }
+  get nombre()   { return this.personForm.get('userdata').get('nombre'); }
+  get apellido() { return this.personForm.get('userdata').get('apellido'); }
+  get email()    { return this.personForm.get('userdata').get('email'); }
+  get password() { return this.personForm.get('userdata').get('password'); }
+  get confirmPassword() { return this.personForm.get('userdata').get('confirmPassword'); }
+
+  onSubmit() {
+      this.model = this.initForSave(this.personForm, this.model, this.currentUser);
+      this.newuser = this.initUserForSave(this.personForm, this.model, this.currentUser);
+
+      this.minimalCtrl.createUserAndPerson(this.newuser, this.model).subscribe(p => {
+        this.event.emit({
+          action: NUEVO,
+          token: p._id,
+          person: p
+        })
+      })
+  }
+
+  cancel(){
+      this.cancel$.emit(true);
+      this.event.emit({
+      	action:CANCEL,
+      	token: '',
+      	person: this.model
+      })
+  }
+
+  resetForm(model: Person) {
+      this.personForm.reset({
+          tdoc: model.tdoc,
+          ndoc: model.ndoc,
+          userdata: {
+            username: model.displayName,
+            nombre: model.nombre,
+            apellido: model.apellido,
+            email: model.email
+
+          }
+      });
+  }
+
+	initUserForSave(form: FormGroup, model: Person, user: User): User {
+    const fvalue = form.value;
+    const tvalue = fvalue.userdata
+    let today = new Date();
+
+		let newuser = new User(tvalue.username, tvalue.email);
+    newuser.username    = tvalue.username;
+    newuser.email       = tvalue.email;
+    newuser.password    = tvalue.password;
+    newuser.displayName = tvalue.username;
+
+    newuser.confirmPassword = tvalue.confirmPassword;
+    newuser.termscond   = true;
+    newuser.navance     = NAVANCE;
+    newuser.estado      = ESTADO;
+    newuser.externalProfile = false;
+    newuser.localProfile = true;
+
+		return newuser;
+	}
+
+
+	initForSave(form: FormGroup, model: Person, user: User): Person {
+    const fvalue = form.value; //getRawValue()
+    const tvalue = fvalue.userdata
+    let today = new Date();
+
+    model.idbrown = "";
+    model.isImported = false;
+    model.tdoc = fvalue.tdoc;
+    model.ndoc = fvalue.ndoc;
+
+		model.persontags = [];
+		model.personType = 'fisica';
+		model.email = tvalue.email;
+		model.locacion = '';
+		model.nombre = tvalue.nombre;
+		model.apellido = tvalue.apellido;
+    model.displayName = tvalue.apellido + ', ' + tvalue.nombre;
+		model.cuil = '';
+
+		model.tprofesion = 'prevencion';
+		model.especialidad = 'local nocturno';
+		model.ambito = '';
+		model.nestudios = '';
+		model.nacionalidad = '';
+		model.fenac = 0;
+		model.fenactx = '';
+		model.ecivil = '';
+		model.sexo = '';
+		model.ts_alta = today.getTime();
+		model.ts_umodif = today.getTime();
+		model.user_alta = '';
+		model.user_umodif = '';
+
+    const address = new Address();
+
+    model.locaciones = [];
+
+    return model;
+  }
+
+
+  changeSelectionValue(type, val) {
+  }
+
+  changeCity() {
+      this.barrioList = personModel.getBarrioList(this.personForm.value.city);
+
+      let zip = personModel.fetchCP(this.personForm.value.city);
+      this.personForm.controls['zip'].setValue(zip);
+  }
+
+  changePersonType() {
+  }
+
+  hasError = (controlName: string, errorName: string) =>{
+      return this.personForm.controls[controlName].hasError(errorName);
+  }
+
+  dniExistenteValidator(that:any, service: SiteMinimalController, message: object): AsyncValidatorFn {
+      return ((control: AbstractControl): Promise<ValidationErrors | null> | Observable<ValidationErrors | null> => {
+          let value = control.value;
+          let tdoc = that.form.controls['tdoc'].value || 'DNI';
+
+          return service.testPersonByDNI(tdoc, value).pipe(
+              map(t => {
+                  let invalid = false;
+                  let txt = ''
+
+                  // if(t && t.length){
+                  //     invalid = true;
+                  //     txt = 'Documento existente: ' + t[0].displayName;
+                  // }
+
+                  message['error'] = txt;
+                  return invalid ? { 'mailerror': txt }: null;
+
+              })
+           )
+      }) ;
+  }
+
+
+
+  emailExistenteValidator(service: SiteMinimalController, message: object): AsyncValidatorFn {
+      return ((control: AbstractControl): Promise<ValidationErrors | null> | Observable<ValidationErrors | null> => {
+          let value = control.value;
+
+          return service.testUserByEmail(value).pipe(
+              map(t => {
+                  let invalid = false;
+                  let txt = ''
+
+                  if(t && t.length){
+                      invalid = true;
+                      txt = 'Correo electrónico existente: ' + t[0].email;
+                  }
+
+                  message['error'] = txt;
+                  return invalid ? { 'emailalreadyused': txt }: null;
+
+              })
+           )
+      }) ;
+   } ;
+
+   currentAge(){
+       let edad = '';
+       let value = this.personForm.value.fenactx
+       let validAge = devutils.validAge(value);
+       if(validAge){
+           edad = devutils.edadActual(devutils.dateFromTx(value)) + '';
+       }
+       return edad;
+   }
+
+  fechaNacimientoValidator(): ValidatorFn {
+      return ((control: AbstractControl) : {[key: string]: any} | null  => {
+          let validAge = devutils.validAge(control.value);
+          return validAge ? null : {'invalidAge': true}
+
+      }) ;
+   }
+
+}

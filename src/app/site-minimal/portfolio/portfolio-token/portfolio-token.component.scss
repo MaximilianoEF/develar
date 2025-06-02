@@ -1,0 +1,136 @@
+@import '../../../../assets/sass/variable';
+
+:host {
+
+	.detail-host {
+		margin: 5px 0 0 0;
+
+		breadcrumb {
+		  max-width: 1100px;
+			margin: 0 0 0 22px;
+			.breadcrumb{
+				font-weight: 400;
+				font-size: .8rem;
+			}
+
+		}
+
+		.detail-card {
+
+			// @media #{$min544} {
+	  //    	width: 50%; 
+	  //  	}
+
+			// @media #{$min768} {
+	  //    	width: 33%; 
+	  //  	}
+
+			// @media #{$min1200} {
+	  //    	width: 25%; 
+	  //  	}
+
+
+		  padding: 2px;
+		}
+	}
+
+}
+
+
+.carrousel {
+	position: relative;
+
+	.carrousel-image {
+		//max-width: 200px;
+		height: auto;
+
+	}
+
+	.controles {
+		margin: 0 0 0 0;
+		font-size: 1.2em;
+		.left {
+			float: left;
+		}
+		.right {
+			float: right;
+		}
+
+	}
+
+	.portfolio {
+		position: absolute;
+		bottom: 0.1%;
+		color: #ffffff;
+		text-align: center;
+		width: 100%;
+		background: rgba(0,0,0,.4);
+		height: 80px;
+
+		.portfolio-name {
+
+			font-size: 0.8em;
+			font-weight: 700;
+			margin: 8px 0 0 0;
+			// > span {
+			// 	background: #323232;
+			// 	opacity: 0.8
+
+			// };
+
+		}
+
+		.portfolio-separator {
+
+			font-size: 0.8em;
+			color: #ffffff;
+			font-weight: 400;
+			margin: -15px 0 5px 0;
+			//margin-top: -15px;
+			// > span {
+			// 	background: #323232;
+			// 	opacity: 0.8
+
+			// };
+
+		}
+
+		.portfolio-slug {
+
+			font-size: 0.7em;
+			font-weight: 700;
+
+			// > span {
+			// 	background: #323232;
+			// 	opacity: 0.8
+
+			// };
+
+		}
+	}
+}
+
+.fa {
+  font-size: 2.8em;
+}
+
+.mat-card-image:first-child {
+	margin-top: 0;
+}
+
+.mat-card-title {
+	font-size: 32px;
+}
+
+.mat-card-subtitle {
+	font-size: 24px;
+}
+
+.mat-card-content {
+	font-size: 18px;
+	text-align: left;
+}
+
+#currentcard {
+   min-width: 450px;
+}

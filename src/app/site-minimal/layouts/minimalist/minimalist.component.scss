@@ -1,0 +1,24 @@
+@import '../../../../assets/sass/variable';
+
+:host {
+  .main-content {
+    height: 100%;
+    transition: padding .2s $animation;
+
+
+
+    // @media #{only screen and (max-width: 991px)} {
+    //   padding-left: 0;
+    // }
+
+
+    @media #{$max991} {
+      padding-left: 0;
+    }
+		.main-content-wrap {
+	    height: 100%;
+	    padding: 20px 0 0 0;
+	    width: 100%;
+	  }
+  }
+}

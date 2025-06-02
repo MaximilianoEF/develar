@@ -1,0 +1,11 @@
+<mat-card>
+    <mat-card-title *ngIf="!isEdit">
+        <h3>{{ createTurnoTemplateTitle }}</h3>
+    </mat-card-title>
+    <mat-card-title *ngIf="isEdit">
+        <h3>{{ editTurnoTemplateTitle }}</h3>
+    </mat-card-title>
+    <mat-card-content>
+        <slot-turno-edit [turnoTemplateId]="turnoTemplateId"></slot-turno-edit>
+    </mat-card-content>
+</mat-card>

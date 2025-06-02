@@ -1,0 +1,70 @@
+<mat-table #turnoTable matSort [dataSource]="dataSource" class="mt-3">
+
+  <ng-container matColumnDef="select">
+    <mat-header-cell *matHeaderCellDef>
+      <mat-checkbox (change)="$event ? masterToggle() : null" [checked]="selection.hasValue() && isAllSelected()"
+        [indeterminate]="selection.hasValue() && !isAllSelected()">
+      </mat-checkbox>
+    </mat-header-cell>
+    <mat-cell *matCellDef="let row">
+      <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(row) : null"
+        [checked]="selection.isSelected(row)">
+      </mat-checkbox>
+    </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="nomyape">
+    <mat-header-cell *matHeaderCellDef mat-sort-header>Nombre y apellido</mat-header-cell>
+    <mat-cell *matCellDef="let item">
+      <span class="mobile-header-cell">Nombre y apellido</span>
+      {{ item.nomyape }}</mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="fe_migracion_tx">
+    <mat-header-cell *matHeaderCellDef>Fecha de Migración</mat-header-cell>
+    <mat-cell *matCellDef="let item">
+    <span class="mobile-header-cell">Fecha de Migración</span>
+      {{ item.fe_migracion_tx }}</mat-cell>
+  </ng-container>
+
+
+  <ng-container matColumnDef="barco">
+    <mat-header-cell *matHeaderCellDef>Barco</mat-header-cell>
+    <mat-cell *matCellDef="let item">
+      <span class="mobile-header-cell">Barco</span>
+      {{ item.barco }}</mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="observaciones">
+    <mat-header-cell *matHeaderCellDef>Observaciones</mat-header-cell>
+    <mat-cell *matCellDef="let item" title="{{ item._id }}">
+      <span class="mobile-header-cell">Observaciones</span>
+      {{ item.observaciones}}</mat-cell>
+  </ng-container>
+
+
+  <ng-container matColumnDef="rowactions">
+    <mat-header-cell *matHeaderCellDef>&nbsp;</mat-header-cell>
+    <mat-cell *matCellDef="let item">
+      <span class="mobile-header-cell">Acciones</span>
+      <mat-icon [routerLink]="['/unidad-descripcion','vista-detallada',item.idUda]" 
+      matTooltip="Navegar a la vista detallada de la UDA relacionada">
+        auto_stories
+      </mat-icon>
+      <mat-icon class="ml-2" matTooltip="Editar este AR" (click)="editEntity(item)">
+        edit
+      </mat-icon>
+      <mat-icon class="ml-2" matTooltip="Eliminar este AR" (click)="deleteEntity(item)">
+        delete
+      </mat-icon>
+    </mat-cell>    
+  </ng-container>
+
+  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+
+  <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+
+</mat-table>
+
+<mat-paginator [length]="10" [pageIndex]="0" [pageSize]="25" [pageSizeOptions]="[5, 10, 25, 100]">
+</mat-paginator>

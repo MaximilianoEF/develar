@@ -1,0 +1,73 @@
+<mat-card>
+  <mat-card-title>Puntos de acceso</mat-card-title>
+  <div class="container-fluid p-0">
+    <div class="row">
+      <div class="col-12">
+        <mat-form-field appearance="fill">
+          <mat-label>Puntos de acceso por materia</mat-label>
+          <mat-chip-list #listaMateria>
+            <mat-chip *ngFor="let materia of materias" [selectable]="true" [removable]="true"
+              (removed)="remove('materias',materia)">
+              {{materia}}
+              <mat-icon matChipRemove>cancel</mat-icon>
+            </mat-chip>
+            <input placeholder="Nueva materia..." [matChipInputFor]="listaMateria"
+              [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="true"
+              (matChipInputTokenEnd)="add('materias',$event)">
+          </mat-chip-list>
+        </mat-form-field>
+      </div>
+      <div class="col-12">
+        <mat-form-field appearance="fill">
+          <mat-label>Puntos de acceso por lugar</mat-label>
+          <mat-chip-list #listaLugar>
+            <mat-chip *ngFor="let lugar of lugares" [selectable]="true" [removable]="true"
+              (removed)="remove('lugares',lugar)">
+              {{lugar}}
+              <mat-icon matChipRemove>cancel</mat-icon>
+            </mat-chip>
+            <input placeholder="Nuevo lugar..." [matChipInputFor]="listaLugar"
+              [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="true"
+              (matChipInputTokenEnd)="add('lugares',$event)">
+          </mat-chip-list>
+        </mat-form-field>
+      </div>
+      <div class="col-12">
+        <mat-form-field appearance="fill">
+          <mat-label>Puntos de acceso por autoridad</mat-label>
+          <mat-chip-list #listaAutoridad>
+            <mat-chip *ngFor="let autoridad of autoridades" [selectable]="true" [removable]="true"
+              (removed)="remove('autoridades',autoridad)">
+              {{autoridad}}
+              <mat-icon matChipRemove>cancel</mat-icon>
+            </mat-chip>
+            <input placeholder="Nueva autoridad..." [matChipInputFor]="listaAutoridad"
+              [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="true"
+              (matChipInputTokenEnd)="add('autoridades',$event)">
+          </mat-chip-list>
+        </mat-form-field>
+      </div>
+      <div class="col-12">
+        <mat-form-field appearance="fill">
+          <mat-label>Puntos de acceso por nombre</mat-label>
+          <mat-chip-list #listaNombres>
+            <mat-chip *ngFor="let nombre of nombres" [selectable]="true" [removable]="true"
+              (removed)="remove('nombres',nombre)">
+              {{nombre}}
+              <mat-icon matChipRemove>cancel</mat-icon>
+            </mat-chip>
+            <input placeholder="Nuevo nombre..." [matChipInputFor]="listaNombres"
+              [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="true"
+              (matChipInputTokenEnd)="add('nombres',$event)">
+           </mat-chip-list>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12">
+        <button class="ml-2" mat-flat-button color="primary" type="button" (click)="onSubmit()">Confirmar</button>
+        <button type="button" class="ml-2" mat-flat-button color="warn" (click)="closeForm()">Cancelar</button>
+      </div>      
+    </div>
+  </div>
+</mat-card>

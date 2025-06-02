@@ -1,0 +1,23 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <mat-card>
+                <mat-card-content>
+                    <div class="row">
+                        <div class="col-12">
+                            <mat-toolbar color="primary">
+                                <span class="flex-grow-1"></span>
+                                <button mat-flat-button (click)="openQuickCreateModal()">
+                                  Dar de alta un registro de autoridad
+                                </button>
+                            </mat-toolbar>
+                        </div>
+                    </div>
+                    <authority-record-browse (lookUpModels)="fetchAuthorityRecords($event)"></authority-record-browse>
+                    <mat-progress-bar mode="indeterminate" *ngIf="searching"></mat-progress-bar>
+                    <authority-record-browse-table *ngIf="showData"></authority-record-browse-table>
+                </mat-card-content>
+            </mat-card>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,28 @@
+<mat-card>
+    <mat-card-title>Notas</mat-card-title>
+    <form [formGroup]="formGroup" (ngSubmit)="onSubmit()">
+        <div class="container-fluid p-0">
+            <div formArrayName="notes" *ngFor="let item of notasGet.controls; let i = index;">
+                <div [formGroupName]="i">
+                    <div class="row">
+                        <div class="col-12">
+                            <mat-form-field appearance="outline">
+                                <mat-label>Notas</mat-label>
+                                <textarea type="text" matInput formControlName="note"></textarea>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <hr>
+                </div>
+            </div>
+            <div class="row">
+                <button class="ml-2" mat-flat-button color="primary" type="submit">Confirmar</button>
+                <button class="ml-2" mat-button color="accent" type="button" (click)="addControls()">Añadir
+                    nota</button>
+                <button class="ml-2" mat-button color="warn" type="button" (click)="removeControl()"
+                    *ngIf="notasGet.length > 1">Retirar nota</button>
+              <button type="button" class="ml-2" mat-flat-button color="warn" (click)="closeForm()">Cancelar</button>
+            </div>
+        </div>
+    </form>
+</mat-card>

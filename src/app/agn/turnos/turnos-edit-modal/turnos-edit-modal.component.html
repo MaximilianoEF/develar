@@ -1,0 +1,36 @@
+<h3 mat-dialog-title>Edición de turno</h3>
+
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <mat-dialog-content>
+        <div class="container-fluid p-0">
+
+            <div class="row mb-5" *ngIf="showCalendar">
+                <div class="col-12">
+                    <h5 class="step my-0 px-2 py-1">Día y horario</h5>
+                    <mat-calendar [dateFilter]="disabledDaysFilter" [headerComponent]="customHeader" [minDate]="today"
+                        [selected]="theDate" (selectedChange)="handleDateSelectionChange($event)">
+                    </mat-calendar>
+                </div>
+                <div class="col-12 mt-3">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Seleccione una franja horaria</mat-label>
+                        <mat-select #txHora formControlName="txHora" required>
+                            <ng-container *ngFor="let item of listHoursOfSelect.items">
+                                <mat-option [value]="item.horaNum" *ngIf="item.capacidad !== 0">
+                                    {{item.franja}}
+                                </mat-option>
+                            </ng-container>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+    </mat-dialog-content>
+    <mat-dialog-actions class="text-right">
+        <button type="submit" mat-flat-button class="mx-2 button-submit" [disabled]="form.invalid">Editar turno</button>
+        <button type="button" mat-flat-button class="button-cancel" mat-dialog-close>
+            Cerrar
+        </button>
+    </mat-dialog-actions>
+
+</form>

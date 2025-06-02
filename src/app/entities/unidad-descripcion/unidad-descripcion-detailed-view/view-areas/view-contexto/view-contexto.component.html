@@ -1,0 +1,37 @@
+<div class="container-fluid p-0 ml-3 my-3">
+  <div class="row">
+    <div class="col-12">
+      <mat-toolbar>Creadores</mat-toolbar>
+    </div>
+  </div>
+  <div class="row mb-2" *ngIf="ud.contexto.creators && ud.contexto.creators.length">
+    <div class="col-12">
+      <ul>
+        <li *ngFor="let item of ud.contexto.creators">
+          <ng-container *ngIf="item.authorityRecordIdentifier">
+            ({{item.authorityRecordIdentifier}})
+          </ng-container>
+          {{item.authorityRecordName}}
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <mat-toolbar>Datos descriptivos</mat-toolbar>
+    </div> 
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <p>
+        <strong>Institución archivística: </strong> {{ud.contexto.repository}}
+      </p>
+      <p>
+        <strong>Historia archivística: </strong> {{ud.contexto.archival_history}}
+      </p>
+      <p>
+        <strong>Origen del ingreso o transferencia: </strong> {{ud.contexto.immediate_source_of_acquisition_or_transfer}}
+      </p>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,10 @@
+<h3 mat-dialog-title>Migración de contenidos a AtoM</h3>
+<mat-dialog-content>
+  <p>Se migrarán {{ cantidadUdas }} registros.</p>
+  <p>Tenga cuidado con esta operación. No podrá volver a repetirse.</p>
+  <mat-divider></mat-divider>
+</mat-dialog-content>
+<mat-dialog-actions class="mt-3">
+  <button mat-flat-button type="submit" color="primary" [disabled]="cantidadUdas <= 0" (click)="confirmarMigracion()">Confirmar</button>
+  <button mat-flat-button type="button" color="warn" class="ml-2" mat-dialog-close>Cancelar</button>
+</mat-dialog-actions>

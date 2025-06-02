@@ -1,0 +1,17 @@
+<div class="container-fluid wrapper">
+  <div class="row">
+    <div class="offset-sm-3 col-sm-6">
+      <vida-query-browse (emitQuery)="showView($event)" (onEmitExportExcel)="onExportExcel()" [cantExport]="cantExport"
+        [query]="query" [browseEnable]="searching">
+      </vida-query-browse>
+      <mat-progress-bar mode="indeterminate" *ngIf="searching"></mat-progress-bar>
+    </div>
+  </div>
+
+  <div class="row" *ngIf="showList">
+    <div class="col-sm-12">
+      <vida-query-list (emitEndRender)="endSearching($event)"></vida-query-list>
+    </div>
+  </div>
+</div>
+<!-- <footer-page></footer-page> -->

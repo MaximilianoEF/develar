@@ -1,0 +1,31 @@
+  <ngx-datatable
+    class="material"
+    [rows]="users"
+    columnMode="force"
+    [headerHeight]="50"
+    [footerHeight]="50"
+    [rowHeight]="35"
+    [limit]="15"
+    [loadingIndicator]="loadingIndicator"
+    >
+
+   <ngx-datatable-column name="Usuario" prop="username" >
+    </ngx-datatable-column>
+
+   <ngx-datatable-column name="Correo electrónico" prop="email" >
+      <ng-template let-row="row" ngx-datatable-cell-template>
+        {{row['email']}}
+      </ng-template>
+    </ngx-datatable-column>
+
+   <ngx-datatable-column name="Mostrar como..." prop="displayName">
+    </ngx-datatable-column>
+
+   <ngx-datatable-column name="Editar" prop="_id">
+      <ng-template let-row="row" let-value="value" let-i="index" ngx-datatable-cell-template>
+        <a  [routerLink]="['./',value]" >
+          <i class="far fa-edit" aria-hidden="true"></i></a>
+      </ng-template>
+    </ngx-datatable-column>
+  </ngx-datatable>
+

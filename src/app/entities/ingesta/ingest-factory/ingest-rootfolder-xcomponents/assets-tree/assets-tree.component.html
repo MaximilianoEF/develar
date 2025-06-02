@@ -1,0 +1,32 @@
+<h6>Árbol de objetos digitales</h6>
+<mat-card class="mat-elevation-z4 mt-4">
+  <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
+    <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding>
+
+      <ng-container *ngIf="node.fileType === 'directory'; else notIsDirectory">
+        <button disabled mat-icon-button [attr.aria-label]="'Toggle ' + node.item" matTreeNodeToggle matTooltip="Esta carpeta no posee archivos">
+          <mat-icon class="mat-icon-rtl-mirror">{{treeControl.isExpanded(node) ? 'folder_open' : 'folder'}}</mat-icon>
+          {{node.item}}
+        </button>
+      </ng-container>
+      <ng-template #notIsDirectory>
+        <button mat-icon-button disabled>
+          <a target="_blank" href="/download/withserver/{{ node.id }}">
+            <mat-icon>image</mat-icon>
+            {{ node.item }}
+          </a>
+        </button>
+        <mat-icon matTooltip="Generar derivada" (click)="crearDerivada(node.id)">chevron_right</mat-icon>
+      </ng-template>
+
+    </mat-tree-node>
+
+    <mat-tree-node *matTreeNodeDef="let node; when: hasChild" matTreeNodePadding>
+      <button mat-icon-button [attr.aria-label]="'Toggle ' + node.item" matTreeNodeToggle>
+        <mat-icon class="mat-icon-rtl-mirror">{{treeControl.isExpanded(node) ? 'folder_open' : 'folder'}}</mat-icon>
+        {{node.item}}
+      </button>
+      <mat-icon matTooltip="Generar derivada" (click)="crearDerivada(node.id)">chevron_right</mat-icon>
+    </mat-tree-node>
+  </mat-tree>
+</mat-card>

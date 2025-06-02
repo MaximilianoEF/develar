@@ -1,0 +1,71 @@
+<mat-progress-bar *ngIf="!startView" mode="indeterminate"></mat-progress-bar>
+<mat-card *ngIf="startView">
+  <mat-card-title>
+    <h3 class="my-0">{{reference_code}}</h3>
+  </mat-card-title>
+  <mat-card-subtitle>
+    <h3 class="my-0"><small>{{ subTitle }}</small></h3>
+    <ng-container *ngIf="ud && ud.atomSlug">
+      <a href="http://atom.mininterior.gob.ar/{{ud.atomSlug}}" target="blank" class="my-0"><span>{{ atomSlug }}</span></a>
+    </ng-container>
+    <ng-container *ngIf="!ud || !ud.atomSlug"> 
+      <p><span class="text-simple">{{atomSlug}}</span></p>
+    </ng-container>
+    <button mat-icon-button type="button" (click)="refreshUdaDialog()" *ngIf="ud && ud.atomSlug" matTooltip="Refrezcar sincronización con AtoM">
+      <mat-icon>refresh</mat-icon>
+    </button>
+  </mat-card-subtitle>
+  <mat-card-content>
+    <div class="container-fluid p-0">
+      <div class="row">
+        <div class="col-12">
+          <h1 class="title-areas">Áreas de información descriptiva</h1>
+          <mat-tab-group>
+            <mat-tab label="Identificación">
+              <view-identificacion [ud]="ud" *ngIf="ud && ud.identificador"></view-identificacion>
+              <p *ngIf="!ud || !ud.identificador">{{defaultLeyenda}}</p>
+            </mat-tab>
+            <mat-tab label="Contexto">
+              <view-contexto [ud]="ud" *ngIf="ud && ud.contexto"></view-contexto>
+              <p *ngIf="!ud || !ud.contexto">{{defaultLeyenda}}</p>
+            </mat-tab>
+            <mat-tab label="Contenido y estructura">
+              <view-contenido-estructura [ud]="ud" *ngIf="ud && ud.contenidoYEstructura">
+              </view-contenido-estructura>
+
+              <p *ngIf="!ud || !ud.contenidoYEstructura">{{defaultLeyenda}}</p>
+            </mat-tab>
+            <mat-tab label="Condiciones de acceso y uso">
+              <view-condiciones-acceso-uso [ud]="ud" *ngIf="ud && ud.accesoYUso">
+              </view-condiciones-acceso-uso>
+              <p *ngIf="!ud || !ud.accesoYUso">{{defaultLeyenda}}</p>
+            </mat-tab>
+            <mat-tab label="Material relacionado">
+              <view-documentacion-asociada [ud]="ud" *ngIf="ud && ud.documentacionAsociada">
+              </view-documentacion-asociada>
+              <p *ngIf="!ud || !ud.documentacionAsociada">{{defaultLeyenda}}</p>
+            </mat-tab>
+            <mat-tab label="Notas">
+              <view-notas [ud]="ud" *ngIf="ud.notes && ud.notes.length"></view-notas>
+              <p *ngIf="!ud || !ud.notes || !ud.notes.length">{{defaultLeyenda}}</p>
+            </mat-tab>
+            <mat-tab label="Control de la descripción">
+              <view-control-descripcion [ud]="ud"></view-control-descripcion>
+            </mat-tab>
+            <mat-tab label="Vista Jerárquica">
+              <unidad-descripcion-jerarquia [ud]="ud"></unidad-descripcion-jerarquia>
+            </mat-tab>
+            <mat-tab label="Visualización del contenido">
+              <view-content-ud [ud]="ud"></view-content-ud>
+            </mat-tab>
+          </mat-tab-group>
+        </div>
+      </div>
+    </div>
+  </mat-card-content>
+  <mat-card-actions>
+    <button class="ml-2" color="accent" type="button" (click)="goToEdit()" mat-flat-button>
+      <mat-icon>edit</mat-icon> Editar
+    </button>
+  </mat-card-actions>
+</mat-card>

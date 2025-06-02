@@ -1,0 +1,129 @@
+<mat-card>
+  <mat-card-title>Formulario migrantes</mat-card-title>
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <mat-card-content>
+      <div class="container-fluid p-0">
+        <div class="row">
+          <div class="col-md-4 col-12">
+            <mat-form-field>
+              <mat-label>Barco</mat-label>
+              <input matInput formControlName="barco">
+            </mat-form-field>
+          </div>
+          <div class="col-md-4 col-12">
+            <mat-form-field>
+              <mat-label>Puerto</mat-label>
+              <input matInput formControlName="puerto">
+            </mat-form-field>
+          </div>
+
+          <div class="col-md-1 col-12">
+            <mat-form-field>
+              <mat-label>Tipo de fecha</mat-label>
+              <mat-select formControlName="date_type">
+                <mat-option *ngFor="let item of typeFechas" [value]="item.val">
+                  {{item.label}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+
+          <div class="col-md-3 col-12">
+            <mat-form-field>
+              <mat-label>Fecha</mat-label>
+              <input matInput formControlName="fe_migracion">
+              <mat-hint>Respete el formato dd/mm/yyyy ó mm/yyyy ó yyyy</mat-hint>
+            </mat-form-field>
+          </div>
+
+          <div class="col-md-4 col-12">
+            <mat-form-field>
+              <mat-label>Caja</mat-label>
+              <input matInput formControlName="caja">
+            </mat-form-field>
+          </div>
+          <div class="col-md-4 col-12">
+            <mat-form-field>
+              <mat-label>Libro</mat-label>
+              <input matInput formControlName="libro">
+            </mat-form-field>
+          </div>
+
+          <div class="col-md-4 col-12">
+            <mat-form-field>
+              <mat-label>Número de expediente</mat-label>
+              <input matInput formControlName="num_expediente">
+            </mat-form-field>
+          </div>
+
+        </div>
+        <mat-divider></mat-divider>
+        <!--Datos personales-->
+        <div class="row">
+          <div class="col-md-3 col-12">
+            <mat-form-field>
+              <mat-label>Nombre</mat-label>
+              <input matInput formControlName="nombre">
+            </mat-form-field>
+          </div>
+          <div class="col-md-3 col-12">
+            <mat-form-field>
+              <mat-label>Apellido</mat-label>
+              <input matInput formControlName="apellido">
+            </mat-form-field>
+          </div>
+          <div class="col-md-3 col-12">
+            <mat-form-field>
+              <mat-label>Fecha de nacimiento</mat-label>
+              <input matInput formControlName="fe_nacimiento" [matDatepicker]="picker">
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker color="primary"></mat-datepicker>
+            </mat-form-field>
+          </div>
+          <div class="col-md-3 col-12">
+            <mat-form-field>
+              <mat-label>Sexo</mat-label>
+              <mat-select formControlName="sexo">
+                <mat-option *ngFor="let item of sexoOptList" [value]="item.val">
+                  {{item.label}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+
+
+
+          <div class="col-md-6 col-12">
+            <mat-form-field appearance="outline">
+              <mat-label>Novedad (infracción)</mat-label>
+              <textarea matInput formControlName="novedad"></textarea>
+            </mat-form-field>
+          </div>
+          <div class="col-md-6 col-12">
+            <mat-form-field appearance="outline">
+              <mat-label>Observaciones</mat-label>
+              <textarea matInput formControlName="observaciones"></textarea>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-12" *ngIf="ar">
+            <p class="mb-1"><b>Se está editando el registro de: </b> {{ar.migrante.nombre}} {{ar.migrante.apellido}}
+            </p>
+          </div>
+          <div class="col-12">
+            <button class="ml-2" mat-flat-button color="primary" type="submit"
+              [disabled]="form.invalid">Confirmar</button>
+            <button class="ml-2" mat-flat-button color="warn" type="button" (click)="closeForm()">Cancelar</button>
+            <button class="ml-2" mat-flat-button color="accent" type="button" (click)="resetInitialValues()"
+              *ngIf="ar">Cancelar edición</button>
+            <button class="ml-2" mat-flat-button color="accent" type="button" (click)="resetDatosPersonales()"
+              *ngIf="ar">Resetear datos personales</button>
+
+          </div>
+        </div>
+      </div>
+    </mat-card-content>
+  </form>
+</mat-card>

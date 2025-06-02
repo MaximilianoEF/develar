@@ -1,0 +1,23 @@
+<mat-card>
+  <mat-card-title>{{pageTitle}}</mat-card-title>
+  <mat-card-content>
+    <div class="d-sm-flex flex-column content">
+      <ng-container *ngFor="let item of typesSync">
+        <mat-card class="flex-grow-1 mat-elevation-z0">
+          <mat-card-title class="text-center">
+            {{item.title}}
+          </mat-card-title>
+          <mat-card-subtitle class="text-center">
+            {{item.subtitle}}
+          </mat-card-subtitle>
+          <mat-card-content class="d-flex">
+            <button class="flex-grow-1" mat-flat-button color="primary" type="button"
+              (click)="dispatchAction(item.action)" [disabled]="searching">{{item.button}}
+            </button>
+          </mat-card-content>
+        </mat-card>
+      </ng-container>
+    </div>
+  </mat-card-content>
+</mat-card>
+<mat-progress-bar mode="indeterminate" *ngIf="searching"></mat-progress-bar>

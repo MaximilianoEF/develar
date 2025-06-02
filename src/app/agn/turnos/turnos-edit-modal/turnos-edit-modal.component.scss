@@ -1,0 +1,98 @@
+@import '../../../../assets/sass/mixin';
+@import '../../../../assets/sass/variable';
+
+
+.mat-flat-button{
+    @include button-agn;
+}
+
+.container-fluid {
+    .step {
+        color: #fff;
+        background-color: #01BBED;
+        display: inline-block;
+    }
+    textarea {
+        resize: none;
+    }
+    margin: 0 auto;
+    @media #{$min992} {
+        width: 75%;
+    }
+    @media #{$max543} {
+        width: 100%;
+        nav {
+            button {
+                width: 100%;
+            }
+        }
+    }
+    .mat-calendar {
+        font-family: "Encode Sans";
+        font-weight: bold;
+        width: 40%;
+    }
+     ::ng-deep {
+        .mat-calendar-body {
+            font-size: 1.3em;
+        }
+        .mat-calendar-period-button {
+            font-size: 1.8em;
+        }
+        .mat-calendar-body-label {
+            // display: none;
+            visibility: hidden;
+        }
+        .mat-calendar-body-cell {
+            border: solid 1px rgba(0, 0, 0, .38);
+        }
+        .mat-calendar-table-header {
+            border: none;
+            border-bottom: solid 1px rgba(0, 0, 0, .38);
+            color: #000;
+        }
+        .mat-calendar-table-header th {
+            font-size: 1.3em;
+            font-weight: bold;
+            padding-bottom: 0;
+            padding-top: 8px;
+        }
+        .mat-calendar-table-header-divider::after {
+            display: none;
+        }
+        .mat-calendar-body-today {
+            border-radius: 0;
+        }
+        .mat-calendar-body-today:not(.mat-calendar-body-selected) {
+            border: none;
+        }
+        .mat-calendar-body-selected {
+            background-color: #01BBED;
+            border-radius: 0;
+            box-shadow: none;
+        }
+        .mat-calendar-body-cell-content {
+            border-radius: 0;
+            left: 0;
+            height: 100%;
+            top: 0;
+            width: 100%;
+        }
+    }
+}
+
+.container-fluid .mat-calendar {
+    width: 50%;
+    @media #{$min992} {
+        width: 80%;
+    }
+    @media #{$max991} {
+        width: 80%;
+    }
+    @media #{$max767} {
+        width: 85%;
+    }
+    @media #{$max543} {
+        width: 100%;
+    }
+}

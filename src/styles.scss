@@ -1,0 +1,73 @@
+/* You can add global styles to this file, and also import other style files */
+
+
+/* You can add global styles to this file, and also import other style files */
+
+@import "../node_modules/bootstrap/scss/bootstrap";
+@import '~@fullcalendar/common/main.css';
+@import '~@fullcalendar/daygrid/main.css';
+@import '~@fullcalendar/timegrid/main.css';
+@import '~mapbox-gl/dist/mapbox-gl.css';
+@import url('https://fonts.googleapis.com/icon?family=Material+Icons');
+
+html,
+body {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    font-family: "Encode Sans", sans-serif;
+}
+
+mat-slider {
+    min-width: 182px !important;
+}
+
+.sinpadding [class*="col-"] {
+    padding: 0;
+}
+
+.cdk-overlay-dark-backdrop {
+    background: rgba(0, 0, 0, .85);
+}
+
+.vjs-agn button.vjs-big-play-button {
+    top: calc(50% - 0.8em);
+    left: calc(50% - 1.5em);
+}
+
+.vida-query-view-modal mat-dialog-container {
+    background: #000;
+}
+
+.error-notification-overlay {
+    background-color: red;
+    color: black;
+    font-size: medium;
+    font-family: Georgia, Times, 'Times New Roman', serif;
+}
+
+.warning-notification-overlay {
+    background-color: orange;
+    color: black;
+    font-size: medium;
+    font-family: Georgia, Times, 'Times New Roman', serif;
+}
+
+.success-notification-overlay {
+    background-color: green;
+    color: white;
+    font-size: medium;
+    font-family: Georgia, Times, 'Times New Roman', serif;
+}
+
+.info-notification-overlay{
+    background-color: rgba(192, 218, 100, 0.85);
+    color : black;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+.clickeable {
+    cursor: pointer;
+}

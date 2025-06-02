@@ -1,0 +1,24 @@
+<div class="detail-host" [align]="customalign" *ngIf="model" >
+
+	<mat-card class="detail-card">
+
+	  <mat-card-content class="portfolio">
+
+	    <div class="carrousel">
+	      <a routerLink="/trabajan/red/{{model._id}}">
+	        <img [ngStyle]="imgMaxSize" class="img-fluid carrousel-image" src="{{ mainImageUrl }}" >
+	      </a>
+
+	    	<div class="portfolio">
+					<p [innerHTML]='model.slug'  class="portfolio-name text-uppercase"></p>
+					<p                           class="portfolio-separator">_______________</p>
+					<p [innerHTML]='model.topic' class="portfolio-slug" ></p>
+				</div>
+	    </div>
+
+	  </mat-card-content>
+
+	</mat-card>
+
+</div>
+<!--- [ngStyle]='cardStyle'  -->

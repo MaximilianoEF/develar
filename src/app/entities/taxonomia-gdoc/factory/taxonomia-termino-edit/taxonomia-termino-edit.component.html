@@ -1,0 +1,138 @@
+<mat-card>
+  <mat-card-title>
+    <ng-container *ngIf="!isEdit">Términos</ng-container>
+    <ng-container *ngIf="isEdit">Editando el término [{{ termino.slug }} - {{ termino._id }}]</ng-container>
+  </mat-card-title>
+
+
+  <mat-card-subtitle>
+    <span *ngIf="taxonomia" (click)="activarTaxonomiaDesdeBreadcrumb()">
+      {{ taxonomia.slug }} <b> >> </b>
+    </span>
+
+    <ng-container *ngIf="(breadcrumb$ | async) as breadcrumbParts">
+      <span *ngFor="let item of breadcrumbParts; last as isLast; count as count; index as index" (click)="activarTerminoDesdeBreadcrumb(item)">
+        <ng-container *ngIf="!isLast">{{ item.slug }}
+          <ng-container *ngIf="index < count - 2"> > </ng-container>
+        </ng-container>
+      </span>
+    </ng-container>
+  </mat-card-subtitle>
+
+
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" #formDirective="ngForm">
+    <div class="container-fluid px-5">
+      <div class="row">
+
+        <div class="col-sm-3">
+          <mat-form-field>
+            <mat-label>Mostrar como (nombre)</mat-label>
+            <input #txtSlug (keyup)="autocompletar(txtSlug.value)" matInput formControlName="slug" required>
+          </mat-form-field>
+        </div>
+
+        <div class="col-sm-3">
+          <mat-form-field>
+            <mat-label>Identificador</mat-label>
+            <input matInput formControlName="identificador" required>
+            <mat-error *ngIf="asyncValidationErrors.terminoIdentificador">{{ asyncValidationErrors.terminoIdentificador }}</mat-error>
+          </mat-form-field>
+        </div>
+
+
+        <div class="col-sm-3">
+          <mat-form-field>
+            <mat-label>Forma abreviada</mat-label>
+            <input matInput formControlName="formaAbreviada">
+          </mat-form-field>
+        </div>
+
+        <div class="col-sm-3">
+          <mat-form-field>
+            <mat-label>Identificador del término padre</mat-label>
+            <input
+              matInput
+              formControlName="parentTermIdentificador"
+              [matAutocomplete]="parentIdTypeahead"
+              #txtParentTermIdentificador
+              (keyup)="searchByIdentificador(txtParentTermIdentificador.value)">
+            <mat-autocomplete
+              #parentIdTypeahead="matAutocomplete">
+                <mat-option (click)="select(item)" *ngFor="let item of parentTermsFound$ | async" [value]="item.identificador">
+                  [{{ item.identificador }}] {{ item.slug }}
+                </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+        </div>
+      </div>
+
+
+      <div class="row">
+        <div class="col-9">
+          <mat-form-field appearance="outline">
+            <mat-label>Descripción</mat-label>
+            <textarea matInput formControlName="descripcion"></textarea>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-12">
+          <mat-form-field appearance="fill">
+            <mat-label>Sinónimos (usado para)</mat-label>
+            <mat-chip-list #listSinonimos>
+              <mat-chip *ngFor="let sinonimo of sinonimos; let i = index" [selectable]="false" [removable]="true" (removed)="remove(i)">
+                {{ sinonimo }}
+                <mat-icon matChipRemove>cancel</mat-icon>
+              </mat-chip>
+              <input placeholder="Sinónimo" [matChipInputFor]="listSinonimos"
+                [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                [matChipInputAddOnBlur]="true"
+                (matChipInputTokenEnd)="add($event)">
+            </mat-chip-list>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-6">
+          <mat-form-field appearance="outline">
+            <mat-label>Notas alcance (Nota(s) sobre el alcance)</mat-label>
+            <textarea matInput formControlName="notasAlcance"></textarea>
+          </mat-form-field>
+        </div>
+        <div class="col-sm-6">
+          <mat-form-field appearance="outline">
+            <mat-label>Notas origen (Nota(s) sobre el origen)</mat-label>
+            <textarea matInput formControlName="notasOrigen"></textarea>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-6">
+          <mat-checkbox formControlName="isLocked">¿Termino bloqueado?</mat-checkbox>
+        </div>
+
+        <div class="col-sm-6" *ngIf="isEdit">
+          <mat-checkbox formControlName="canEditIdentificador" (change)="changeEditIdentificador($event)">
+            <span>Editar identificador</span>
+          </mat-checkbox>
+        </div>
+      </div>
+
+      <div class="row mt-5">
+        <div class="col-12">
+          <button mat-flat-button type="submit" color="primary" [disabled]="form.invalid">
+            <ng-container *ngIf="isEdit">
+              Guardar
+            </ng-container>
+            <ng-container *ngIf="!isEdit">
+              Crear
+            </ng-container>
+          </button>
+          <button mat-flat-button class="ml-2" type="button" color="accent"  (click)="cancelEdit()" *ngIf="isEdit">Cancelar edición</button>
+        </div>
+      </div>
+    </div>
+  </form>
+</mat-card>

@@ -1,0 +1,48 @@
+<mat-progress-bar mode="indeterminate" class="mt-4" color="primary" *ngIf="dataSource.loading$ | async"></mat-progress-bar>
+<mat-table [dataSource]="dataSource">
+
+    <ng-container matColumnDef="select">
+        <mat-header-cell *matHeaderCellDef>
+            <mat-checkbox (change)="$event ? masterToggle() : null" [checked]="selection.hasValue() && isAllSelected()" [indeterminate]="selection.hasValue() && !isAllSelected()">
+            </mat-checkbox>
+        </mat-header-cell>
+        <mat-cell *matCellDef="let row">
+            <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(row) : null" [checked]="selection.isSelected(row)">
+            </mat-checkbox>
+        </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="txFechaHora">
+        <mat-header-cell *matHeaderCellDef>Fecha y hora</mat-header-cell>
+        <mat-cell *matCellDef="let val">
+            <span class="mobile-header-cell">Fecha y hora</span>{{ val.txFechaHora }}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="recurso">
+        <mat-header-cell *matHeaderCellDef>Recurso</mat-header-cell>
+        <mat-cell *matCellDef="let val">
+            <span class="mobile-header-cell">Recurso</span> {{val.recurso}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="descripcion">
+        <mat-header-cell *matHeaderCellDef>Búsqueda</mat-header-cell>
+        <mat-cell *matCellDef="let val">
+            <span class="mobile-header-cell">Búsqueda</span>
+            <ng-container *ngFor="let descrip of val.descripcion">
+                {{descrip}}<br/>
+            </ng-container>
+        </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="rowactions">
+        <mat-header-cell *matHeaderCellDef>&nbsp;</mat-header-cell>
+        <mat-cell *matCellDef="let val">
+            <span class="mobile-header-cell">Acciones</span>
+            <mat-icon matTooltip="Repetir búsqueda" (click)="repetirQuery(val)" class="mr-3">repeat_one</mat-icon>
+        </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+
+    <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+
+</mat-table>

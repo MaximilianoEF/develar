@@ -1,0 +1,20 @@
+@import '../../../../assets/sass/mixin';
+h2 {
+    font-size: 2rem;
+    margin-top: 0;
+}
+
+.block-info {
+    background-color: #eee;
+    margin-bottom: 20px;
+    padding: 10px;
+}
+
+.mat-tab-group,
+h2 {
+    font-family: "Encode Sans";
+}
+
+.mat-flat-button {
+    @include button-agn;
+}

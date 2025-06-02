@@ -1,0 +1,92 @@
+@import '../../../assets/sass/variable';
+
+.logo {
+  z-index: 9999;
+
+  .logo-alt-img {
+    width: auto;
+    height: auto;
+    z-index: 9999;
+
+    @media #{$max543} {
+      max-height: 100px;
+      margin-top: -15px;
+    }
+
+    @media #{$min544} {
+      max-height: 130px;
+      margin-top: -15px;
+    }
+
+  }
+}
+
+
+:host {
+  .mat-card {
+    background: #ffffff;
+
+  }
+
+  .mat-card-image {
+    margin: 0;
+  }
+
+  .top-image {
+
+    @media #{$max543} {
+      min-height: 50px;
+    }
+
+    @media #{$min544} {
+      min-height: 220px;
+    }
+
+    .main-text{
+        text-align: center;
+        color: #fff;
+        max-width: 800px;
+        font-weight: 700;
+        font-style: italic;
+
+        @media #{$max543} {
+          margin: 0 15px 0 15px;
+          font-size: 1.2em;
+        }
+
+        @media #{$min544} {
+          margin: 15px 15px 0 15px;
+          font-size: 2.1em;
+        }
+
+    }
+
+    .link-box{
+      margin: 15px 0 0 0;
+      text-align: center;
+      background: #0bc869;
+
+      @media #{$max543} {
+        font-size: 1.2em;
+      }
+
+      @media #{$min544} {
+        font-size: 1.8em;
+      }
+
+      .link-button {
+        color: #ffffff;
+        line-height: 24px;
+        font-size: 1em;
+        font-weight: 700;
+        font-style: italic;
+      }
+
+    }
+
+
+  }
+
+
+}
+

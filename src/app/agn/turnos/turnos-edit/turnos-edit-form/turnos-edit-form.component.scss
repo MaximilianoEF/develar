@@ -1,0 +1,40 @@
+@import '../../../../../assets/sass/variable';
+
+$color-destacado: #0645f5;
+// .fecha-hora-control {
+// 	padding: 10px;
+// 	border: solid rgba(50, 50, 50, .6);
+// }
+// .fecha-hora-container {
+// 	padding: 10px 10px 10px 10px;
+// }
+
+mat-card {
+    width: 75%;
+    margin: 0 auto;
+
+    @media #{$min992} {
+        width: 75%;
+    }
+
+    @media #{$max991} {
+        width: 75%;
+    }
+
+    @media #{$max767} {
+        width: 80%;
+    }
+
+    @media #{$max543} {
+        width: 100%;
+    }
+
+}
+
+.text-destacado {
+    margin: 0 0 0 0;
+    color: $color-destacado;
+    font-weight: 400;
+    font-size: 1.2rem;
+    font-style: italic;
+}

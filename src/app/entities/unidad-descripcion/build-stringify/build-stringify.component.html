@@ -1,0 +1,12 @@
+<mat-card>
+  <mat-card-title class="text-center">Optimizar búsqueda de UDA</mat-card-title>
+  <mat-card-subtitle class="text-center">Este proceso revisa todas las UDA y optimza las condiciones de recuperación, en particular la búsqueda por palabra (proceso 'stringify').</mat-card-subtitle>
+  <mat-card-content>
+    <div class="d-flex">
+      <button mat-flat-button color="primary" class="flex-grow-1" type="button" (click)="rebuildStringify()">
+        Reconstruir
+      </button>
+    </div>
+  </mat-card-content>
+</mat-card>
+<mat-progress-bar mode="indeterminate" color="primary" *ngIf="searching"></mat-progress-bar>

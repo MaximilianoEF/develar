@@ -1,0 +1,25 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-12">
+      <mat-card>
+        <mat-card-content>
+          <div class="row">
+            <div class="col-12">
+              <mat-toolbar color="primary">
+                <h3>Navegador de taxonomías</h3>
+                <span class="flex-grow-1"></span>
+                <button mat-raised-button [routerLink]="['factory']">
+                  <mat-icon>add</mat-icon>
+                  Dar de alta
+                </button>
+              </mat-toolbar>
+            </div>
+          </div>
+          <tesauro-gdoc-browse (lookUpModels)="fetch($event)"></tesauro-gdoc-browse>
+          <mat-progress-bar mode="indeterminate" *ngIf="searching"></mat-progress-bar>
+          <tesauro-gdoc-table *ngIf="showData"></tesauro-gdoc-table>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+</div>

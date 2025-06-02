@@ -1,0 +1,516 @@
+import { Injectable } from '@angular/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { BehaviorSubject, Subject } from 'rxjs';
+import * as io from 'socket.io-client';
+import { User, CurrentCommunity } from './user';
+import { Person } from '../person/person';
+import { Community } from '../../develar-commons/community/community.model';
+import { DaoService } from '../../develar-commons/dao.service';
+import { UserWebService } from '../userweb/user-web.service';
+import { isOnIdentifyEffects } from '@ngrx/effects/src/lifecycle_hooks';
+
+const estados = [
+	{ val: 'no_definido', label: 'Seleccione opción' },
+	{ val: 'pendiente', label: 'Pendiente' },
+	{ val: 'activo', label: 'Activo' },
+	{ val: 'suspendido', label: 'Suspendido' },
+	{ val: 'baja', label: 'Baja' },
+
+];
+
+const avances = [
+	{ val: 'no_definido', label: 'Seleccione opción' },
+	{ val: 'webform', label: 'Alta por Webform' },
+	{ val: 'lnocturno', label: 'Alta por Webform Locales Nocturnos' },
+	{ val: 'mailok', label: 'Correo verificado' },
+	{ val: 'approved', label: 'Aprobado' },
+	{ val: 'desafectado', label: 'Desafectado' },
+];
+
+const modulos = [
+	{ val: 'no_definido', label: 'Seleccione opción' },
+	{ val: 'core', label: 'General' },
+	{ val: 'com', label: 'COM' },
+	{ val: 'ivr', label: 'Servicio IVR' },
+	{ val: 'medico', label: 'Médico' },
+	{ val: 'vigilancia', label: 'Epidemio: Seguimiento' },
+	{ val: 'same', label: '107Same' },
+	{ val: 'webmaster', label: 'Webmaster' },
+	{ val: 'marketing', label: 'Marketing' },
+	{ val: 'encuestador', label: 'Encuestador' },
+	{ val: 'productor', label: 'Productor' },
+	{ val: 'qa', label: 'Calidad' },
+	{ val : 'digitalizacion', label : 'Digitalización'}
+];
+
+const roles = [
+	{ val: 'no_definido', label: 'Seleccione opción' },
+	{ val: 'operator', label: 'Operador' },
+	{ val: 'admin', label: 'Admin' },
+	{ val: 'master', label: 'Master' },
+];
+
+var nextUser = 40;
+
+@Injectable()
+export class UserService {
+	private _socket: any;
+	private usersUrl = 'api/users';  // URL to web api
+	private personUrl = 'api/persons';  // URL to web api
+	private currentUserUrl = "api/currentuser";
+	private headers = new HttpHeaders().set('Content-Type', 'application/json');
+
+	private _currentUser: User;
+	private _userEmitter: BehaviorSubject<User>;
+
+	private isLogIn = false;
+	private hasLogout = false;
+
+	constructor(private http: HttpClient,
+		private _userWebService: UserWebService,
+		private _daoService : DaoService) {
+		this.currentUser = new User('invitado', 'invitado@develar')
+		this._userEmitter = new BehaviorSubject<User>(this.currentUser);
+		const ioFunc = (io as any).default ? (io as any).default : io;
+		this._socket = ioFunc();
+	}
+
+	isUserMemberOf(targetRole): boolean{
+        let ok = false;
+    
+        if(this._currentUser && this._currentUser.roles && this._currentUser.roles.length){
+          ok = this._currentUser.moduleroles.find(role => role === targetRole) ? true : false;
+        }
+        return ok;
+	}
+
+	fetchUserByRole(roles:string){
+		let query = {
+		  moduleroles: roles
+		}
+		return this._daoService.search<User>('user', query);
+	
+	  }
+	  /**
+	   * 
+	buildParamsFromArray(roles : string[]) : string {
+		let searchUrl = this.usersUrl+'/search'
+		// IMPLEMENTAMOS ESTE CRITERIO PARA LA BÚSQUEDA POR ARRAY
+		let condiciones : string = "?";
+		roles.forEach( (condicion,index) => {
+		  condiciones = condiciones+"roles="+condicion;
+		  if(index < roles.length-1){
+			  condiciones+='&'
+		  }
+		});
+	
+		return searchUrl = searchUrl+condiciones;
+	  }
+	   */
+
+
+	/**************
+		DAO FUNCTIONS
+	******************/
+	getUsers(): Promise<User[]> {
+		return this.http.get(this.usersUrl)
+			.toPromise()
+			.catch(this.handleError);
+	}
+
+	private handleError(error: any): Promise<any> {
+		console.error('handleError: Ocurrió un error [%s] [%s]', error, arguments.length);
+		console.dir(error)
+
+		return Promise.reject(error.message || error);
+	}
+
+	create(user: User): Promise<User> {
+		const url = `${this.usersUrl}/${'signup'}`;
+		return this.http
+			.post(url, JSON.stringify(user), { headers: this.headers })
+			.toPromise()
+			.catch(this.handleError);
+	}
+
+	update(user: User): Promise<User> {
+		const url = `${this.usersUrl}/${'signup'}/${user._id}`;
+		return this.http
+			.put(url, JSON.stringify(user), { headers: this.headers })
+			.toPromise()
+			.catch(this.handleError);
+	}
+
+	updateCommunity(community: any, userId: string): Promise<User> {
+		const url = `${this.usersUrl}/${'signup'}/${ userId }`;
+		return this.http
+			.put(url, JSON.stringify(community), { headers: this.headers })
+			.toPromise()
+			.catch(this.handleError);
+	}
+
+
+	credentials(user: User): Promise<User> {
+		const url = `${this.usersUrl}/${'credentials'}/${user._id}`;
+		return this.http
+			.put(url, JSON.stringify(user), { headers: this.headers })
+			.toPromise()
+			.catch(this.handleError);
+	}
+
+
+	getPerson(): Promise<Person> {
+		let id = this._currentUser.personId;
+		const url = `${this.personUrl}/${id}`;
+		return this.http.get(url)
+			.toPromise()
+			.catch(this.handleError);
+	}
+
+
+	getUser(id: string): Promise<User> {
+		const url = `${this.usersUrl}/${id}`;
+		return this.http.get(url)
+			.toPromise()
+			.catch(this.handleError);
+	}
+
+	delete(id: string): Promise<void> {
+		const url = `${this.usersUrl}/${id}`;
+		return this.http.delete(url, { headers: this.headers })
+			.toPromise()
+			.then(() => null)
+			.catch(this.handleError);
+	}
+
+
+	/**************
+		COMMUNITY MANAGEMENT
+	******************/
+	changeCurrentCommunity(community: Community) {
+		let move_to: CurrentCommunity = {
+			id: community.id,
+			name: community.name,
+			slug: community.slug,
+			displayAs: community.displayAs
+		}
+
+		let user = {};
+		user['communityId'] = community._id;
+		user['communityUrlpath'] = community.urlpath;
+		user['currentCommunity'] = move_to;
+		this.updateCommunity(user, this._currentUser._id).then(user => {
+			//this.userEmitter.next(user);
+		})
+
+	}
+
+	changeUserCommunity(user: User, community: Community) {
+		let move_to: CurrentCommunity = {
+			id: community.id,
+			name: community.name,
+			slug: community.slug,
+			displayAs: community.displayAs
+		}
+		user.communityId = community._id;
+		user.communityUrlpath = community.urlpath;
+		user.currentCommunity = move_to;
+		this.update(user)
+	}
+
+
+	/**************
+		LOGIN MANAGEMENT
+	******************/
+	login(user: User): Promise<User> {
+		const url = `${this.usersUrl}/${'login'}`;
+		this.hasLogout = false;
+		return this.http
+			.post(url, JSON.stringify(user), { headers: this.headers })
+			.toPromise()
+			.catch(this.loginError);
+	}
+
+	googlelogin(): Promise<User> {
+		const url = `${this.usersUrl}/${'login/google'}`;
+		this.hasLogout = false;
+		return this.http
+			.get(url)
+			.toPromise()
+			.catch(this.loginError);
+	}
+
+	logout(): Promise<any> {
+
+		let url = `${this.usersUrl}/closesession`;
+		this.isLogIn = false;
+		this.hasLogout = true;
+		this._userWebService.logout().then();
+		this._currentUser = new User('invitado', 'invitado@develar');
+		this._userEmitter.next(this._currentUser);
+		return this.http.get(url)
+			.toPromise()
+			.catch(this.handleError);
+
+	}
+
+	private loginError(error: any): Promise<any> {
+		this.isLogIn = false;
+		this.hasLogout = false;
+		return Promise.reject({ message: 'loginError: fallo en la autenticación, el usuario o la clave son incorrectas' });
+	}
+
+	/**************
+		MAIL NOTIFICATION
+	**********************/
+	sendMailFactory(opt?: Object): SendMail {
+		return new SendMail(opt);
+	}
+
+	send(mail: SendMail): Promise<any> {
+		return this.http
+			.post(mail.url, JSON.stringify(mail.content), { headers: this.headers })
+			.toPromise()
+			.catch(this.handleError);
+	}
+
+
+	initCurrentUser() {
+		// OjO esto es solo para desarrollo
+		this.currentUser.password = "abc1234";
+		this.login(this.currentUser)
+			.then(user => {
+				this.currentUser = user;
+				if (!this.currentUser.currentCommunity) {
+					this.currentUser.currentCommunity = {
+						id: null,
+						name: 'develar',
+						slug: 'develar',
+						displayAs: 'develar'
+					}
+				}
+				this._userEmitter.next(this.currentUser);
+			})
+	}
+
+	/**************
+		API UTILS
+	******************/
+
+	get userEmitter(): BehaviorSubject<User> {
+		return this._userEmitter;
+	}
+
+	get socket(): any {
+		return this._socket;
+	}
+
+	get userlogged(): boolean {
+		return this.isLogIn;
+	}
+
+
+	/***** CURRENT USER     **********/
+	get currentUser(): User {
+		if (this._currentUser.username === 'invitado' && !this.hasLogout) {
+			this.updateCurrentUser();
+		}
+		return this._currentUser;
+	}
+
+	set currentUser(user: User) {
+		this._currentUser = user;
+	}
+
+	//****************** login management  *****************
+	initLoginUser() {
+		let fetchedUser: User;
+		let loggedIn = false;
+		let loginUser = new Subject<User>();
+
+		this.loadLoginUser().then(res => {
+			fetchedUser = res as User;
+			loggedIn = (fetchedUser && fetchedUser._id) ? true : false;
+
+			if (!loggedIn) {
+				setTimeout(() => {
+
+					this.loadLoginUser().then(res => {
+						fetchedUser = res as User;
+						loggedIn = (fetchedUser && fetchedUser._id) ? true : false;
+
+						if (!loggedIn) {
+							fetchedUser = new User('invitado', 'invitado@develar');
+							this.setAnonimousUser(fetchedUser, loginUser);
+
+						} else {
+							this.setLoginUser(fetchedUser, loginUser);
+						}
+					})
+				}, 2000)
+
+			} else {
+				this.setLoginUser(fetchedUser, loginUser);
+			}
+
+		})
+			.catch(this.handleError);
+
+		return loginUser;
+	}
+
+
+	loadLoginUser() {
+		return this.http
+			.get(this.currentUserUrl)
+			.toPromise()
+	}
+
+	setAnonimousUser(user: User, loginUser: Subject<User>) {
+		this._currentUser = user;
+		this.isLogIn = false;
+		this.hasLogout = false;
+		loginUser.next(this._currentUser);
+		this.userEmitter.next(this._currentUser);
+	}
+
+	setLoginUser(user: User, loginUser: Subject<User>) {
+		this._currentUser = user;
+		this.isLogIn = true;
+		this.hasLogout = false;
+		loginUser.next(this._currentUser);
+		this.userEmitter.next(this._currentUser);
+	}
+
+	//****************** END: login management  *****************
+
+	updateCurrentUser(): Promise<User> {
+		return this.http
+			.get(this.currentUserUrl)
+			.toPromise()
+			.then(res => {
+				let fetchedUser = res as User;
+				this.isLogIn = (fetchedUser && fetchedUser._id) ? true : false;
+				if (!this.isLogIn) {
+					this.hasLogout = true;
+					this.currentUser = new User('invitado', 'invitado@develar');
+
+				} else {
+					this.hasLogout = false;
+					this.currentUser = fetchedUser;
+				}
+
+				this.userEmitter.next(this._currentUser);
+				return this._currentUser;
+			})
+			.catch(this.handleError);
+	}
+
+	getEstados() {
+		return estados;
+	}
+
+	getAvances() {
+		return avances;
+	}
+
+	getRoles() {
+		return roles;
+	}
+
+	isAdminUser() {
+		let user = this.currentUser || this._userWebService.currentUser;
+		let admin = false;
+		if (user && !user['isUsuarioWeb'] && (user.username !== 'invitado')) {
+			admin = true;
+		}
+		return admin;
+	}
+
+	getVigilanciaRole() {
+		let user = this.currentUser;
+		let roles = user.moduleroles;
+		let vigilancia = '';
+		if (roles && roles.length) {
+			vigilancia = roles.find(t => t.substr(0, 10) === 'vigilancia');
+
+		}
+		return vigilancia;
+	}
+
+	getModulos() {
+		return modulos;
+	}
+
+}
+
+
+
+
+
+
+class SendMail {
+	private urlRoot = '/api/utils/sendmail';
+	private httpHeaders = new Headers({ 'Content-Type': 'application/json' });
+
+	private mailData = {
+		from: '',
+		to: '',
+		cc: '',
+		subject: '',
+		body: '',
+	}
+
+	private handleError(error: any): Promise<any> {
+		console.error('Ocurrió un error [user.service]', error);
+
+		return Promise.reject(error.message || error);
+	}
+
+	constructor(options?: Object) {
+		if (options) Object.assign(this.mailData, options);
+	}
+
+
+	set mailFrom(data) {
+		this.mailData.from = data;
+	}
+
+	set mailTo(data) {
+		this.mailData.to = data;
+	}
+
+	set mailSubject(data) {
+		this.mailData.subject = data;
+	}
+
+	set mailBody(data) {
+		this.mailData.body = data;
+	}
+
+	get content() {
+		return this.mailData;
+	}
+
+	get url() {
+		return this.urlRoot;
+	}
+
+	get headers() {
+		return this.httpHeaders;
+	}
+
+
+}
+
+export class UserToken {
+	isLogged: boolean = false;
+	hasCommunity: boolean = false;
+	username: string = "";
+	email: string = "";
+	id: string = "";
+	communityId: string = "";
+	userCommunity: Community;
+	data: User;
+}
+

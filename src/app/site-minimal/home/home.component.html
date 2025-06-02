@@ -1,0 +1,86 @@
+<div class="top-margin"></div>
+
+
+<ng-container *ngIf="isTopcarrousel">
+    <top-carrousel [record]='topcarrousel'></top-carrousel>
+</ng-container>
+
+<ng-container *ngIf="isTopbranding">
+    <top-branding [record]='topbranding'></top-branding>
+</ng-container>
+
+<ng-container *ngIf="isBuscador">
+  <buscador-agn-bicentenario [record]='buscadoragnbicentenario'></buscador-agn-bicentenario>
+</ng-container>
+
+<ng-container *ngIf="isDestacado">
+    <destacado [record]='destacado'></destacado>
+</ng-container>
+
+<ng-container *ngIf="isPortfolioCarrousel">
+    <porfolio-carrousel-page></porfolio-carrousel-page>
+</ng-container>
+
+
+<ng-container *ngIf="isPortfolios">
+    <div class="portfolio d-flex flex-row justify-content-center align-items-start flex-wrap">
+        <portfolio-token class="p-1" *ngFor='let portfolio of portfolios' [cardSize]='portfolioCardSize' [model]='portfolio'>
+        </portfolio-token>
+    </div>
+</ng-container>
+
+<ng-container *ngIf="isRegistro">
+    <registro-container [record]='registro' [target]="'comercio'"></registro-container>
+</ng-container>
+
+<ng-container *ngIf="isPersonalSeguridad">
+    <registro-container [record]='personalSeguridad' [target]="'personalseguridad'"></registro-container>
+</ng-container>
+
+<ng-container *ngIf="isTopaboutlr">
+    <top-aboutlr [record]='topaboutlr'></top-aboutlr>
+</ng-container>
+
+<ng-container *ngIf="isServicios">
+    <top-servicios [record]='servicios'></top-servicios>
+</ng-container>
+
+<ng-container *ngIf="isTopabout">
+    <top-about [record]='topabout'></top-about>
+</ng-container>
+
+<ng-container *ngIf="isTopmission">
+    <top-mission [record]='topmission'></top-mission>
+</ng-container>
+
+<ng-container *ngIf="isPosts">
+    <post-top-container [destaque]="'destaque1'"></post-top-container>
+</ng-container>
+
+<ng-container *ngIf="isPosts">
+    <post-top-container [destaque]="'destaque2'"></post-top-container>
+</ng-container>
+
+<ng-container *ngIf="isPosts">
+    <post-top-container [destaque]="'destaque3'"></post-top-container>
+</ng-container>
+
+<ng-container *ngIf="isPosts">
+    <post-top-container [destaque]="'destaque4'"></post-top-container>
+</ng-container>
+
+
+<ng-container *ngIf="showProductos">
+    <myproducts></myproducts>
+</ng-container>
+
+<ng-container *ngIf="isContacto">
+    <top-contacto [record]='contacto'></top-contacto>
+</ng-container>
+
+
+<ng-container *ngIf="isFooter">
+    <footer-page></footer-page>
+</ng-container>
+
+<!-- app-cardsviewgrid></app-cardsviewgrid -->

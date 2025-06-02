@@ -1,0 +1,19 @@
+<mat-card>
+    <mat-card-title>Vista jerárquica de la Descripción Archivística</mat-card-title>
+    <mat-card-content>
+        <ng-container *ngFor="let properties of results">
+            <div class="mat-elevation-z4 p-2" *ngIf="properties[0].propiedad !== '_id'">
+                <p class="text-destacado">Propiedad: {{properties[0].propiedad}} </p>
+                <ng-container *ngFor="let item of properties">
+                    <div class="m-3 mat-elevation-z3 p-2">
+                        <p> ({{item.level_of_description}}) => <span [innerHtml]="item.value | sanitizeHtml"></span></p>
+                        <small style="color: gray;"> mapKey: {{item.mapKey}} </small>
+                    </div>
+                </ng-container>
+            </div>
+        </ng-container>
+    </mat-card-content>
+  <mat-card-actions>
+    <button type="button" class="ml-2" mat-flat-button color="warn" (click)="closeForm()">Cerrar</button>
+  </mat-card-actions>
+</mat-card>

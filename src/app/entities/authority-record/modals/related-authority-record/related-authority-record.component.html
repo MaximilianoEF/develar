@@ -1,0 +1,43 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <h1 mat-dialog-title>Nueva relación</h1>
+    <mat-dialog-content>
+        <div class="container">
+            <div class="row">
+                <div class="col-12 pl-0">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Buscar registro de autoridad por nombre</mat-label>
+                        <input #searchBox matInput name="identifier" [matAutocomplete]="identifier" (keyup)="searchEntities(searchBox.value)">
+                    </mat-form-field>
+                    <mat-autocomplete #identifier="matAutocomplete">
+                        <mat-option *ngFor="let item of authorityRecords$ | async" (onSelectionChange)="selectEntity(item)" [value]='item.controlArea.identifier'>
+                            {{ item.controlArea.identifier }} :: {{ item.identityArea.authorizedName }}
+                        </mat-option>
+                    </mat-autocomplete>
+                </div>
+            </div>
+            <div class="row" *ngIf="hasSelectedEntity">
+                <div class="col-12 pl-0">
+                    <mat-list dense>
+                        <mat-list-item><strong>Tipo de entidad: </strong> {{ selectedEntity.identityArea.entityType }}</mat-list-item>
+                        <mat-list-item><strong>Identificador: </strong> {{ selectedEntity.controlArea.identifier }}</mat-list-item>
+                        <mat-list-item><strong>Forma autorizada del nombre: </strong> {{ selectedEntity.identityArea.authorizedName }}</mat-list-item>
+                    </mat-list>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12 pl-0">
+                    <mat-form-field>
+                        <mat-label>Categoría de la relación: </mat-label>
+                        <mat-select #selCategory formControlName="category">
+                            <mat-option *ngFor="let item of categoryList" [value]="item.val">{{ item.label }}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+    </mat-dialog-content>
+    <mat-dialog-actions>
+        <button type="submit" mat-flat-button color="primary" [disabled]="form.invalid || !hasSelectedEntity">Crear relación</button>
+        <button type="button" mat-flat-button color="warn" (click)="cancel()">Cancelar</button>
+    </mat-dialog-actions>
+</form>

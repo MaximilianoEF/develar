@@ -1,0 +1,9 @@
+@import 'variable';
+@import 'fonts';
+
+::ng-deep  {
+	@import 'structure';
+  @import 'typography';
+  @import 'helpers';
+  @import 'material-components';
+}

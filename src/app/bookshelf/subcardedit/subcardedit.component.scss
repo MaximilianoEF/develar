@@ -1,0 +1,12 @@
+@use 'sass:math';
+@import '../../../assets/sass/variable';
+:host {
+	display: block;
+	margin: 0 0 40px 0;
+
+
+  .additional-info {
+    margin: $module (-$module) (-$module);
+    padding: math.div($module, 2) $module;
+  }
+}

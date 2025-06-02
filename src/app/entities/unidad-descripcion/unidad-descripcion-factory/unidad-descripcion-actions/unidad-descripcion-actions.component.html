@@ -1,0 +1,18 @@
+<mat-card>
+  <mat-card-title>Áreas de información descriptiva</mat-card-title>
+  <mat-card-content>
+    <button mat-flat-button class="m-1" color="primary" (click)="emitAction('IDENT')">Identificación</button>
+    <button mat-flat-button class="m-1" color="primary" (click)="emitAction('CONTEXTO')">Contexto</button>
+    <button mat-flat-button class="m-1" color="primary" (click)="emitAction('CONTENT')">Contenido y estructura</button>
+    <button mat-flat-button class="m-1" color="primary" (click)="emitAction('CONDICIONES')">Condiciones de acceso y uso</button>
+    <button mat-flat-button class="m-1" color="primary" (click)="emitAction('DOC')">Material relacionado</button>
+    <button mat-flat-button class="m-1" color="primary" (click)="emitAction('NOTAS')">Notas</button>
+    <button mat-flat-button class="m-1" color="primary" (click)="emitAction('DESCR')">Control de la descripción</button>
+    <button mat-flat-button class="m-1" color="primary" (click)="emitAction('ADMINISTRACION')">Administración</button>
+    <button mat-flat-button class="m-1" color="primary" (click)="emitAction('PUNTOSACCESO')">Puntos de acceso</button>
+    <button mat-flat-button class="m-1" color="secondary" [routerLink]="['/punto-acceso', 'factory', udaId]">Acceso extendido</button>
+    <button mat-flat-button class="m-1" color="accent" (click)="emitAction('JERARQUIA')" *ngIf="isEdit">Vista jerárquica</button>
+    <button mat-flat-button class="m-1" color="accent" (click)="navigateToDetailedView()" *ngIf="isEdit">Vista detallada</button>
+    <button mat-flat-button class="m-1" color="warn" (click)="navigateToBrowser()" title="Navegar hacia el buscador de UDAs">Volver</button>
+  </mat-card-content>
+</mat-card>

@@ -1,0 +1,12 @@
+<div class="container-fluid p-0">
+    <div class="row">
+        <div class="col-12">
+            <tech-machine-factory-edit (emitSaveChanges)="saveChanges($event)" *ngIf="showEditForm"></tech-machine-factory-edit>
+        </div>
+    </div>
+    <div class="row mt-2">
+        <div class="col-12">
+            <tech-machine-factory-view></tech-machine-factory-view>
+        </div>
+    </div>
+</div>

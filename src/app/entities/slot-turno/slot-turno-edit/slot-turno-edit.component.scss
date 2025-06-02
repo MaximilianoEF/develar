@@ -1,0 +1,17 @@
+.slots-container .mat-icon {
+    cursor: pointer;
+    vertical-align: middle;
+}
+
+.slots-container .mat-icon:hover {
+    background: #ccc;
+    border-radius: 20px;
+}
+
+.icon-remove {
+    color: #f00;
+}
+
+.icon-add {
+    color: #3C4E62;
+}

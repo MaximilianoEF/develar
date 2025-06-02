@@ -1,0 +1,212 @@
+<mat-card class="p-0 p-md-3 mat-elevation-z0">
+    <mat-card-title>
+        <h3 class="mb-2">{{ title }}</h3>
+    </mat-card-title>
+    <mat-card-content>
+        <form [formGroup]="form">
+            <div class="row">
+                <div class="col-12 col-md-8" *ngIf="isModoServicio">
+                    <mat-form-field>
+                        <mat-label>Servicios disponibles</mat-label>
+                        <mat-select #fldType formControlName="type" (selectionChange)="changeSelectionValue('type',fldType.value)">
+                            <mat-option *ngFor="let item of consultaOptList" [value]="item.val">{{ item.label }}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12 p-0 p-md-3" *ngIf='!isAsesoramiento && !isMaterial && !isModoServicio'>
+                    <mat-form-field appearance="outline">
+                        <textarea id="text-consulta-primary" matInput rows="10" formControlName="description" [placeholder]="mePlaceholder"></textarea>
+                    </mat-form-field>
+                </div>
+
+            </div>
+            <ng-container *ngIf='isAsesoramiento'>
+                <div class="row">
+                    <div class="col-12">
+                        <h4>Solicitar una asistencia técnica</h4>
+                        <span>
+                            Las asistencias técnicas del Archivo General de la Nación consisten en asesoramientos archivísticos realizados por profesionales del organismo. El objetivo del servicio es promover y ayudar a una correcta gestión de los documentos de archivo en organismos públicos de todos los poderes e instituciones de la sociedad civil. 
+                        </span>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-12 col-md-6">
+                        <mat-form-field>
+                            <mat-label>Institución solicitante</mat-label>
+                            <input matInput formControlName="institucion">
+                        </mat-form-field>
+                    </div>
+
+                    <div class="col-12 col-md-6">
+                        <mat-form-field>
+                            <mat-label>CUIT (sin guiones)</mat-label>
+                            <input matInput formControlName="cuit">
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-12 col-md-6">
+                        <mat-form-field>
+                            <mat-label>Correo electrónico institucional</mat-label>
+                            <input matInput formControlName="contacto">
+                        </mat-form-field>
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <mat-form-field>
+                            <mat-label>Teléfono institucional</mat-label>
+                            <input matInput formControlName="telefono">
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-12 col-md-12">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Asistencia técnica requerida (descripción breve)</mat-label>
+                            <textarea matInput formControlName="solicitud"></textarea>
+                        </mat-form-field>
+                    </div>
+                </div>
+
+            </ng-container>
+            <!--Solicitud de material-->
+            <ng-container *ngIf='isMaterial'>
+                <div class="row">
+                    <div class="col-12">
+                        <h4>Solicitar el envío de documentación digitalizada</h4>
+                        <p><strong>Para solicitar copias de documentación al Archivo General de la Nación seguí estos
+                                pasos:</strong></p>
+                        <!-- <p>
+                            Para remitirte copias es necesario que nos indiques la información asociada a los documentos, si aún no la tenés podés encontrarla en nuestros inventarios y catálogos en <a target="_blank" href="https://argentina.gob.ar/interior/archivo-general">https://argentina.gob.ar/interior/archivo-general</a>.
+                            Si tenés dudas envianos tu consulta desde 'Mi perfil AGN'.
+                        </p>
+
+                        <p>Por el momento podemos remitir únicamente documentación ya digitalizada. El volumen del envío queda sujeto a requerimientos técnicos.</p> -->
+                        <p>
+                            <b>1.</b> Revisá el listado de fondos documentales disponibles para este servicio y consultá sus inventarios. Podés acceder a estas referencias
+                            <a href="https://www.argentina.gob.ar/interior/archivo-general/fondos-consulta" target="_blank" class="font-weight-bold">
+                                acá.
+                            </a>Al descargar y consultar los inventarios, podrás buscar las piezas documentales que sean de su interés.
+                        </p>
+                        <p>
+                            <b>2.</b> Cuando ya identificaste las piezas de tu interés, completá los datos que se solicitan en esta página y pulsá <b>"enviar solicitud."</b>
+                        </p>
+                        <p><b>Tiempo de demora</b></p>
+                        <p>A partir de los 30 días hábiles estaremos respondiendo a tu consulta y enviándote el material solicitado</p>
+                        <blockquote class="pl-3 py-3 font-weight-bold block-aclaracion">
+                            <p><b>El Archivo General de la Nación no digitaliza a pedido ni efectúa investigaciones personales. Los recursos disponibles son aquellos que figuran en los fondos documentales digitalizados.
+                            </b></p>
+                        </blockquote>
+                    </div>
+                </div>
+
+
+                <div formArrayName="solMaterial" *ngFor="let item of solMaterialGet.controls; let i = index;">
+                    <div [formGroupName]="i">
+                        <div class="row mt-3">
+                            <div class="col-12">
+                                <mat-form-field appearance="outline">
+                                    <mat-label><b>Tipo de material que necesitas</b></mat-label>
+                                    <mat-select #tmaterialSelect formControlName="tmaterial">
+                                        <mat-option *ngFor="let item of tmaterialList" [value]="item.val">{{item.label}}</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <ng-container *ngIf="item && getTMaterial(i)">
+                            <div class="row">
+                                <div class="col-12 col-md-6" *ngIf="getTMaterial(i) != 'audiovisual'">
+                                    <mat-form-field>
+                                        <mat-label>Fondo documental</mat-label>
+                                        <input matInput formControlName="fondodocumental">
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-12 col-md-6" *ngIf="getTMaterial(i) != 'audiovisual'">
+                                    <mat-form-field>
+                                        <mat-label>Serie documental</mat-label>
+                                        <input matInput formControlName="seriedocumental">
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="row" *ngIf="getTMaterial(i) == 'audiovisual'">
+                                <div class="col-12 col-md-6">
+                                    <mat-form-field>
+                                        <mat-label>Titulo del video o audio</mat-label>
+                                        <input matInput formControlName="titulo">
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-12 col-md-6">
+                                    <mat-form-field>
+                                        <mat-label>Times-code</mat-label>
+                                        <input matInput formControlName="timescode">
+                                    </mat-form-field>
+                                </div>                                
+                            </div>
+                         
+    
+                            <div class="row" *ngIf="getTMaterial(i) != 'audiovisual'">
+                                <div class="col-12 col-md-12">
+                                    <mat-form-field>
+                                        <mat-label>Descripción</mat-label>
+                                        <input matInput formControlName="destino">
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="row" *ngIf="getTMaterial(i) == 'escrita'">
+                                <div class="col-12">
+                                    <mat-form-field>
+                                        <mat-label>Fecha</mat-label>
+                                        <input matInput formControlName="fecha">
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="row" >
+                                <div class="col-12 col-md-6">
+                                    <mat-form-field>
+                                        <mat-label *ngIf="getTMaterial(i) != 'fotografica'">Número de legajo</mat-label>
+                                        <mat-label *ngIf="getTMaterial(i) == 'fotografica'">Número de caja</mat-label>
+                                        <input matInput formControlName="numeropieza">
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-12 col-md-6">
+                                    <mat-form-field>
+                                        <mat-label *ngIf="getTMaterial(i) == 'escrita'">Número de documento/ expediente/ folio</mat-label>
+                                        <mat-label *ngIf="getTMaterial(i) == 'fotografica'">Número de inventario</mat-label>
+                                        <mat-label *ngIf="getTMaterial(i) == 'audiovisual'">ID</mat-label>
+                                        <input matInput formControlName="identificador">
+                                    </mat-form-field>
+                                </div>
+                                
+                            </div>
+                            <mat-divider></mat-divider>
+                        </ng-container>
+                    </div>
+                </div>
+                <div class="row">
+                    <button mat-button color="accent" type="button" (click)="addControls()"><mat-icon>add</mat-icon> <b>agregar otro documento </b></button>
+                    <button class="ml-0 ml-md-2" mat-button color="warn" type="button" (click)="removeControl()" *ngIf="solMaterialGet.length > 1">
+                        <mat-icon>remove</mat-icon> <b>Retirar un documento</b>
+                    </button>
+
+                </div>
+
+            </ng-container>
+            <!--Fin sol material-->
+        <mat-card-actions class="text-right">
+            <button type="button" mat-flat-button class="button-cancel" (click)="cancel()">
+                <mat-icon>keyboard_arrow_left</mat-icon>Volver
+            </button>
+
+            <button type="button" mat-flat-button class="mx-2 button-submit" (click)="upsertRecord()" [disabled]="form.invalid || (isModoServicio && !typeSelected)">Enviar Solicitud
+            </button>
+
+        </mat-card-actions>
+
+    </form>
+    </mat-card-content>
+</mat-card>

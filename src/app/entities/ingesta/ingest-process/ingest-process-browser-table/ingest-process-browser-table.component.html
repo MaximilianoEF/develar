@@ -1,0 +1,51 @@
+<mat-table matSort [dataSource]="dataSource" class="mt-3">
+
+  <ng-container matColumnDef="select">
+    <mat-header-cell *matHeaderCellDef>
+      <mat-checkbox (change)="$event ? masterToggle() : null" [checked]="selection.hasValue() && isAllSelected()"
+        [indeterminate]="selection.hasValue() && !isAllSelected()">
+      </mat-checkbox>
+    </mat-header-cell>
+    <mat-cell *matCellDef="let row">
+      <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(row) : null"
+        [checked]="selection.isSelected(row)">
+      </mat-checkbox>
+    </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="slug">
+    <mat-header-cell *matHeaderCellDef mat-sort-header>Denominación PI</mat-header-cell>
+    <mat-cell *matCellDef="let item">
+      <span class="mobile-header-cell">Denominación PI</span>
+      {{ item.slug }}</mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="compNum">
+    <mat-header-cell *matHeaderCellDef mat-sort-header>Número de comprobante</mat-header-cell>
+    <mat-cell *matCellDef="let item">
+      <span class="mobile-header-cell">Número de comprobante</span>
+      {{ item.compNum }}</mat-cell>
+  </ng-container>
+  <ng-container matColumnDef="fecha_tx">
+    <mat-header-cell *matHeaderCellDef mat-sort-header>Fecha de alta</mat-header-cell>
+    <mat-cell *matCellDef="let item">
+      <span class="mobile-header-cell">Fecha de alta</span>
+      {{ item.fecha_tx }}</mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="rowactions">
+    <mat-header-cell *matHeaderCellDef>&nbsp;</mat-header-cell>
+    <mat-cell *matCellDef="let item">
+      <span class="mobile-header-cell">Acciones</span>
+      <mat-icon matTooltip="Editar este PI" class="mr-3" (click)="edit(item)">edit</mat-icon>
+    </mat-cell>
+  </ng-container>
+
+  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+
+  <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+
+</mat-table>
+
+<mat-paginator #paginator [length]="10" [pageIndex]="0" [pageSize]="25" [pageSizeOptions]="[5, 10, 25, 100]">
+</mat-paginator>

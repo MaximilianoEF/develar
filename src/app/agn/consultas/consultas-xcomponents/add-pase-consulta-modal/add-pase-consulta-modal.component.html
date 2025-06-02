@@ -1,0 +1,21 @@
+<h3 mat-dialog-title>Añadir pase</h3>
+<form [formGroup]="formGroup" (ngSubmit)="onSubmit()">
+    <mat-dialog-content>
+        <div class="container-fluid p-0">
+            <div class="row">
+                <div class="col-12">
+                    <mat-form-field appearance="outline">
+                        <textarea matInput formControlName="novedad_tx"></textarea>
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+    </mat-dialog-content>
+    <mat-dialog-actions>
+        <button mat-flat-button type="submit" [disabled]="formGroup.invalid">Confirmar</button>
+        <button class="ml-2" mat-flat-button type="button" mat-dialog-close>
+            <mat-icon>arrow_keyboard_left</mat-icon>
+            Volver
+        </button>
+    </mat-dialog-actions>
+</form>

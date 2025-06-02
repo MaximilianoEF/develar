@@ -1,0 +1,90 @@
+<mat-card>
+  <div class="container-fluid p-0">
+    <div class="row">
+      <ng-container *ngIf="!actionSelected">
+        <div class="col-12">
+          <!-- p>Seleccione un área para cargar los datos</p  -->
+        </div>
+      </ng-container>
+      <ng-container *ngIf="showIdentForm">
+        <div class="col-12">
+          <form-identificador *ngIf="ud" (closeInputAreaEmitter)="handleCloseInputArea($event)"
+            (identifierEmitter)="updateIdentifier($event)" (value)="formValue($event)" (udSelected)="emitir($event)"
+            [referenceCodeTx]="referenceCodeTx" [identificador]="ud.identificador" [ud]="ud"
+            [udChildrens]="udChildrens">
+          </form-identificador>
+
+          <form-identificador (identifierEmitter)="updateIdentifier($event)" (value)="formValue($event)"
+            (udSelected)="emitir($event)" [referenceCodeTx]="referenceCodeTx" *ngIf="!ud"></form-identificador>
+        </div>
+      </ng-container>
+      <ng-container *ngIf="showContenidoForm">
+        <div class="col-12">
+          <form-contenido (value)="formValue($event)" [ud]="ud" (closeInputAreaEmitter)="handleCloseInputArea($event)">
+          </form-contenido>
+        </div>
+      </ng-container>
+
+      <ng-container *ngIf="showContextForm">
+        <div class="col-12">
+          <form-context [ud]="ud" (value)="formValue($event)" (closeInputAreaEmitter)="handleCloseInputArea($event)">
+          </form-context>
+        </div>
+      </ng-container>
+
+      <ng-container *ngIf="showDocForm">
+        <div class="col-12">
+          <form-doc (value)="formValue($event)" [ud]="ud" (closeInputAreaEmitter)="handleCloseInputArea($event)">
+          </form-doc>
+        </div>
+
+      </ng-container>
+
+      <ng-container *ngIf="showCondicionesForm">
+        <div class="col-12">
+          <form-condiciones (closeInputAreaEmitter)="handleCloseInputArea($event)" (value)="formValue($event)"
+            [ud]="ud">
+          </form-condiciones>
+        </div>
+      </ng-container>
+
+      <!--
+              Muestra el componente Unidad Descripcion History; el mismo
+              permite controlar los datos históricos de una unidad de descripción
+            -->
+      <ng-container *ngIf="showDescrForm">
+        <div class="col-12">
+          <control-descripcion (value)="formValue($event)" (closeInputAreaEmitter)="handleCloseInputArea($event)" [ud]="ud"></control-descripcion>
+        </div>
+      </ng-container>
+
+      <ng-container *ngIf="showAdministracion">
+        <div class="col-12">
+          <unidad-descripcion-history (value)="formValue($event)" (closeInputAreaEmitter)="handleCloseInputArea($event)"
+            [unidadDescripcion]="ud">
+          </unidad-descripcion-history>
+        </div>
+      </ng-container>
+
+      <ng-container *ngIf="showNotasForm">
+        <div class="col-12">
+          <form-notas (value)="formValue($event)" [ud]="ud" (closeInputAreaEmitter)="handleCloseInputArea($event)">
+          </form-notas>
+        </div>
+      </ng-container>
+      
+      <ng-container *ngIf="showPuntosAcceso">
+        <div class="col-12">
+          <puntos-acceso (value)="formValue($event)" [ud]="ud" (closeInputAreaEmitter)="handleCloseInputArea($event)"></puntos-acceso>
+        </div>
+      </ng-container>
+      <ng-container *ngIf="showJerarquia">
+        <div class="col-12">
+          <unidad-descripcion-jerarquia [ud]="ud" (closeInputAreaEmitter)="handleCloseInputArea($event)">
+          </unidad-descripcion-jerarquia>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+
+</mat-card>

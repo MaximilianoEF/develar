@@ -1,0 +1,28 @@
+<div class="container">
+    <mat-card class="p-0 p-md-3 mat-elevation-z0">
+        <mat-card-title>
+            <div class="row">
+                <div class="col-12">
+                    <h3>{{ title }}</h3>
+                </div>
+            </div>
+        </mat-card-title>
+        <mat-card-content>
+            <div class="row">
+                <div class="col-12">
+                    <nav>
+                        <button mat-flat-button [routerLink]="['alta']"><i class="fas fa-plus"></i> Nuevo turno</button>
+                        <button class="mt-1 mt-sm-0 ml-sm-2" mat-flat-button [routerLink]="['vigentes']"><i class="far fa-dot-circle"></i> Turnos vigentes</button>
+                    </nav>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-12">
+                    <agn-turnos-main></agn-turnos-main>
+                </div>
+            </div>
+        </mat-card-content>
+    </mat-card>
+</div>
+<!-- <footer-page [showContacto]="false"></footer-page> -->

@@ -1,0 +1,11 @@
+<h3 class="mb-0" mat-dialog-title>Edición de Asset</h3>
+<form [formGroup]="formGroup" (ngSubmit)="onSubmit()">
+    <mat-dialog-content>
+        <p>Modal de contenido</p>
+
+    </mat-dialog-content>
+    <mat-dialog-actions class="py-4">
+        <button mat-flat-button type="submit" color="primary">Confirmar</button>
+        <button mat-flat-button type="button" color="warn" mat-dialog-close>Cerrar</button>
+    </mat-dialog-actions>
+</form>
